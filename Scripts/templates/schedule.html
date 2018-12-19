@@ -1,0 +1,1275 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health & Fitness Schedule Planner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='health_fitness_plan.css') }}">
+    <script src="{{ url_for('static', filename='health_fitness_plan.js') }}"></script>
+</head>
+<body>
+<!-- Navigation bar -->
+{% include 'includes/_navbar.html' %}
+{% block body %}{% endblock %}
+
+<!-- calendar page -->
+<div id="overlay">
+    <div id="spinner"></div>
+</div>
+<div class="container-fluid" id="container">
+    <div>
+        <h1 class="text-center">Health & Fitness Schedule Planner</h1>
+        <div>
+            <br>
+        </div>
+        <div>
+            <div id="planner" class="pagination col-8">
+                <!-- November month -->
+                <div id="Nov">
+                    <h3>Month/Year:
+                        <span class="important">November / 2018</span>
+                    </h3>
+                    <table class="table table-striped col-8" id="calendar">
+                        <tr>
+                            <th colspan="7">
+                                <button class="btn btn-success text-white" id="lastmth" onclick="BacktoOct()" disabled>&laquo;</button>
+                                November 2018
+                                <button class="btn btn-success text-white" id="nextmth" onclick="GotoDec()">&raquo;</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <!-- All the days in a week -->
+                            <th class="text-danger">Sun</th>
+                            <th>Mon</th>
+                            <th>Tues</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        <tr>
+                            <td class="lastmth">
+                                <span>28</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>29</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>30</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>31</span>
+                            </td>
+                            <td>
+                                <span>1</span>
+                            </td>
+                            <td>
+                                <span>2</span>
+                            </td>
+                            <td>
+                                <span>3</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">4</span>
+                            </td>
+                            <td>
+                                <span>5</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-danger" data-toggle="tooltip" title="Deepavali">
+                                <span>6</span>
+                            </td>
+                            <td>
+                                <span>7</span>
+                            </td>
+                            <td>
+                                <span>8</span>
+                            </td>
+                            <td>
+                                <span>9</span>
+                            </td>
+                            <td>
+                                <span>10</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">11</span>
+                            </td>
+                            <td>
+                                <span>12</span>
+                            </td>
+                            <td>
+                                <span>13</span>
+                            </td>
+                            <td>
+                                <span>14</span>
+                            </td>
+                            <td>
+                                <span>15</span>
+                            </td>
+                            <td>
+                                <span>16</span>
+                            </td>
+                            <td>
+                                <span>17</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">18</span>
+                            </td>
+                            <td>
+                                <span>19</span>
+                            </td>
+                            <td>
+                                <span>20</span>
+                            </td>
+                            <td>
+                                <span>21</span>
+                            </td>
+                            <td>
+                                <span>22</span>
+                            </td>
+                            <td>
+                                <span>23</span>
+                            </td>
+                            <td>
+                                <span>24</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">25</span>
+                            </td>
+                            <td>
+                                <span>26</span>
+                            </td>
+                            <td>
+                                <span>27</span>
+                            </td>
+                            <td>
+                                <span>28</span>
+                            </td>
+                            <td>
+                                <span>29</span>
+                            </td>
+                            <td>
+                                <span>30</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>1</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- December month -->
+                <div id="Dec" style="display:none">
+                    <h3>Month/Year:
+                        <span class="important">December / 2018</span>
+                    </h3>
+                    <table class="table table-striped col-8" id="calendar">
+                        <tr>
+                            <th colspan="7">
+                                <button class="btn btn-success text-white" onclick="BacktoNov()">&laquo;</button>
+                                December 2018
+                                <button class="btn btn-success text-white" onclick="GotoJan()">&raquo;</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <!-- All the days in a week -->
+                            <th class="text-danger">Sun</th>
+                            <th>Mon</th>
+                            <th>Tues</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        <tr>
+                            <td class="lastmth">
+                                <span>25</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>26</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>27</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>28</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>29</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>30</span>
+                            </td>
+                            <td>
+                                <span>1</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">2</span>
+                            </td>
+                            <td>
+                                <span>3</span>
+                            </td>
+                            <td>
+                                <span>4</span>
+                            </td>
+                            <td>
+                                <span>5</span>
+                            </td>
+                            <td>
+                                <span>6</span>
+                            </td>
+                            <td>
+                                <span>7</span>
+                            </td>
+                            <td>
+                                <span>8</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">9</span>
+                            </td>
+                            <td>
+                                <span>10</span>
+                            </td>
+                            <td>
+                                <span>11</span>
+                            </td>
+                            <td>
+                                <span>12</span>
+                            </td>
+                            <td>
+                                <span>13</span>
+                            </td>
+                            <td>
+                                <span>14</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>15</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span class="text-danger">16</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>17</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>18</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>19</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>20</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>21</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>22</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span class="text-danger">23</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>24</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-danger" data-toggle="tooltip" title="Christmas Day">
+                                <span>25</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>26</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>27</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>28</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>29</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span class="text-danger">30</span>
+                            </td>
+                            <td>
+                                <span>31</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>1</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>2</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>3</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>4</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>5</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- January month -->
+                <div id="Jan" style="display:none">
+                    <h3>Month/Year:
+                        <span class="important">January / 2019</span>
+                    </h3>
+                    <table class="table table-stripped col-8" id="calendar">
+                        <tr>
+                            <th colspan="7">
+                                <button class="btn btn-success text-white" onclick="BacktoDec()">&laquo;</button>
+                                January 2019
+                                <button class="btn btn-success text-white" onclick="GotoFeb()">&raquo;</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-danger">Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        <tr>
+                            <td class="lastmth">
+                                <span>30</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>31</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-danger" data-toggle="tooltip" title="New Year Day">
+                                <span>1</span>
+                            </td>
+                            <td>
+                                <span>2</span>
+                            </td>
+                            <td>
+                                <span>3</span>
+                            </td>
+                            <td>
+                                <span>4</span>
+                            </td>
+                            <td>
+                                <span>5</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">6</span>
+                            </td>
+                            <td>
+                                <span>7</span>
+                            </td>
+                            <td>
+                                <span>8</span>
+                            </td>
+                            <td>
+                                <span>9</span>
+                            </td>
+                            <td>
+                                <span>10</span>
+                            </td>
+                            <td>
+                                <span>11</span>
+                            </td>
+                            <td>
+                                <span>12</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">13</span>
+                            </td>
+                            <td>
+                                <span>14</span>
+                            </td>
+                            <td>
+                                <span>15</span>
+                            </td>
+                            <td>
+                                <span>16</span>
+                            </td>
+                            <td>
+                                <span>17</span>
+                            </td>
+                            <td>
+                                <span>18</span>
+                            </td>
+                            <td>
+                                <span>19</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">20</span>
+                            </td>
+                            <td>
+                                <span>21</span>
+                            </td>
+                            <td>
+                                <span>22</span>
+                            </td>
+                            <td>
+                                <span>23</span>
+                            </td>
+                            <td>
+                                <span>24</span>
+                            </td>
+                            <td>
+                                <span>25</span>
+                            </td>
+                            <td>
+                                <span>26</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">27</span>
+                            </td>
+                            <td>
+                                <span>28</span>
+                            </td>
+                            <td>
+                                <span>29</span>
+                            </td>
+                            <td>
+                                <span>30</span>
+                            </td>
+                            <td>
+                                <span>31</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>1</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>2</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- February month -->
+                <div id="Feb" style="display:none">
+                    <h3>Month/Year:
+                        <span class="important">February / 2019</span>
+                    </h3>
+                    <table class="table table-stripped col-8" id="calendar">
+                        <tr>
+                            <th colspan="7">
+                                <button class="btn btn-success text-white" onclick="BacktoJan()">&laquo;</button>
+                                February 2019
+                                <button class="btn btn-success text-white" onclick="GotoMar()">&raquo;</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-danger">Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        <tr>
+                            <td class="lastmth">
+                                <span>27</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>28</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>29</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>30</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>31</span>
+                            </td>
+                            <td>
+                                <span>1</span>
+                            </td>
+                            <td>
+                                <span>2</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">3</span>
+                            </td>
+                            <td>
+                                <span>4</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-danger" data-toggle="tooltip" title="Chinese New Year">
+                                <span>5</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-danger" data-toggle="tooltip" title="Chinese New Year">
+                                <span>6</span>
+                            </td>
+                            <td>
+                                <span>7</span>
+                            </td>
+                            <td>
+                                <span>8</span>
+                            </td>
+                            <td>
+                                <span>9</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">10</span>
+                            </td>
+                            <td>
+                                <span>11</span>
+                            </td>
+                            <td>
+                                <span>12</span>
+                            </td>
+                            <td>
+                                <span>13</span>
+                            </td>
+                            <td>
+                                <span>14</span>
+                            </td>
+                            <td>
+                                <span>15</span>
+                            </td>
+                            <td>
+                                <span>16</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">17</span>
+                            </td>
+                            <td>
+                                <span>18</span>
+                            </td>
+                            <td>
+                                <span>19</span>
+                            </td>
+                            <td>
+                                <span>20</span>
+                            </td>
+                            <td>
+                                <span>21</span>
+                            </td>
+                            <td>
+                                <span>22</span>
+                            </td>
+                            <td>
+                                <span>23</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">24</span>
+                            </td>
+                            <td>
+                                <span>25</span>
+                            </td>
+                            <td>
+                                <span>26</span>
+                            </td>
+                            <td>
+                                <span>27</span>
+                            </td>
+                            <td>
+                                <span>28</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>1</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>2</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- March month -->
+                <div id="Mar" style="display:none">
+                    <h3>Month/Year:
+                        <span class="important">March / 2019</span>
+                    </h3>
+                    <table class="table table-stripped col-8" id="calendar">
+                        <tr>
+                            <th colspan="7">
+                                <button class="btn btn-success text-white" onclick="BacktoFeb()">&laquo;</button>
+                                March 2019
+                                <button class="btn btn-success text-white" onclick="GotoApr()">&raquo;</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-danger">Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        <tr>
+                            <td class="lastmth">
+                                <span>24</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>25</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>26</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>27</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>28</span>
+                            </td>
+                            <td>
+                                <span>1</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>2</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span class="text-danger">3</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>4</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>5</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>6</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>7</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>8</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>9</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span class="text-danger">10</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>11</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>12</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>13</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>14</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>15</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>16</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span class="text-danger">17</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>18</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>19</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>20</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>21</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>22</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>23</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span class="text-danger">24</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>25</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>26</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>27</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>28</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>29</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>30</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span class="text-danger">31</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>1</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>2</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>3</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>4</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>5</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>6</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- April month -->
+                <div id="Apr" style="display:none">
+                    <h3>Month/Year:
+                        <span class="important">April / 2019</span>
+                    </h3>
+                    <table class="table table-striped col-8" id="calendar">
+                        <tr>
+                            <th colspan="7">
+                                <button class="btn btn-success" onclick="BacktoMar()">&laquo;</button>
+                                April 2019
+                                <button class="btn btn-success" onclick="GotoMay()">&raquo;</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-danger">Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        <tr>
+                            <td class="lastmth">
+                                <span>31</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>1</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>2</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>3</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>4</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>5</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>6</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span class="text-danger">7</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>8</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>9</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>10</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>11</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>12</span>
+                            </td>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span>13</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 mb-2 bg-primary">
+                                <span class="text-danger">14</span>
+                            </td>
+                            <td>
+                                <span>15</span>
+                            </td>
+                            <td>
+                                <span>16</span>
+                            </td>
+                            <td>
+                                <span>17</span>
+                            </td>
+                            <td>
+                                <span>18</span>
+                            </td>
+                            <td>
+                                <span>19</span>
+                            </td>
+                            <td>
+                                <span>20</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">21</span>
+                            </td>
+                            <td>
+                                <span>22</span>
+                            </td>
+                            <td>
+                                <span>23</span>
+                            </td>
+                            <td>
+                                <span>24</span>
+                            </td>
+                            <td>
+                                <span>25</span>
+                            </td>
+                            <td>
+                                <span>26</span>
+                            </td>
+                            <td>
+                                <span>27</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">28</span>
+                            </td>
+                            <td>
+                                <span>29</span>
+                            </td>
+                            <td>
+                                <span>30</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>1</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>2</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>3</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>4</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- May month -->
+                <div id="May" style="display:none">
+                    <h3>Month/Year:
+                        <span class="important">May / 2019</span>
+                    </h3>
+                    <table class="table table-striped" id="calendar">
+                        <tr>
+                            <th colspan="7">
+                                <button class="btn btn-success" onclick="BacktoApr()">&laquo;</button>
+                                May 2019
+                                <button class="btn btn-success">&raquo;</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-danger">Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        <tr>
+                            <td class="lastmth">
+                                <span>28</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>29</span>
+                            </td>
+                            <td class="lastmth">
+                                <span>30</span>
+                            </td>
+                            <td>
+                                <span>1</span>
+                            </td>
+                            <td>
+                                <span>2</span>
+                            </td>
+                            <td>
+                                <span>3</span>
+                            </td>
+                            <td>
+                                <span>4</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">5</span>
+                            </td>
+                            <td>
+                                <span>6</span>
+                            </td>
+                            <td>
+                                <span>7</span>
+                            </td>
+                            <td>
+                                <span>8</span>
+                            </td>
+                            <td>
+                                <span>9</span>
+                            </td>
+                            <td>
+                                <span>10</span>
+                            </td>
+                            <td>
+                                <span>11</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">12</span>
+                            </td>
+                            <td>
+                                <span>13</span>
+                            </td>
+                            <td>
+                                <span>14</span>
+                            </td>
+                            <td>
+                                <span>15</span>
+                            </td>
+                            <td>
+                                <span>16</span>
+                            </td>
+                            <td>
+                                <span>17</span>
+                            </td>
+                            <td>
+                                <span>18</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">19</span>
+                            </td>
+                            <td>
+                                <span>20</span>
+                            </td>
+                            <td>
+                                <span>21</span>
+                            </td>
+                            <td>
+                                <span>22</span>
+                            </td>
+                            <td>
+                                <span>23</span>
+                            </td>
+                            <td>
+                                <span>24</span>
+                            </td>
+                            <td>
+                                <span>25</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">26</span>
+                            </td>
+                            <td>
+                                <span>27</span>
+                            </td>
+                            <td>
+                                <span>28</span>
+                            </td>
+                            <td>
+                                <span>29</span>
+                            </td>
+                            <td>
+                                <span>30</span>
+                            </td>
+                            <td>
+                                <span>31</span>
+                            </td>
+                            <td class="nextmth">
+                                <span>1</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="Jun" style="display:none">
+                    <h3>Month/Year:
+                        <span class="important">June / 2019</span>
+                    </h3>
+                    <table class="table table-striped" id="calendar">
+                        <tr>
+                            <th colspan="7">
+                                <button class="btn btn-success" onclick="BacktoMay()">&laquo;</button>
+                                June 2019
+                                <button class="btn btn-success" onclick="GotoJun()">&raquo;</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="lastmth">26</span>
+                            </td>
+                            <td>
+                                <span class="lastmth">27</span>
+                            </td>
+                            <td>
+                                <span class="lastmth">28</span>
+                            </td>
+                            <td>
+                                <span class="lastmth">29</span>
+                            </td>
+                            <td>
+                                <span class="lastmth">30</span>
+                            </td>
+                            <td>
+                                <span class="lastmth">31</span>
+                            </td>
+                            <td>
+                                <span>1</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">2</span>
+                            </td>
+                            <td>
+                                <span>3</span>
+                            </td>
+                            <td>
+                                <span>4</span>
+                            </td>
+                            <td>
+                                <span>5</span>
+                            </td>
+                            <td>
+                                <span>6</span>
+                            </td>
+                            <td>
+                                <span>7</span>
+                            </td>
+                            <td>
+                                <span>8</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">9</span>
+                            </td>
+                            <td>
+                                <span>10</span>
+                            </td>
+                            <td>
+                                <span>11</span>
+                            </td>
+                            <td>
+                                <span>12</span>
+                            </td>
+                            <td>
+                                <span>13</span>
+                            </td>
+                            <td>
+                                <span>14</span>
+                            </td>
+                            <td>
+                                <span>15</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">16</span>
+                            </td>
+                            <td>
+                                <span>17</span>
+                            </td>
+                            <td>
+                                <span>18</span>
+                            </td>
+                            <td>
+                                <span>19</span>
+                            </td>
+                            <td>
+                                <span>20</span>
+                            </td>
+                            <td>
+                                <span>21</span>
+                            </td>
+                            <td>
+                                <span>22</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">23</span>
+                            </td>
+                            <td>
+                                <span>24</span>
+                            </td>
+                            <td>
+                                <span>25</span>
+                            </td>
+                            <td>
+                                <span>26</span>
+                            </td>
+                            <td>
+                                <span>27</span>
+                            </td>
+                            <td>
+                                <span>28</span>
+                            </td>
+                            <td>
+                                <span>29</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-danger">30</span>
+                            </td>
+                            <td>
+                                <span class="nextmth">1</span>
+                            </td>
+                            <td>
+                                <span class="nextmth">2</span>
+                            </td>
+                            <td>
+                                <span class="nextmth">3</span>
+                            </td>
+                            <td>
+                                <span class="nextmth">4</span>
+                            </td>
+                            <td>
+                                <span class="nextmth">5</span>
+                            </td>
+                            <td>
+                                <span class="nextmth">6</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="legendcont" class="col-lg-3 col-sm-12">
+
+                <div id="legend" class="col-12 ">
+                    <p>Legend</p>
+                    <p>(Hover over to get the details):</p>
+                    <div class="p-3 mb-2 bg-primary text-dark" data-toggle="tooltip" title="School Holiday">
+                        <div>
+                            <p id="Hol" class="text-center">December<br>20</p>
+                        </div>
+                    </div>
+
+                    <div class="p-3 mb-2 bg-danger text-dark" data-toggle="tooltip" title="Public Holiday">
+                        <div>
+                            <p id="PH" class="text-center">November<br>6</p>
+                        </div>
+                    </div>
+
+                    <div class="p-3 mb-2 bg-secondary text-white" data-toggle="tooltip" title="Next/Last Month">
+                        <div>
+                            <p id="next-last" class="text-center">January<br>3</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-success" onclick="todolist()">&raquo; Go To-Do-List &raquo;</button>
+                </div>
+            </div>
+            <div class="col-12">
+                <br>
+            </div>
+            <div id="plannerinstruction" class="col-lg-12">
+                <button id="displayinstruction" class="btn btn-primary col-12" data-toggle="collapse" data-target="#instruction">Instructions</button>
+                <div id="instruction" class="collapse">
+                    <table id="allinstruction" class="table table-light">
+                        <thead>
+                        <tr class="table-success">
+                            <th>Instructions on how to use the Calendar Planner & To-Do-List</th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>&#8226; Click on the button <button class="btn btn-success">Go to To-Do-List</button> and you will enter into the To-Do-List page</td>
+                        </tr>
+                        <tr class="table-success">
+                            <td>&#8226; After entering into the To-Do-List page, you will need to write down the date, time and your to-do-lists in the given text boxes</td>
+                        </tr>
+                        <tr>
+                            <td>&#8226; After finish setting your To-Do-Lists, you will need to click on the
+                                <button class="btn btn-success">Submit your inputs</button>
+                                in order to save all your inputs
+                            </td>
+                        </tr>
+                        <tr class="table-success">
+                            <td>&#8226; Click on the
+                                <button class="btn btn-danger">Back to Calendar page</button>
+                                to go back to the Calendar page (But BEWARE! Once you click this button all your inputs will be erased if you did not save your inputs)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&#8226; Hover over the dates in the LEGEND MENU to display the details on what each colors represent</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

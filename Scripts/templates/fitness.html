@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Fitness tracker</title>
+
+    <style type="text/css">
+        @import url('//fonts.googleapis.com/css?family=Lato:400');
+        @import url('//fonts.googleapis.com/css?family=Lusitana:400,700');
+    </style>
+
+</head>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='fitness_bootstrap.css') }}">
+
+<style>
+    .marginTB__ {
+        margin-top: 30px;
+        padding-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .marginLR__ {
+        margin-left: 30px;
+        padding-left: 20px;
+        margin-right: 30px;
+    }
+
+    .profile-pic {
+        right: 0;
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+    }
+
+    .img-thumbnail {
+        height: 50px !important;
+    }
+
+    .highlight-pic:hover {
+    }
+</style>
+
+<script>
+function recordbreakfast() {
+    let i;
+    let breakfastfoodlist = [];
+    let gramls = [];
+    for(i=0; i < 1; i++) {
+        breakfastfoodlist.push(prompt("Enter food:"));
+        gramls.push(prompt("Enter amount of " + breakfastfoodlist[i] + " in gram:"));
+        document.getElementById('listadd1').innerHTML += "<li>" + "Food:" + breakfastfoodlist[i] + "<br />" + "Gram:" + gramls[i] + "<br />";
+}}
+
+function recordlunch() {
+    let i;
+    let lunchfoodlist = [];
+    let gramls = [];
+    for(i=0; i < 1; i++) {
+        lunchfoodlist.push(prompt("Enter food:"));
+        gramls.push(prompt("Enter amount of " + lunchfoodlist[i] + " in gram:"));
+        document.getElementById('listadd2').innerHTML += "<li>" + "Food:" + lunchfoodlist[i] + "<br />" + "Gram:" + gramls[i] + "<br />";
+}}
+
+function recorddinner() {
+    let i;
+    let dinnerfoodlist = [];
+    let gramls = [];
+    for(i=0; i < 1; i++) {
+        dinnerfoodlist.push(prompt("Enter food:"));
+        gramls.push(prompt("Enter amount of " + dinnerfoodlist[i] + " in gram:"));
+        document.getElementById('listadd3').innerHTML += "<li>" + "Food:" + dinnerfoodlist[i] + "<br />" + "Gram:" + gramls[i] + "<br />";
+}}
+
+function recordsnacks() {
+    let i;
+    let snacksfoodlist = [];
+    let gramls = [];
+    for(i=0; i < 1; i++) {
+        snacksfoodlist.push(prompt("Enter food:"));
+        gramls.push(prompt("Enter amount of " + snacksfoodlist[i] + " in gram:"));
+        document.getElementById('listadd4').innerHTML += "<li>" + "Food:" + snacksfoodlist[i] + "<br />" + "Gram:" + gramls[i] + "<br />";
+}}
+
+function recordexercise() {
+    let i;
+    let exerciselist = [];
+    let gramls = [];
+    for(i=0; i < 1; i++) {
+        exerciselist.push(prompt("Enter exercise:"));
+        document.getElementById('listadd5').innerHTML += "<li>" + "Exercise:" + exerciselist[i] + "<br />";
+}}
+
+</script>
+
+<div>
+
+    {% include 'includes/_navbar.html' %}
+
+</div>
+
+<!--Logo heading-->
+<h3 style="color:rgba(105, 205, 60, 1); font-size:50px;" class="text-center headers bg-dark">
+    Fitness tracker</h3>
+
+<div id="toppartoffit">
+    <div id="wrapper">
+        <div class="marginTB__ ">
+            <div class="circle hover text-center">
+                <h1>
+                    {{ kcal.get_maintenance() }}</h1>
+                <span class="font-weight-bold">KCAL LEFT</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="marginTB__"></div>
+</div>
+
+<div class="bg-light text-center" style="position: static;">
+    {#section heading#}
+    <h2 class="marginTB__" style="font-family: Verdana;">
+        <span>Nutritional Consumption</span>
+    </h2>
+    {#contentCardHeading#}
+
+    <div>
+        {#    Carbohydrates#}
+        <div style="display:inline-block;" class="marginLR__">
+            <h4 class="marginTB__">
+                250 g left | Carbs</h4>
+
+            <!--Content card image-->
+            <div id="ex3">
+                <img class="img-circle hover"
+                     src="//img1.wsimg.com/isteam/ip/6f953e8e-3d8b-4559-908e-a0d20d9ad096/5b5a8b94-b66d-4362-8dbc-4872277fb85b.jpg/:/cr=t:0%25,l:18.43%25,w:66.25%25,h:100%25/rs=w:223,h:223,cg:true">
+
+                <div id="wrapper" class="marginTB__">
+                    <span class="font-weight-bold">Carbohydrates</span>
+                    have six major functions within the body: Providing energy and
+                    regulation of blood glucose. Prevent ketosis.
+
+
+                    <div class="marginTB__"></div>
+
+                </div>
+            </div>
+        </div>
+
+        {#    Proteins#}
+        <div style="display:inline-block; vertical-align: top;" class="marginLR__">
+            <h4 class="marginTB__"> 206g left | Proteins</h4>
+            <!--Content card image-->
+            <div id="ex3">
+                <img class="img-circle hover"
+                     src="//img1.wsimg.com/isteam/ip/6f953e8e-3d8b-4559-908e-a0d20d9ad096/92c5ee9e-094b-4813-9183-448eef2f164a.jpg/:/cr=t:2.32%25,l:0%25,w:100%25,h:66.72%25/rs=w:223,h:223,cg:true">
+                <div id="wrapper" class="marginTB__">
+                    <span class="font-weight-bold">Protein</span>
+                    is essential for the maintenance and building of body tissues
+                    and muscle. Prevent protein deficiency issues.
+
+                    <div class="marginTB__"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top;" class="marginLR__">
+            <h4 class="marginTB__">
+                75g left | Fats</h4>
+
+            {#Content card image#}
+            <div id="ex3">
+                <img class="img-circle hover"
+                     src="//img1.wsimg.com/isteam/ip/6f953e8e-3d8b-4559-908e-a0d20d9ad096/0139ec1b-30a4-4f98-9732-7fe4b03c19af.jpg/:/cr=t:33.32%25,l:0%25,w:100%25,h:66.68%25/rs=w:223,h:223,cg:true">
+                <div id="wrapper" class="marginTB__">
+                    <span class="font-weight-bold">Fats </span>acts
+                    as a backup source of energy, absorption for fat-soluble
+                    vitamins, insulation to temperature, increasing testoterone.
+
+                    <div class="marginTB__"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <!--Heading for meal section-->
+    <div class="c">
+        <h2 class="marginTB__">
+            <span class="font-weight-bold" style="color: limegreen">Meals</span>
+        </h2>
+
+        <div class="marginTB__">
+            <h4>Breakfast</h4>
+            <div>
+                <p style="margin:0"></p>
+                <ul id="listadd1">
+                </ul>
+                <p></p></div>
+            <!--Buttons to add meal and exercises-->
+            <button type="button"
+                    class="btn btn-success" onclick="recordbreakfast()">
+                Add your meal
+
+            </button>
+        </div>
+
+        <div class="marginTB__">
+            <h4>Lunch</h4>
+            <div>
+                <p style="margin:0"></p>
+                <ul id="listadd2">
+                </ul>
+                <p></p></div>
+            <button type="button"
+                    class="btn btn-success"
+            onclick="recordlunch()">
+                Add your meal
+            </button>
+        </div>
+
+        <div class="marginTB__">
+            <h4>Dinner</h4>
+            <div>
+                <p style="margin:0"></p>
+                <ul id="listadd3">
+                </ul>
+                <p></p></div>
+            <button type="button"
+                    class="btn btn-success"
+            onclick="recorddinner()">
+                Add your meal
+            </button>
+        </div>
+
+        <div class="marginTB__">
+            <h4>Snacks</h4>
+            <div>
+                <p style="margin:0"></p>
+                <ul id="listadd4">
+                </ul>
+                <p></p></div>
+            <button type="button"
+                    class="btn btn-success"
+            onclick="recordsnacks()">
+                Add your meal
+            </button>
+        </div>
+
+        <div class="marginTB__">
+            <h4>Exercise</h4>
+            <div>
+                <p style="margin:0"></p>
+                <ul id="listadd5">
+                </ul>
+                <p></p></div>
+            <button type="button"
+                    class="btn btn-danger"
+            onclick="recordexercise()">
+                Add your exercise
+            </button>
+        </div>
+    </div>
+</div>
+
+
+</body>

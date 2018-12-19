@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Health Tracker</title>
+    <!-- Bootstrap-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='HealthTracker.css') }}">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='HealthTracker.js') }}"></script>
+</head>
+<body>
+<!--Navbar-->
+{% include 'includes/_navbar.html' %}
+    <div id="healthtracker">
+        <!--Update-->
+    <div class="alert alert-info" id="update">
+        <strong>Update!</strong> Your new heart rate as of <strong><span id="date"></span></strong> is <strong><span id="record"></span></strong> beats per minute.
+    </div>
+        <!--User Stats-->
+    <h1>Username</h1>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FF1iiKKqXcGja2DO9tplEIoq1Es4x20SIEGJXld2XWrB9zDz" alt=username">
+    <div id="userstats">
+    <p>Age : 16</p><br>
+    <p>Date of Birth: 25/12/2001</p><br>
+    <p>Previous Heart Rate: <strong><span id="record2"></span></strong> beats per minute</p><br>
+        <p>Previously Recorded on: <strong><span id="date2"></span></strong></p><br>
+    <p>Condition: <span id="condition"></span></p><br>
+    <p>Recommended Activities: Exercising</p><br>
+    <p style="font-weight: bold;">(Note: Subject to change)</p><br>
+    </div>
+    <div id="measure">
+    <div id="measure_stats">
+        <!--Measure heart rate-->
+    <h3>No. of heart beats in 10 seconds:<textarea placeholder="E.g.(20, 30)" id="bpm"></textarea></h3>
+    </div>
+    <button type="button" class="btn btn-warning" id="myBtn" onclick="Multiply()">MEASURE</button>
+</div>
+    <div id="instructions">
+        <!--Instructions-->
+        <h1 id="heading">Want to measure your heart rate? Click <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#info">here</button> to see how!</h1>
+        <div id="info" class="collapse">
+            <h2>Learn what is a normal heart rate and how to find your pulse with your fingers or a device</h2>
+            <p>Measuring your heart rate is any easy way to gauge your health, as it provides a real-time snapshot of your heart muscle function.</p>
+            <p>A normal heart rate can vary from person to person. However, an unusually high or low resting heart rate can be a sign of trouble.</p>
+            <h2>What is a normal heart rate?</h2>
+            <p>A normal heart rate for adults is typically 60 to 100 beats per minute. A heart rate that is slower than 60 beats per minute is considered bradycardia ("slow heart") and a rate that is faster than 100 beats per minutes is termed tachycardia ("fast heart"). There are some experts who believe that an ideal resting heart rate is closer to 50 to 70 beats per minute. Regardless of what is considered normal, it's important to recognize that a healthy heart rate will vary depending on the situation.</p>
+            <p>Among healthy people, a slower heart rate can be due to being physically fit, a medication, or sleep patterns. However, a slower heart rate can indicate a sign of disease including heart attack or other heart disease, certain infections, high levels of potassium in the blood, or an an underactive thyroid.<p>
+            <p>On the reverse side, a fast rate in healthy people can be because they are exercising, nervous or excited, using a stimulant or are pregnant. The disease health conditions that are associated with a fast heart rate include most infections or just about any cause of fever, heart problems, certain medications, low levels of potassium in the blood, an overactive thyroid gland or too much thyroid medication, anemia, or asthma or other breathing trouble.</p>
+            <h2>How to check your heart rate?</h2>
+            <ul>
+                <img src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/2018/1-whatshouldmy.jpg" style="float: right; width: 200px; height: 100px;">
+                <li>At the neck, lightly press the side of the neck, just below your jawbone.</li>
+                <li>Alternatively, at the wrist, lightly press the index and middle fingers of one hand on the opposite wrist, just below the base of the thumb.</li>
+                <li>Count the number of beats in 10 seconds, and multiply by six. That's your heart rate.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="chartContainer">
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</div>
+</body>
+</html>
+
+			<!--{ x: new Date(2017, 10, 6), y: 55 },
+			{ x: new Date(2017, 10, 7), y: 54 },
+			{ x: new Date(2017, 10, 8), y: 69 },
+			{ x: new Date(2017, 10, 9), y: 65 },
+			{ x: new Date(2017, 10, 10), y: 66 },
+			{ x: new Date(2017, 10, 11), y: 63 },
+			{ x: new Date(2017, 10, 12), y: 67 },
+			{ x: new Date(2017, 10, 13), y: 66 },
+			{ x: new Date(2017, 10, 14), y: 56 },
+			{ x: new Date(2017, 10, 15), y: 64 }
+
+			{ x: new Date(2017, 10, 6), y: 65 },
+			{ x: new Date(2017, 10, 7), y: 73 },
+			{ x: new Date(2017, 10, 8), y: 96 },
+			{ x: new Date(2017, 10, 9), y: 84 },
+			{ x: new Date(2017, 10, 10), y: 85 },
+			{ x: new Date(2017, 10, 11), y: 86 },
+			{ x: new Date(2017, 10, 12), y: 94 },
+			{ x: new Date(2017, 10, 13), y: 97 },
+			{ x: new Date(2017, 10, 14), y: 86 },
+			{ x: new Date(2017, 10, 15), y: 89 }
+
+			,
+	{
+		type: "line",
+		showInLegend: true,
+		name: "Actual Sales",
+		lineDashType: "dash",
+		yValueFormatString: "#,##0K",
+		dataPoints: [
+			{ x: new Date(2018, 11, 14), y: 60 },
+			{ x: new Date(2018, 11, 15), y: 57 },
+			{ x: new Date(2018, 11, 16), y: 51 },
+			{ x: new Date(2018, 11, 17), y: 56 },
+			{ x: new Date(2018, 11, 18), y: 54 },
+		]
+	}-->

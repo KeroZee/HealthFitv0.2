@@ -1,0 +1,30 @@
+class Exercises():
+    def __init__(self, desc, benefits, steps, image):
+        self.desc = desc
+        self.benefits = benefits
+        self.steps = steps
+        self.image = image
+
+    def get_image(self):
+        return self.image
+
+    def get_desc(self):
+        return self.desc
+
+    def get_benefits(self):
+        return self.benefits
+
+    def get_steps(self):
+        return self.steps
+
+    def set_image(self, image):
+        self.image = image
+
+    def set_desc(self, desc):
+        self.desc = desc
+
+    def set_benefits(self, benefits):
+        self.benefits = benefits
+
+    def set_steps(self, steps):
+        self.steps = steps

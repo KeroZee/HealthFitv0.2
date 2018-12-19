@@ -1,0 +1,55 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+body{
+    background-color: white;
+}
+
+.pagination{
+    font-size: 15px;
+    text-align: center;
+}
+
+#Sun, #Mon, #Tue, #Wed, #Thu, #Fri{
+    margin-right: 82px;
+    margin-left: 33px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+
+#Sat{
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+
+#planner{
+    padding: 10px;
+}
+
+#container{
+    width: 98.5%;
+    min-height: 50vh;
+    background-color: whitesmoke;
+    margin: auto;
+    margin-top: 12vh;
+    border: 2px solid lightgray;
+    border-radius: 10px;
+}
+
+#nextmonth{
+    float: right;
+}
+
+#mth{
+    margin: 405px;
+    font-family: Headline R;
+}
+
+h3{
+    text-align: center;
+}

@@ -1,0 +1,14 @@
+.desc{
+    font-size: 18px;
+    font-family: 'Verdana','sans-serif';
+}
+
+.headers{
+    font-family: 'Verdana','sans-serif';
+}
+
+.tutorials{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
