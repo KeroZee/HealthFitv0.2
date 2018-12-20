@@ -1,3 +1,4 @@
+import secrets, os
 from flask import render_template, flash, redirect, url_for, request
 from Scripts.forms import RegisterForm, LoginForm, UpdateDetails
 from Scripts import app, db, bcrypt
@@ -19,10 +20,9 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(name=form.name.data, email=form.email.data, username=form.username.data, password=hashed_password)
+        user = User(name=form.name.data, email=form.email.data.lower(), username=form.username.data.lower(), password=hashed_password)
         db.session.add(user)
         db.session.commit()
-
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
@@ -33,7 +33,7 @@ def login():
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(username=form.username.data.lower()).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
@@ -48,23 +48,40 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    f_name, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    form_picture.save(picture_path)
+
+    return picture_fn
+
 @app.route('/profile', methods=['GET','POST'])
 @login_required
 def profile():
     form = UpdateDetails()
     app.logger.debug('in profile method')
     if form.validate_on_submit():
-        app.logger.debug('inside update form validate')
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
+        current_user.height = form.height.data
+        current_user.weight = form.weight.data
+        current_user.age = form.age.data
         db.session.commit()
         flash('Your account has been updated!', 'success')
-        return redirect(url_for('account'))
+        return redirect(url_for('profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
+        form.height.data = current_user.height
+        form.weight.data = current_user.weight
+        form.age.data = current_user.age
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('profile.html', title='Account',
+    return render_template('profile.html', title='Profile',
                            image_file=image_file, form=form)
 
 @app.route('/ExGuide')
@@ -149,26 +166,33 @@ def guide():
             exercise2 = exercises_list[cycle]
             int_list.append(cycle)
 
-    return render_template('ExGuide.html', exercise=exercise, exercise1=exercise1, exercise2=exercise2)
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+
+    return render_template('ExGuide.html', exercise=exercise, exercise1=exercise1, exercise2=exercise2, image_file=image_file)
 
 @app.route('/schedule')
 @login_required
 def schedule():
-    return render_template('schedule.html')
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('schedule.html',image_file=image_file)
 
 @app.route('/schedule/ToDoList')
 @login_required
 def todolist():
-    return render_template('todolist.html')
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('todolist.html',image_file=image_file)
 
 @app.route('/HealthTracker')
 @login_required
 def HealthTracker():
-    return render_template('HealthTracker.html')
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('HealthTracker.html',image_file=image_file)
 
 @app.route('/fitness')
 @login_required
 def fitness():
     r1 = Record('food1')
     p1 = YourPlan('2500', 'bulk')
-    return render_template('fitness.html', items=r1, kcal=p1)
+
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('fitness.html', items=r1, kcal=p1, image_file=image_file)
