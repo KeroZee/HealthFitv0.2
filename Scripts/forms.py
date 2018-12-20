@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, IntegerField, RadioField, BooleanField, FloatField, SubmitField
+from wtforms.fields.html5 import DateField
+from wtforms import StringField, PasswordField, IntegerField, RadioField, BooleanField, FloatField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationError
 from Scripts.models import User
 
@@ -67,3 +68,8 @@ class UpdateDetails(FlaskForm):
             user = User.query.filter_by(email=email.data.lower()).first()
             if user:
                 raise ValidationError('That email is taken. Please Choose a different one')
+class TodoList(FlaskForm):
+    datetime = DateField('Date', format='%Y-%m-%d')
+    description = TextAreaField('Description', validators=[DataRequired()], render_kw={"placeholder":"Enter your to-do in this section"})
+    remarks = TextAreaField('Remarks', render_kw={"placeholder":"Enter any important info about your to-dos"})
+    submit = SubmitField('Add')

@@ -1,6 +1,7 @@
 import secrets, os
+from PIL import Image
 from flask import render_template, flash, redirect, url_for, request
-from Scripts.forms import RegisterForm, LoginForm, UpdateDetails
+from Scripts.forms import RegisterForm, LoginForm, UpdateDetails,TodoList
 from Scripts import app, db, bcrypt
 from Scripts.models import User, Schedule
 from random import randint
@@ -45,6 +46,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+    flash('Logged Out successfully!', 'success')
     logout_user()
     return redirect(url_for('home'))
 
@@ -53,7 +55,12 @@ def save_picture(form_picture):
     f_name, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
-    form_picture.save(picture_path)
+
+    output_size = (125,125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+
+    i.save(picture_path)
 
     return picture_fn
 
@@ -176,11 +183,20 @@ def schedule():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('schedule.html',image_file=image_file)
 
-@app.route('/schedule/ToDoList')
+@app.route('/schedule/ToDoList', methods=['GET','POST'])
 @login_required
 def todolist():
+    form = TodoList()
+    Todos = Schedule.query.all()
+    if form.validate_on_submit():
+        activity = Schedule(description=form.description.data, remarks=form.remarks.data, name=current_user)
+        db.session.add(activity)
+        db.session.commit()
+        app.logger.debug('Activities added')
+        flash('Activity have been added to your schedule', 'success')
+        return redirect(url_for('todolist'))
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('todolist.html',image_file=image_file)
+    return render_template('todolist.html',title='ToDoList',image_file=image_file, form=form, Todos=Todos )
 
 @app.route('/HealthTracker')
 @login_required

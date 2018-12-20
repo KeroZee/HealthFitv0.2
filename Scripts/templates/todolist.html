@@ -1,6 +1,8 @@
 <!doctype html>
 <html>
 <head>
+    {% extends 'layout.html' %}
+    {% block body %}
 	<title>To-Do-List_Planner</title>
 
 
@@ -17,8 +19,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='todolist.css') }}">
     <script src="{{ url_for('static', filename='todolist.js') }}"></script>
 <body>
-{% include 'includes/_navbar.html' %}
-{% block body %}{% endblock %}
 
 <div id="overlay">
     <div id="spinner"></div>
@@ -358,51 +358,73 @@
 		</div>
         <div id="planner" class="col-12">
             <table id="todolist" class="table table-striped" border="1">
-                <tr>
-                    <th colspan="3">
-                        <h2>Set your To-Do-Lists here</h2>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        <h2>Time Slot</h2>
-                        <br>Enter your date and time in this section
-                    </th>
-                    <th>
-                        <h2>Details of your to-do-lists</h2>
-                        <br>Enter your to-do-lists in this section
-                    </th>
-                    <th>
-                        <h2>Remarks</h2>
-                        <br>Enter any other Important information about your to-do-list
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Date:</label>
-                        <br>
-                        <input id="date" type="text" placeholder="Eg. 20 November 2018">
-                        <br>
-                        <label>From(Start time):</label>
-                        <br>
-                        <input id="startTime" type="text" placeholder="Eg. 4pm">
-                        <br>
-                        <label>To(End time):</label>
-                        <br>
-                        <input id="endTime" type="text" placeholder="Eg. 5pm">
-                    </td>
-                    <td>
-                        <textarea rows="7" cols="44" placeholder="Eg. Do 5 sets of push-up, do 4 sets of sit-ups and jog for 30 minutes"></textarea>
-                    </td>
-                    <td>
-                        <textarea rows="7" cols="52" placeholder="Eg. Practice for upcoming health & fitness test. Need to lose weight so as to be fitter"></textarea>
-                    </td>
-                </tr>
+                <div class="content-section">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4">{{ legend }}</legend>
+                            <div class="form-group">
+                                {{ form.datetime.label }}
+                                {% if form.datetime.errors %}
+                                    {{ form.datetime(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.datetime.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.datetime }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.description.label(class="form-control-label") }}
+                                {% if form.description.errors %}
+                                    {{ form.description(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.description.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.description(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.remarks.label(class="form-control-label") }}
+                                {% if form.remarks.errors %}
+                                    {{ form.remarks(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.remarks.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.remarks(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-outline-info") }}
+                        </div>
+                    </form>
+                </div>
             </table>
-            <button class="btn btn-danger" onclick="save()">Submit your inputs</button>
-            <button class="btn btn-danger" onclick="Calendar()">Back to Calendar page</button>
+            <button class="btn btn-danger" onclick="window.location.href = '../schedule';">Back to Calendar page</button>
         </div>
 	</div>
 </div>
+    {% for activity in Todos %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ activity.name }}</a>
+              <small class="text-muted">{{ activity.date_posted }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ activity.description }}</a></h2>
+            <p class="article-content">{{ activity.remarks }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock %}
 </body>
 </html>
