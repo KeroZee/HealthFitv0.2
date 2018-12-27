@@ -91,3 +91,13 @@ class ResetPasswordForm(FlaskForm):
     confirm = PasswordField('Confirm Password',
                             validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
+
+class FoodForm(FlaskForm):
+    name = StringField('Food',validators=[DataRequired()])
+    mass = IntegerField('Mass',validators=[DataRequired()])
+    submit = SubmitField('Add Food')
+
+class ExerciseForm(FlaskForm):
+    name = StringField('Exercise',validators=[DataRequired()])
+    mass = IntegerField('Duration',validators=[DataRequired()])
+    submit = SubmitField('Add Exercise')

@@ -177,11 +177,11 @@ function recordexercise() {
         {{ form.hidden_tag() }}
         <div class="container">
             <p class="lead">
-                Meals
+                Exercise
             </p>
-            <a href="#Breakfast" class="btn btn-info" data-toggle="collapse">Breakfast</a>
-            <fieldset id="Breakfast" class="collapse">
-                <legend class="border-bottom mb-4">Food Details</legend>
+            <a href="#Exercise" class="btn btn-info" data-toggle="collapse">Exercise</a>
+            <fieldset id="Exercise" class="collapse">
+                <legend class="border-bottom mb-4">Exercise Details</legend>
                 <div class="form-group">
                     {{ form.name.label(class="form-control-label") }}
                     {% if form.name.errors %}
@@ -196,16 +196,16 @@ function recordexercise() {
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.mass.label(class="form-control-label") }}
-                    {% if form.mass.errors %}
-                        {{ form.mass(class="form-control form-control-lg is-invalid") }}
+                    {{ form.duration.label(class="form-control-label") }}
+                    {% if form.duration.errors %}
+                        {{ form.duration(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
-                            {% for error in form.mass.errors %}
+                            {% for error in form.duration.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.mass(class="form-control form-control-lg") }}
+                        {{ form.duration(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -214,84 +214,5 @@ function recordexercise() {
             </fieldset>
         </div>
     </form>
-<br>
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <div class="container">
-            <a href="#Lunch" class="btn btn-info" data-toggle="collapse">Lunch</a>
-            <fieldset id="Lunch" class="collapse">
-                <legend class="border-bottom mb-4">Food Details</legend>
-                <div class="form-group">
-                    {{ form.name.label(class="form-control-label") }}
-                    {% if form.name.errors %}
-                        {{ form.name(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.name.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.name(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.mass.label(class="form-control-label") }}
-                    {% if form.mass.errors %}
-                        {{ form.mass(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.mass.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.mass(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-outline-info") }}
-                </div>
-            </fieldset>
-        </div>
-    </form>
-<br>
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <div class="container">
-            <a href="#Dinner" class="btn btn-info" data-toggle="collapse">Dinner</a>
-            <fieldset id="Dinner" class="collapse">
-                <legend class="border-bottom mb-4">Food Details</legend>
-                <div class="form-group">
-                    {{ form.name.label(class="form-control-label") }}
-                    {% if form.name.errors %}
-                        {{ form.name(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.name.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.name(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.mass.label(class="form-control-label") }}
-                    {% if form.mass.errors %}
-                        {{ form.mass(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.mass.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.mass(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-outline-info") }}
-                </div>
-            </fieldset>
-        </div>
-    </form>
-<br>
 </body>
 {% endblock %}

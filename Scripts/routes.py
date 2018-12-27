@@ -1,7 +1,7 @@
 import secrets, os
 from PIL import Image
 from flask import render_template, flash, redirect, url_for, request
-from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm
+from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm, FoodForm, ExerciseForm
 from Scripts import app, db, bcrypt, mail
 from Scripts.models import User, Schedule
 from random import randint
@@ -111,7 +111,7 @@ def reset_request():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         send_reset_email(user)
-        flash('An email has been sent with instructions to reset your password')
+        flash('An email has been sent with instructions to reset your password', 'success')
         return redirect(url_for('login'))
     return render_template('reset_request.html', title='Reset Password', form=form)
 
@@ -245,11 +245,28 @@ def HealthTracker():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('HealthTracker.html',image_file=image_file)
 
-@app.route('/fitness')
+@app.route('/food')
 @login_required
 def fitness():
+    form = FoodForm()
+    if form.validate_on_submit():
+        food = FoodForm(name=form.name.data, mass=form.mass.data)
+        db.session.add(food)
+        db.session.commit()
+        flash('Your entry has been entered!', 'success')
     r1 = Record('food1')
     p1 = YourPlan('2500', 'bulk')
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('fitness.html', items=r1, kcal=p1, image_file=image_file)
+    return render_template('fitness.html', items=r1, kcal=p1, image_file=image_file, form=form)
+@app.route('/exercise')
+@login_required
+def exercise():
+    form = ExerciseForm()
+    if form.validate_on_submit():
+        exercise1 = FoodForm(name=form.name.data, duration=form.mass.data)
+        db.session.add(exercise1)
+        db.session.commit()
+        flash('Your entry has been entered!', 'success')
+
+    return render_template('exercise.html', form=form)
