@@ -15,9 +15,9 @@ login_manager.login_view = 'login'
 login_manager.login_message_category = 'info' #bootstrap info method
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = '587'
-app.config['MAIL_MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
-app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_PASS')
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'app.noreply1206@gmail.com'
+app.config['MAIL_PASSWORD'] = 'Blzh1206'
 mail = Mail(app)
 
 
