@@ -73,3 +73,21 @@ class TodoList(FlaskForm):
     description = TextAreaField('Description', validators=[DataRequired()], render_kw={"placeholder":"Enter your to-do in this section"})
     remarks = TextAreaField('Remarks', render_kw={"placeholder":"Enter any important info about your to-dos"})
     submit = SubmitField('Add')
+
+class RequestResetForm(FlaskForm):
+    email = StringField('Email',
+                        validators=[DataRequired(), Email(), Length(min=6, max=50)])
+    submit = SubmitField('Request Password Reset')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data.lower()).first()
+        if user is None:
+            raise ValidationError('There is no account linked to that email. Please Enter valid email.')
+
+class ResetPasswordForm(FlaskForm):
+
+    password = PasswordField('Password',
+        validators=[DataRequired(), EqualTo('password'),Length(min=6, max=24)])
+    confirm = PasswordField('Confirm Password',
+                            validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset Password')
