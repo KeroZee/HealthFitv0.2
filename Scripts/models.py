@@ -51,11 +51,13 @@ class Schedule(db.Model):
 
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    food = db.Column(db.String(100), nullable=False)
-    kcal = db.Column(db.Integer)
-    exercise = db.Column(db.String(100), nullable=False)
 
-class Fitness(db.Model):
+    def __repr__(self): #How objects are printed
+        return f"User('{self.date_posted}', '{self.description}', '{self.remarks}')"
+class Fitness(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     duration = db.Column(db.Integer(),nullable=False)
+
+    def __repr__(self): #How objects are printed
+        return f"Fitness('{self.name}', '{self.mass}')"

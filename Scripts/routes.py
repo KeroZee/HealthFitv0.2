@@ -245,12 +245,12 @@ def HealthTracker():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('HealthTracker.html',image_file=image_file)
 
-@app.route('/food')
+@app.route('/food',methods=['GET','POST'])
 @login_required
-def fitness():
+def Food():
     form = FoodForm()
     if form.validate_on_submit():
-        food = FoodForm(name=form.name.data, mass=form.mass.data)
+        food = Food(name=form.name.data, mass=form.mass.data)
         db.session.add(food)
         db.session.commit()
         flash('Your entry has been entered!', 'success')
@@ -258,13 +258,13 @@ def fitness():
     p1 = YourPlan('2500', 'bulk')
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('fitness.html', items=r1, kcal=p1, image_file=image_file, form=form)
-@app.route('/exercise')
+    return render_template('food.html', items=r1, kcal=p1, image_file=image_file, form=form)
+@app.route('/exercise',methods=['GET','POST'])
 @login_required
 def exercise():
     form = ExerciseForm()
     if form.validate_on_submit():
-        exercise1 = FoodForm(name=form.name.data, duration=form.mass.data)
+        exercise1 = Fitness(name=form.name.data, duration=form.mass.data)
         db.session.add(exercise1)
         db.session.commit()
         flash('Your entry has been entered!', 'success')
