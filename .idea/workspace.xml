@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2856a55d-ff9c-4593-8a56-33c78cdfdb0a" name="Default Changelist" comment="Update HTMLSv1.1">
       <change beforePath="$PROJECT_DIR$/Scripts/health.db" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/health.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/templates/includes/_navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/templates/includes/_navbar.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,7 +17,7 @@
     <SUITE FILE_PATH="coverage/HealthFitv0_11_master$app.coverage" NAME="app Coverage Results" MODIFIED="1544590683296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HealthFitv0_11$Practical5.coverage" NAME="Practical5 Coverage Results" MODIFIED="1542852445998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Practical5" />
     <SUITE FILE_PATH="coverage/HealthFitv0_11$app.coverage" NAME="app Coverage Results" MODIFIED="1544344509132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/HealthFitv0_11_master$run.coverage" NAME="run Coverage Results" MODIFIED="1546149867696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HealthFitv0_11_master$run.coverage" NAME="run Coverage Results" MODIFIED="1546275394010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HealthFitv0_11$Revision1.coverage" NAME="Revision1 Coverage Results" MODIFIED="1542778757699" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Documents/Python Scripts" />
   </component>
   <component name="DatabaseView">
@@ -106,13 +104,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="17" />
-          <entry key="html" value="4216" />
+          <entry key="html" value="4280" />
           <entry key="py" value="12076" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="4216" />
+          <entry key="HTML" value="4280" />
           <entry key="PLAIN_TEXT" value="17" />
           <entry key="Python" value="12076" />
         </counts>
@@ -154,10 +152,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Scripts/routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3174">
+            <state relative-caret-position="4058">
               <caret line="252" column="61" selection-start-line="252" selection-start-column="61" selection-end-line="252" selection-end-column="61" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -202,11 +200,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scripts/templates/includes/_navbar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="471">
-              <caret line="52" column="10" selection-start-line="52" selection-start-column="10" selection-end-line="52" selection-end-column="10" />
+            <state relative-caret-position="553">
+              <caret line="58" selection-start-line="58" selection-end-line="58" />
             </state>
           </provider>
         </entry>
@@ -226,7 +224,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scripts/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
+            <state relative-caret-position="1598">
               <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
@@ -866,22 +864,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-            <marker date="1545895930512" expanded="true" signature="1690:1691" ph="..." />
-            <marker date="1545895930512" expanded="true" signature="3158:3163" ph="..." />
-            <marker date="1545895930512" expanded="true" signature="3475:3480" ph="..." />
-            <marker date="1545895930512" expanded="true" signature="3682:3691" ph="..." />
-            <marker date="1545895930512" expanded="true" signature="3919:3921" ph="..." />
-            <marker date="1545895930512" expanded="true" signature="4238:4395" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="692">
@@ -895,19 +877,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3174">
-          <caret line="252" column="61" selection-start-line="252" selection-start-column="61" selection-end-line="252" selection-end-column="61" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <marker date="1546150342201" expanded="true" signature="2322:2680" ph="..." />
-            <marker date="1546150342201" expanded="true" signature="3864:4249" ph="..." />
-            <marker date="1546150342201" expanded="true" signature="4323:5571" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/templates/layout.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -915,10 +884,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1598">
+          <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+            <marker date="1545895930512" expanded="true" signature="1690:1691" ph="..." />
+            <marker date="1545895930512" expanded="true" signature="3158:3163" ph="..." />
+            <marker date="1545895930512" expanded="true" signature="3475:3480" ph="..." />
+            <marker date="1545895930512" expanded="true" signature="3682:3691" ph="..." />
+            <marker date="1545895930512" expanded="true" signature="3919:3921" ph="..." />
+            <marker date="1545895930512" expanded="true" signature="4238:4395" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/templates/includes/_navbar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="52" column="10" selection-start-line="52" selection-start-column="10" selection-end-line="52" selection-end-column="10" />
+        <state relative-caret-position="553">
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4058">
+          <caret line="252" column="61" selection-start-line="252" selection-start-column="61" selection-end-line="252" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <marker date="1546150342201" expanded="true" signature="2322:2680" ph="..." />
+            <marker date="1546150342201" expanded="true" signature="3864:4249" ph="..." />
+            <marker date="1546150342201" expanded="true" signature="4323:5571" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
