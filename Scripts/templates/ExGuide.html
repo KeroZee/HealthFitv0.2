@@ -8,13 +8,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
     <!-- Guide Style CSS -->
-    <link rel="stylesheet" href="../ExStyle.css">
+    <link rel="stylesheet" href="../static/ExStyle.css">
+    <title>HealthGuide</title>
 </head>
-<body style="background-image: url('../static/Carousel_OOPP/e5WlXi.jpg');">
-{% include 'includes/_navbar.html' %}
+<body>
+{% extends 'layout.html' %}
+{% block body %}
     <div id="page" class="container">
         <div class='container'>
-            <div>
+            <div id="header">
                 <h2 class="font-weight-bold text-center headers">Welcome to the Exercise Guide!</h2>
             </div>
             <div id="guide_body">
@@ -22,17 +24,15 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <img style="width: 330px; height: 258px;" src="{{ exercise.get_image() }}">
-                                <a href="#vids" class="btn btn-info tutorials" data-toggle="collapse">Tutorial Videos</a>
-                                <div id="vids" class="collapse">
-
-                                </div>
+                                <img src="{{ exercise.get_image() }}">
                             </div>
                             <div class="col-md-6">
                                 <p class="text-justify desc">{{ exercise.get_desc() }}</p>
                                 <dl>
-                                    <dt>Muscles Trained:</dt>
-                                    <dd>{{ exercise.get_benefits() }}</dd>
+                                    <dt class = 'ben_list'>Muscles Trained:</dt>
+                                    {% for benefits in exercise.get_benefits() %}
+                                    <dd>{{ benefits }}</dd>
+                                    {% endfor %}
                                 </dl>
                                 <a href="#randex" class="btn btn-info" data-toggle="collapse">Instructions</a>
                                 <div id="randex" class="collapse">
@@ -42,6 +42,12 @@
                                         {% endfor %}
                                     </ol>
                                 </div>
+                                <a href="#vids" class="btn btn-info" data-toggle="collapse">Tutorial Videos</a>
+                                <div id="vids" class="collapse tutorials">
+                                    <iframe width="420" height="315"
+                                        src = "{{ exercise.get_videos() }}">
+                                    </iframe>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -50,16 +56,15 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <img style="width: 330px; height: 258px;" src="{{ exercise1.get_image() }}">
-                                <a href="#vids1" class="btn btn-info tutorials" data-toggle="collapse">Tutorial Videos</a>
-                                <div id="vids1" class="collapse">
-                                </div>
+                                <img src="{{ exercise1.get_image() }}">
                             </div>
                             <div class="col-md-6">
                                 <p class="text-justify desc">{{ exercise1.get_desc() }}</p>
                                 <dl>
-                                    <dt>Muscles trained:</dt>
-                                    <dd>{{ exercise1.get_benefits() }}</dd>
+                                    <dt class = 'ben_list'>Muscles trained:</dt>
+                                    {% for benefits in exercise1.get_benefits() %}
+                                    <dd>{{ benefits }}</dd>
+                                    {% endfor %}
                                 </dl>
                                 <a href="#randex1" class="btn btn-info" data-toggle="collapse">Instructions</a>
                                 <div id="randex1" class="collapse">
@@ -68,6 +73,12 @@
                                             <li>{{ steps }}</li>
                                         {% endfor %}
                                     </ol>
+                                </div>
+                                <a href="#vids1" class="btn btn-info" data-toggle="collapse">Tutorial Videos</a>
+                                <div id="vids1" class="collapse">
+                                    <iframe width="420" height="315"
+                                        src = "{{ exercise1.get_videos() }}">
+                                    </iframe>
                                 </div>
                             </div>
                         </div>
@@ -78,15 +89,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <img style="width: 330px; height: 258px;" src="{{ exercise2.get_image() }}">
-                                <a href="#vids2" class="btn btn-info tutorials" data-toggle="collapse">Tutorial Videos</a>
-                                <div id="vids2" class="collapse">
-                                </div>
                             </div>
                             <div class="col-md-6">
                                 <p class="text-justify desc">{{ exercise2.get_desc() }}</p>
                                 <dl>
-                                    <dt>Muscles trained:</dt>
-                                    <dd>{{ exercise2.get_benefits() }}</dd>
+                                    <dt class = 'ben_list'>Muscles trained:</dt>
+                                    {% for benefits in exercise2.get_benefits() %}
+                                    <dd>{{ benefits }}</dd>
+                                    {% endfor %}
                                 </dl>
                                 <a href="#randex2" class="btn btn-info" data-toggle="collapse">Instructions</a>
                                 <div id="randex2" class="collapse">
@@ -95,6 +105,12 @@
                                             <li>{{ steps }}</li>
                                         {% endfor %}
                                     </ol>
+                                </div>
+                                <a href="#vids2" class="btn btn-info" data-toggle="collapse">Tutorial Videos</a>
+                                <div id="vids2" class="collapse">
+                                    <iframe width="420" height="315"
+                                        src = "{{ exercise2.get_videos() }}">
+                                    </iframe>
                                 </div>
                             </div>
                         </div>
@@ -106,5 +122,6 @@
     <!-- jQuery first, then Bootstrap JS. -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+{% endblock %}
 </body>
 </html>

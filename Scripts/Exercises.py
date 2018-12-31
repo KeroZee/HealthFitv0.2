@@ -1,9 +1,13 @@
 class Exercises():
-    def __init__(self, desc, benefits, steps, image):
+    def __init__(self, desc, benefits, steps, image, videos):
         self.desc = desc
         self.benefits = benefits
         self.steps = steps
         self.image = image
+        self.videos = videos
+
+    def get_videos(self):
+        return self.videos
 
     def get_image(self):
         return self.image
@@ -16,6 +20,9 @@ class Exercises():
 
     def get_steps(self):
         return self.steps
+
+    def set_videos(self, videos):
+        self.videos = videos
 
     def set_image(self, image):
         self.image = image
