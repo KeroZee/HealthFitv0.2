@@ -3,7 +3,7 @@ from PIL import Image
 from flask import render_template, flash, redirect, url_for, request
 from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm, FoodForm, ExerciseForm
 from Scripts import app, db, bcrypt, mail
-from Scripts.models import User, Schedule
+from Scripts.models import User, Schedule, Food, Fitness
 from random import randint
 from Scripts.Exercises import Exercises
 from Scripts.Fitness import Record, YourPlan
@@ -247,7 +247,7 @@ def HealthTracker():
 
 @app.route('/food',methods=['GET','POST'])
 @login_required
-def Food():
+def _Food():
     form = FoodForm()
     if form.validate_on_submit():
         food = Food(name=form.name.data, mass=form.mass.data)

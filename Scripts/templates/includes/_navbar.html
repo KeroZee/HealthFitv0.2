@@ -42,6 +42,7 @@
           <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
           <li class="nav-item"><a class="nav-link" href="/login">Log in</a></li>
           {% endif %}
+          {% if current_user.is_authenticated %}
           <div class="row">
               <div class="col-lg-3">
                   <div class="profile-pic">
@@ -51,6 +52,7 @@
                   </div>
               </div>
           </div>
+          {% endif %}
       </ul>
   </nav>
 
