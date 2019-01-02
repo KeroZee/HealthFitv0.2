@@ -3,12 +3,42 @@
     font-family: 'Verdana','sans-serif';
 }
 
-.headers{
-    font-family: 'Verdana','sans-serif';
+.jumbotron{
+    border: 3px solid black;
 }
 
-.tutorials{
-    position: absolute;
-    left: 0;
-    bottom: 0;
+.headers{
+    font-family: 'Goudy Stout','Rockwell Extra Bold','Verdana','sans-serif';
+    color: whitesmoke;
+    text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
+}
+
+#header{
+    margin: 10px 5px 5px 5px;
+}
+
+.btn{
+    border: 2px solid green;
+}
+
+.btn:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.collapse{
+    margin: 10px 5px 5px 0;
+}
+
+.ben_list{
+    font-size: 18px;
+}
+
+body{
+    background-image: url('../static/e5WlXi.jpg');
+}
+
+.images{
+    width: 330px;
+    height: 258px;
+    border: 3px solid black;
 }
