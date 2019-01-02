@@ -3,6 +3,10 @@
     margin: 0px;
 }
 
+body{
+    background-image: url("e5WlXi.jpg");
+}
+
 #healthtracker {
     position: static;
     float: left;
