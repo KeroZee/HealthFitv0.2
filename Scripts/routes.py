@@ -13,8 +13,11 @@ from flask_mail import Message
 @app.route("/")
 @app.route("/home")
 def home():
-    #image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template("home.html")
+    if current_user.is_authenticated:
+        image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    else:
+        image_file = url_for('static', filename='profile_pics/default.png')
+    return render_template("home.html", image_file=image_file)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
