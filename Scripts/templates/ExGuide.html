@@ -9,6 +9,7 @@
     <!--<link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">-->
     <!-- Guide Style CSS -->
     <link rel="stylesheet" href="../static/ExStyle.css">
+    <link rel="icon" href="../static/Picture1.png">
     <title>HealthGuide</title>
 </head>
 <body>
@@ -24,7 +25,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <img src="{{ exercise.get_image() }}">
+                                <img src="{{ exercise.get_image() }}" class="images">
                             </div>
                             <div class="col-md-6">
                                 <p class="text-justify desc">{{ exercise.get_desc() }}</p>
@@ -56,7 +57,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <img src="{{ exercise1.get_image() }}">
+                                <img src="{{ exercise1.get_image() }}" class="images">
                             </div>
                             <div class="col-md-6">
                                 <p class="text-justify desc">{{ exercise1.get_desc() }}</p>
@@ -88,7 +89,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <img style="width: 330px; height: 258px;" src="{{ exercise2.get_image() }}">
+                                <img style="width: 330px; height: 258px;" src="{{ exercise2.get_image() }}" class="images">
                             </div>
                             <div class="col-md-6">
                                 <p class="text-justify desc">{{ exercise2.get_desc() }}</p>

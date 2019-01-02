@@ -37,7 +37,7 @@ body{
     background-image: url('../static/e5WlXi.jpg');
 }
 
-img{
+.images{
     width: 330px;
     height: 258px;
     border: 3px solid black;
