@@ -15,8 +15,8 @@
 </head>
 <body>
 <!-- Navigation bar -->
-{% include 'includes/_navbar.html' %}
-{% block body %}{% endblock %}
+{% extends 'layout.html' %}
+{% block body %}
 
 <!-- calendar page -->
 <div id="overlay">
@@ -1270,6 +1270,7 @@
         </div>
     </div>
 </div>
+{% endblock %}
 </body>
 </html>
 
