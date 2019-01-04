@@ -1,4 +1,5 @@
 # import personalDetails (weight, height)
+import mysql.connector
 
 def bmi():
     bodyMassIndex = weight / (height ** 2)
@@ -94,3 +95,27 @@ class Record:
 
 
 # get all info with this class and store into database
+
+# 447.593 + (9.247 x body weight (kg)) + (3.098 x height (cm)) – (4.33 x age in years) ;bmr
+
+# Little to none
+# 1.2
+# Light (1-3 days)
+# 1.375
+# Moderate (3-5 days)
+# 1.55
+# Heavy (6-7 days)
+# 1.725
+# Very heavy (twice daily)
+# 1.9
+
+# https://www.rachaelattard.com/how-to-calculate-your-daily-calorie-intake/
+
+class db_connection:
+
+    def get_items(self):
+        cursor = db_connection.cursor()
+        cursor.execute()
+        items = cursor.fetchall()
+
+        return items

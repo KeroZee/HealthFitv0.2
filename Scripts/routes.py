@@ -6,9 +6,11 @@ from Scripts import app, db, bcrypt, mail
 from Scripts.models import User, Schedule, Food, Fitness
 from random import randint
 from Scripts.Exercises import Exercises
-from Scripts.Fitness import Record, YourPlan
+from Scripts.Fitness import Record, YourPlan, db_connection
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
+import mysql.connector
+
 
 @app.route("/")
 @app.route("/home")
@@ -273,19 +275,24 @@ def _Food():
         db.session.add(food)
         db.session.commit()
         flash('Your entry has been entered!', 'success')
-    r1 = Record('food1')
     p1 = YourPlan('2500', 'bulk')
+    # 447.593 + (9.247 x body weight (kg)) + (3.098 x height (cm)) – (4.33 x age in years)
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('food.html', items=r1, kcal=p1, image_file=image_file, form=form)
+    return render_template('food.html', kcal=p1, image_file=image_file, form=form)
+
 @app.route('/exercise',methods=['GET','POST'])
 @login_required
 def exercise():
     form = ExerciseForm()
     if form.validate_on_submit():
-        exercise1 = Fitness(name=form.name.data, duration=form.mass.data)
+        exercise1 = Fitness(name=form.name.data, duration=form.duration.data)
         db.session.add(exercise1)
         db.session.commit()
         flash('Your entry has been entered!', 'success')
 
-    return render_template('exercise.html', form=form)
+    p1 = YourPlan('2500', 'bulk')
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    items = db_connection.get_items(form.name.data)
+
+    return render_template('exercise.html', image_file=image_file, kcal=p1, form=form, items=items)

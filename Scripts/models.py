@@ -60,7 +60,7 @@ class Food(db.Model):
 class Fitness(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    duration = db.Column(db.Integer(),nullable=False)
+    duration = db.Column(db.Integer(), nullable=False)
 
     def __repr__(self): #How objects are printed
         return f"Fitness('{self.name}', '{self.duration}')"
