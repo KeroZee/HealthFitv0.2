@@ -274,15 +274,27 @@ def _Food():
         db.session.add(food)
         db.session.commit()
         flash('Your entry has been entered!', 'success')
+
+    #daily intake
     mtcalories = (447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height *100) - (4.33 * current_user.age))*1.55
     simplifiedmt = round(mtcalories)
 
+    #food and exercise
+    # totalfood =
+    # totalexercises =
+
+    #daily intake - added food and exercises
+    # recordedcalories = totalfood + totalexercises
+    # simplifiedmt = round(mtcalories) - recordedcalories
+
+    #macronutrients left
     protein25 = round(simplifiedmt*0.25)
     fat25 = round(simplifiedmt*0.25)
     carb50 = round(simplifiedmt*0.5)
     cprotein25 = round(protein25/4)
     cfat25 = round(fat25/9)
     ccarb50 = round(carb50/4)
+
 
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
     # 447.593 + (9.247 x form.weight ) + (3.098 x form.height) - (4.33 x form.age)
