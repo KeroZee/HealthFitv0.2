@@ -6,10 +6,9 @@ from Scripts import app, db, bcrypt, mail
 from Scripts.models import User, Schedule, Food, Fitness
 from random import randint
 from Scripts.Exercises import Exercises
-from Scripts.Fitness import Record, YourPlan, db_connection
+from Scripts.Fitness import Record, YourPlan
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
-import mysql.connector
 
 
 @app.route("/")
@@ -28,7 +27,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(name=form.name.data, email=form.email.data.lower(), username=form.username.data.lower(), password=hashed_password, age=form.age.data, weight=form.weight.data, height=form.height.data )
+        user = User(name=form.name.data, email=form.email.data.lower(), username=form.username.data.lower(), password=hashed_password, age=form.age.data, weight=form.weight.data, height=form.height.data)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
@@ -275,8 +274,18 @@ def _Food():
         db.session.add(food)
         db.session.commit()
         flash('Your entry has been entered!', 'success')
-    p1 = YourPlan('2500', 'bulk')
-    # 447.593 + (9.247 x body weight (kg)) + (3.098 x height (cm)) – (4.33 x age in years)
+    mtcalories = (447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height *100) - (4.33 * current_user.age))*1.55
+    simplifiedmt = round(mtcalories)
+
+    protein25 = round(simplifiedmt*0.25)
+    fat25 = round(simplifiedmt*0.25)
+    carb50 = round(simplifiedmt*0.5)
+    cprotein25 = round(protein25/4)
+    cfat25 = round(fat25/9)
+    ccarb50 = round(carb50/4)
+
+    p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
+    # 447.593 + (9.247 x form.weight ) + (3.098 x form.height) - (4.33 x form.age)
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('food.html', kcal=p1, image_file=image_file, form=form)
@@ -291,8 +300,19 @@ def exercise():
         db.session.commit()
         flash('Your entry has been entered!', 'success')
 
-    p1 = YourPlan('2500', 'bulk')
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    items = db_connection.get_items(form.name.data)
+    mtcalories = (447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
+                4.33 * current_user.age)) * 1.55
+    simplifiedmt = round(mtcalories)
 
-    return render_template('exercise.html', image_file=image_file, kcal=p1, form=form, items=items)
+    protein25 = round(simplifiedmt * 0.25)
+    fat25 = round(simplifiedmt * 0.25)
+    carb50 = round(simplifiedmt * 0.5)
+    cprotein25 = round(protein25 / 4)
+    cfat25 = round(fat25 / 9)
+    ccarb50 = round(carb50 / 4)
+
+    p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    # items = db_connection.get_items(form.name.data)
+
+    return render_template('exercise.html', image_file=image_file, kcal=p1, form=form)

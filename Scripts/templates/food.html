@@ -117,7 +117,7 @@
         {#    Carbohydrates#}
         <div style="display:inline-block;" class="marginLR__">
             <h4 class="marginTB__">
-                250 g left | Carbs</h4>
+                {{ kcal.get_carbohydrates() }} g left | Carbs</h4>
 
             <!--Content card image-->
             <div id="ex3">
@@ -138,7 +138,7 @@
 
         {#    Proteins#}
         <div style="display:inline-block; vertical-align: top;" class="marginLR__">
-            <h4 class="marginTB__"> 206g left | Proteins</h4>
+            <h4 class="marginTB__"> {{kcal.get_proteins()}} g left | Proteins</h4>
             <!--Content card image-->
             <div id="ex3">
                 <img class="img-circle hover"
@@ -155,7 +155,7 @@
 
         <div style="display:inline-block; vertical-align: top;" class="marginLR__">
             <h4 class="marginTB__">
-                75g left | Fats</h4>
+                {{ kcal.get_fats() }} g left | Fats</h4>
 
             {#Content card image#}
             <div id="ex3">

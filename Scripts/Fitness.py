@@ -1,5 +1,4 @@
 # import personalDetails (weight, height)
-import mysql.connector
 
 def bmi():
     bodyMassIndex = weight / (height ** 2)
@@ -44,14 +43,14 @@ def category():
 # store nutritionPlan in database
 
 
-def macronutrient_measured_per_gram():
-    protein = 4
-    protein_intake = weight * 1.4
-    carb = 4
-    fat = 9
+# def macronutrient_measured_per_gram():
+#     protein = 4
+#     protein_intake = weight * 1.4
+#     carb = 4
+#     fat = 9
 
 
-def maintenanceNutrition():
+# def maintenanceNutrition():
     # https://jcdfitness.com/calorie-intake-calculator/#calculator
     calories = int(input("Input the calculated calories"))
 
@@ -66,21 +65,35 @@ def maintenanceNutrition():
 
 
 class YourPlan:
-    def __init__(self, maintenance, diet):
+    def __init__(self, maintenance, carbohydrates, proteins, fats):
         self.__maintenance = maintenance
-        self.__diet = diet
+        self.__carbohydrates = carbohydrates
+        self.__proteins = proteins
+        self.__fats = fats
 
-    def get_diet(self):
-        return self.__diet
+    def get_carbohydrates(self):
+        return self.__carbohydrates
 
     def get_maintenance(self):
         return self.__maintenance
 
-    def set_diet(self, diet):
-        self.__diet = diet
+    def set_carbohydrates(self, carbohydrates):
+        self.__carbohydrates = carbohydrates
 
     def set_maintenance(self, maintenance):
         self.__maintenance = maintenance
+
+    def get_proteins(self):
+        return self.__proteins
+
+    def get_fats(self):
+        return self.__fats
+
+    def set_proteins(self, proteins):
+        self.__proteins = proteins
+
+    def set_fats(self, fats):
+        self.__fats = fats
 
 
 class Record:
@@ -111,11 +124,11 @@ class Record:
 
 # https://www.rachaelattard.com/how-to-calculate-your-daily-calorie-intake/
 
-class db_connection:
-
-    def get_items(self):
-        cursor = db_connection.cursor()
-        cursor.execute()
-        items = cursor.fetchall()
-
-        return items
+# class db_connection:
+#
+#     def get_items(self):
+#         cursor = db_connection.cursor()
+#         cursor.execute()
+#         items = cursor.fetchall()
+#
+#         return items
