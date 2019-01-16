@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms.fields.html5 import DateField
-from wtforms import StringField, PasswordField, IntegerField, RadioField, BooleanField, FloatField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, IntegerField, RadioField, BooleanField, FloatField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationError
 from Scripts.models import User
 
@@ -95,9 +95,19 @@ class ResetPasswordForm(FlaskForm):
 class FoodForm(FlaskForm):
     name = StringField('Food',validators=[DataRequired()])
     mass = IntegerField('Mass',validators=[DataRequired()])
+    calories = IntegerField('Calories',validators=[DataRequired()])
+    protein = IntegerField('Protein',validators=[DataRequired()])
+    carbohydrates = IntegerField('Carbs',validators=[DataRequired()])
+    fats = IntegerField('Fats',validators=[DataRequired()])
     submit = SubmitField('Add Food')
 
 class ExerciseForm(FlaskForm):
     name = StringField('Exercise',validators=[DataRequired()])
     mass = IntegerField('Duration',validators=[DataRequired()])
     submit = SubmitField('Add Exercise')
+
+class SearchForm(FlaskForm):
+    meal = SelectField('Meal : ', choices=[('breakfast','Breakfast'),('lunch','Lunch'),('dinner','Dinner')])
+    name = StringField('Food Name',validators=[DataRequired()])
+    submit = SubmitField('Search & Add')
+

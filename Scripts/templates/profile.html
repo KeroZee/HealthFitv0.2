@@ -111,5 +111,26 @@
         </div>
         </fieldset>
     </form>
+        BREAKFAST
+<br>
+    {% for food in bfastt %}
+        {{food.foodname}}
+        {{food.calories}} Kcal
+    <br>
+    {% endfor %}
+    LUNCH
+<br>
+    {% for food in lunchh %}
+        {{food.foodname}}
+        {{food.calories}} Kcal
+    <br>
+    {% endfor %}
+    DINNER
+<br>
+    {% for food in dinnerr %}
+        {{food.foodname}}
+        {{food.calories}} Kcal
+    <br>
+    {% endfor %}
 </div>
 {% endblock %}

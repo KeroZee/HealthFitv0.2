@@ -172,15 +172,10 @@ function recordexercise() {
         </div>
     </div>
 </div>
-<br>
     <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <div class="container">
-            <p class="lead">
-                Meals
-            </p>
-            <a href="#Breakfast" class="btn btn-info" data-toggle="collapse">Breakfast</a>
-            <fieldset id="Breakfast" class="collapse">
+            <fieldset id="Meal">
                 <legend class="border-bottom mb-4">Food Details</legend>
                 <div class="form-group">
                     {{ form.name.label(class="form-control-label") }}
@@ -196,102 +191,23 @@ function recordexercise() {
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.mass.label(class="form-control-label") }}
-                    {% if form.mass.errors %}
-                        {{ form.mass(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.mass.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.mass(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-outline-info") }}
-                </div>
-            </fieldset>
-        </div>
-    </form>
-<br>
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <div class="container">
-            <a href="#Lunch" class="btn btn-info" data-toggle="collapse">Lunch</a>
-            <fieldset id="Lunch" class="collapse">
-                <legend class="border-bottom mb-4">Food Details</legend>
-                <div class="form-group">
-                    {{ form.name.label(class="form-control-label") }}
-                    {% if form.name.errors %}
-                        {{ form.name(class="form-control form-control-lg is-invalid") }}
+                    {{ form.meal.label(class="form-control-label") }}
+                    {% if form.meal.errors %}
+                        {{ form.meal(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.name.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.name(class="form-control form-control-lg") }}
+                        {{ form.meal(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.mass.label(class="form-control-label") }}
-                    {% if form.mass.errors %}
-                        {{ form.mass(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.mass.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.mass(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-outline-info") }}
+                    {{ form.submit(class="btn btn-info") }}
                 </div>
             </fieldset>
         </div>
     </form>
-<br>
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <div class="container">
-            <a href="#Dinner" class="btn btn-info" data-toggle="collapse">Dinner</a>
-            <fieldset id="Dinner" class="collapse">
-                <legend class="border-bottom mb-4">Food Details</legend>
-                <div class="form-group">
-                    {{ form.name.label(class="form-control-label") }}
-                    {% if form.name.errors %}
-                        {{ form.name(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.name.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.name(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.mass.label(class="form-control-label") }}
-                    {% if form.mass.errors %}
-                        {{ form.mass(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.mass.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.mass(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-outline-info") }}
-                </div>
-            </fieldset>
-        </div>
-    </form>
-<br>
 </body>
 {% endblock %}

@@ -2,6 +2,8 @@ from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from Scripts import db, login_manager, app
 from flask_login import UserMixin
+from whooshalchemy import IndexService
+app.config['WHOOSH_BASE'] = 'path/to/whoosh/base'
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -16,6 +18,9 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=True, default='default.png')
     password = db.Column(db.String(60), nullable=False)
     schedule = db.relationship('Schedule', backref='name', lazy=True)
+    breakfast = db.relationship('Breakfast', backref='name', lazy=True)
+    lunch = db.relationship('Lunch', backref='name', lazy=True)
+    dinner = db.relationship('Dinner', backref='name', lazy=True)
     age = db.Column(db.Integer)
     weight = db.Column(db.Integer)
     height = db.Column(db.Integer)
@@ -50,9 +55,15 @@ class Schedule(db.Model):
         return f"User('{self.date_posted}', '{self.description}', '{self.remarks}')"
 
 class Food(db.Model):
+    __searchable__ = ['name']
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     mass = db.Column(db.Integer(), nullable=False)
+    calories = db.Column(db.Integer(), nullable=False)
+    protein = db.Column(db.Integer(), nullable=False)
+    carbohydrates = db.Column(db.Integer(), nullable=False)
+    fats = db.Column(db.Integer(), nullable=False)
 
     def __repr__(self): #How objects are printed
         return f"Food('{self.name}', '{self.mass}')"
@@ -64,3 +75,33 @@ class Fitness(db.Model):
 
     def __repr__(self): #How objects are printed
         return f"Fitness('{self.name}', '{self.duration}')"
+
+class Breakfast(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    foodname = db.Column(db.String(100), nullable=False)
+    mass = db.Column(db.Integer(), nullable=False)
+    calories = db.Column(db.Integer(), nullable=False)
+    protein = db.Column(db.Integer(), nullable=False)
+    carbohydrates = db.Column(db.Integer(), nullable=False)
+    fats = db.Column(db.Integer(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+class Lunch(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    foodname = db.Column(db.String(100), nullable=False)
+    mass = db.Column(db.Integer(), nullable=False)
+    calories = db.Column(db.Integer(), nullable=False)
+    protein = db.Column(db.Integer(), nullable=False)
+    carbohydrates = db.Column(db.Integer(), nullable=False)
+    fats = db.Column(db.Integer(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+class Dinner(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    foodname = db.Column(db.String(100), nullable=False)
+    mass = db.Column(db.Integer(), nullable=False)
+    calories = db.Column(db.Integer(), nullable=False)
+    protein = db.Column(db.Integer(), nullable=False)
+    carbohydrates = db.Column(db.Integer(), nullable=False)
+    fats = db.Column(db.Integer(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

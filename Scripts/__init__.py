@@ -8,6 +8,7 @@ from flask_mail import Mail
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret123'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///health.db'
+app.config['WHOOSH_BASE'] = 'whoosh'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)

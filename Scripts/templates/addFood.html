@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container">
+    <form method="POST" action="">
+        {{ form.hidden_tag()}}
+        <legend class="border-bottom mb-4">Add Food!</legend>
+        <div class="form-group">
+            {{ form.name.label(class="form-control-label") }}
+            {% if form.name.errors %}
+                {{ form.name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.name(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.mass.label(class="form-control-label") }}
+            {% if form.mass.errors %}
+                {{ form.mass(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.mass.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.mass(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.calories.label(class="form-control-label") }}
+            {% if form.calories.errors %}
+                {{ form.calories(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.calories.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.calories(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.protein.label(class="form-control-label") }}
+            {% if form.protein.errors %}
+                {{ form.protein(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.protein.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.protein(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.carbohydrates.label(class="form-control-label") }}
+            {% if form.carbohydrates.errors %}
+                {{ form.carbohydrates(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.carbohydrates.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.carbohydrates(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.fats.label(class="form-control-label") }}
+            {% if form.fats.errors %}
+                {{ form.fats(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.fats.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.fats(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+             {{form.submit(class_="btn btn-outline-info")}}
+         </div>
+     </form>
+</div>
+{% endblock %}
