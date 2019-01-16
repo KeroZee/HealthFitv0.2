@@ -25,6 +25,10 @@
             color: rgba(255,255,255,.5);
             font-size: 17px;
         }
+
+        #drop:hover{
+            color: greenyellow;
+        }
     </style>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
@@ -39,7 +43,7 @@
       <a class="nav-link" href="/schedule">Schedule</a>
     </li>
     <li class="dropdown">
-        <button type='button' id="drop" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Fitness
+        <button type='button' id="drop" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fitness
         <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-menu">

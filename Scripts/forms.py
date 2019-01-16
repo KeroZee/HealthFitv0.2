@@ -103,7 +103,8 @@ class FoodForm(FlaskForm):
 
 class ExerciseForm(FlaskForm):
     name = StringField('Exercise',validators=[DataRequired()])
-    mass = IntegerField('Duration',validators=[DataRequired()])
+    duration = IntegerField('Duration',validators=[DataRequired()])
+    intensity = IntegerField('Reps',validators=[DataRequired()])
     submit = SubmitField('Add Exercise')
 
 class SearchForm(FlaskForm):

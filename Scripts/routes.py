@@ -27,7 +27,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(name=form.name.data, email=form.email.data.lower(), username=form.username.data.lower(), password=hashed_password, age=form.age.data, weight=form.weight.data, height=form.height.data )
+        user = User(name=form.name.data, email=form.email.data.lower(), username=form.username.data.lower(), password=hashed_password, age=form.age.data, weight=form.weight.data, height=form.height.data)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
@@ -276,6 +276,7 @@ def HealthTracker():
 @app.route('/food',methods=['GET','POST'])
 @login_required
 def _Food():
+<<<<<<< HEAD
     form = SearchForm()
     if form.meal.data == 'breakfast':
         searches = Food.query.filter_by(name=form.name.data).first()
@@ -304,16 +305,53 @@ def _Food():
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('food.html', items=r1, kcal=p1, image_file=image_file, form=form, searches=searches)
+=======
+    form = FoodForm()
+    if form.validate_on_submit():
+        food = Food(name=form.name.data, mass=form.mass.data)
+        db.session.add(food)
+        db.session.commit()
+        flash('Your entry has been entered!', 'success')
+
+    #daily intake
+    mtcalories = (447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height *100) - (4.33 * current_user.age))*1.55
+    simplifiedmt = round(mtcalories)
+
+    #food and exercise
+    # totalfood = foodprotein*4 + foodcarb*4 + foodfat*9
+    # totalexercises = time*(intensity*0.33)
+    # 1 rep = 0.3-0.4cal
+
+    #daily intake - added food and exercises
+    # recordedcalories = totalfood + totalexercises
+    # simplifiedmt = round(mtcalories) - recordedcalories
+
+    #macronutrients left
+    protein25 = round(simplifiedmt*0.25)
+    fat25 = round(simplifiedmt*0.25)
+    carb50 = round(simplifiedmt*0.5)
+    cprotein25 = round(protein25/4)
+    cfat25 = round(fat25/9)
+    ccarb50 = round(carb50/4)
+
+
+    p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
+
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('food.html', kcal=p1, image_file=image_file, form=form)
+
+>>>>>>> 2f4777dc18de9d3e17bed3cc0a309950cc99a348
 @app.route('/exercise',methods=['GET','POST'])
 @login_required
 def exercise():
     form = ExerciseForm()
     if form.validate_on_submit():
-        exercise1 = Fitness(name=form.name.data, duration=form.mass.data)
+        exercise1 = Fitness(name=form.name.data, duration=form.duration.data)
         db.session.add(exercise1)
         db.session.commit()
         flash('Your entry has been entered!', 'success')
 
+<<<<<<< HEAD
     return render_template('exercise.html', form=form)
 
 @app.route('/addfood',methods=['GET','POST'])
@@ -343,3 +381,21 @@ def test():
 
 
     return render_template('test.html', form=form, searches=searches)
+=======
+    mtcalories = (447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
+                4.33 * current_user.age)) * 1.55
+    simplifiedmt = round(mtcalories)
+
+    protein25 = round(simplifiedmt * 0.25)
+    fat25 = round(simplifiedmt * 0.25)
+    carb50 = round(simplifiedmt * 0.5)
+    cprotein25 = round(protein25 / 4)
+    cfat25 = round(fat25 / 9)
+    ccarb50 = round(carb50 / 4)
+
+    p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    # items = db_connection.get_items(form.name.data)
+
+    return render_template('exercise.html', image_file=image_file, kcal=p1, form=form)
+>>>>>>> 2f4777dc18de9d3e17bed3cc0a309950cc99a348

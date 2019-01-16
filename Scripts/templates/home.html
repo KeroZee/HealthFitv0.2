@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="icon" href="../static/Picture1.png">
+    <link rel="icon" href="../static/Healthfit.png">
+    <title>HealthFit</title>
     <!-- Bootstrap CSS -->
     <style>
         .carousel-item
@@ -18,14 +19,33 @@
             -o-background-size: cover;
             background-size: cover;
         }
+
+        .carousel-control-prev-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+        }
+
+        .carousel-control-next-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+        }
+
+        .carousel-indicators .active{
+            background-color: #f00 !important;
+        }
+
+        .carousel-indicators li {
+          background-color: #999 !important;
+          background-color: rgba(70,70,70,.25) !important;
+        }
+
         .preview-img
         {
-            height: 85%;
+            height: 80%;
             width: 100%;
         }
         .carousel-caption p
         {
             color:black;
+            font-size: 18px;
         }
         .carousel-caption h3
         {
@@ -43,38 +63,46 @@
           <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
           <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
           <!-- Slide One - Set the background image for this slide in the line below -->
           <div class="carousel-item active">
             <div class="carousel-caption d-none d-md-block">
-                <img class="preview-img" src="../static/Carousel_OOPP/Schedule.PNG">
-              <h3>First Slide</h3>
-              <p>This is a description for the first slide.</p>
+                <img class="preview-img" src="../static/Carousel_OOPP/Healthfit.png">
+              <h3>Welcome to HealthFit!</h3>
+              <p>Keep healthy. Keep Fit.</p>
             </div>
           </div>
           <!-- Slide Two - Set the background image for this slide in the line below -->
           <div class="carousel-item">
-              <img class="preview-img" src="../static/Carousel_OOPP/HealthTracker.PNG">
+              <img class="preview-img" src="../static/Carousel_OOPP/Health.jpg">
             <div class="carousel-caption d-none d-md-block">
-              <h3>Second Slide</h3>
-              <p>This is a description for the second slide.</p>
+              <h3>Track your health!</h3>
+              <p>Measure your heart rate or glucose levels!</p>
             </div>
           </div>
           <!-- Slide Three - Set the background image for this slide in the line below -->
           <div class="carousel-item">
-              <img class="preview-img" src="../static/Carousel_OOPP/ExGuide.png">
+              <img class="preview-img" src="../static/Carousel_OOPP/Guide.jpg">
             <div class="carousel-caption d-none d-md-block">
-              <h3>Third Slide</h3>
-              <p>This is a description for the third slide.</p>
+              <h3>Simple exercises you can do at home!</h3>
+              <p>When the local gym is far away or you have no equipment at home</p>
             </div>
           </div>
           <!-- Slide Four - Set the background image for this slide in the line below -->
           <div class="carousel-item">
-              <img class="preview-img" src="../static/Carousel_OOPP/FitTracker.PNG">
+              <img class="preview-img" src="../static/Carousel_OOPP/Fitness.jpg">
             <div class="carousel-caption d-none d-md-block">
-              <h3>Fourth Slide</h3>
-              <p>This is a description for the fourth slide.</p>
+              <h3>Calculate your calories!</h3>
+              <p>Achieve your fitness goals!</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="carousel-caption d-none d-md-block">
+                <img class="preview-img" src="../static/Carousel_OOPP/Schedule2.jpg">
+              <h3>Plan your schedule!</h3>
+              <p>Make time for exercising by planning your very own schedule!</p>
             </div>
           </div>
         </div>
