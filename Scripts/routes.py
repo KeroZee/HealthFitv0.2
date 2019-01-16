@@ -1,7 +1,8 @@
-import secrets, os
+import secrets, os, datetime
 from PIL import Image
 from flask import render_template, flash, redirect, url_for, request
-from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm, FoodForm, ExerciseForm, SearchForm
+from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm, \
+    FoodForm, ExerciseForm, SearchForm
 from Scripts import app, db, bcrypt, mail
 from Scripts.models import User, Schedule, Food, Fitness, Breakfast, Lunch, Dinner
 from random import randint
@@ -20,21 +21,24 @@ def home():
         image_file = url_for('static', filename='profile_pics/default.png')
     return render_template("home.html", image_file=image_file)
 
-@app.route('/register', methods=['GET','POST'])
+
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(name=form.name.data, email=form.email.data.lower(), username=form.username.data.lower(), password=hashed_password, age=form.age.data, weight=form.weight.data, height=form.height.data)
+        user = User(name=form.name.data, email=form.email.data.lower(), username=form.username.data.lower(),
+                    password=hashed_password, age=form.age.data, weight=form.weight.data, height=form.height.data)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
-@app.route('/login', methods=['GET','POST'])
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -50,11 +54,13 @@ def login():
 
     return render_template('login.html', title='Login', form=form)
 
+
 @app.route('/logout')
 def logout():
     flash('Logged Out successfully!', 'success')
     logout_user()
     return redirect(url_for('home'))
+
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -62,7 +68,7 @@ def save_picture(form_picture):
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
 
-    output_size = (125,125)
+    output_size = (125, 125)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
 
@@ -70,7 +76,8 @@ def save_picture(form_picture):
 
     return picture_fn
 
-@app.route('/profile', methods=['GET','POST'])
+
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     form = UpdateDetails()
@@ -97,25 +104,31 @@ def profile():
         form.weight.data = current_user.weight
         form.age.data = current_user.age
 
-    kcal = 0
+    profile.kcal = 0
     for food in bfastt:
-        kcal += food.calories
-    app.logger.debug(kcal)
+        profile.kcal += food.calories
+    for food in lunchh:
+        profile.kcal += food.calories
+    for food in dinnerr:
+        profile.kcal += food.calories
+    app.logger.debug(profile.kcal)
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('profile.html', title='Profile',
                            image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr)
+
 
 def send_reset_email(user):
     token = user.get_reset_token()
     msg = Message('Password Reset Request', sender='app.noreply1206@gmail.com', recipients=[user.email])
     msg.body = f'''To reset your password, visit the following link:
 {url_for('reset_token', token=token, _external=True)}
-    
+
 If you did not make this request then simply ignore this email and no changes will be made.
 '''
     mail.send(msg)
 
-@app.route('/reset_password', methods=['GET','POST'])
+
+@app.route('/reset_password', methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -127,7 +140,8 @@ def reset_request():
         return redirect(url_for('login'))
     return render_template('reset_request.html', title='Reset Password', form=form)
 
-@app.route('/reset_password/<token>', methods=['GET','POST'])
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -143,6 +157,7 @@ def reset_token(token):
         flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
+
 
 @app.route('/ExGuide')
 @login_required
@@ -244,15 +259,18 @@ def guide():
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
-    return render_template('ExGuide.html', exercise=exercise, exercise1=exercise1, exercise2=exercise2, image_file=image_file)
+    return render_template('ExGuide.html', exercise=exercise, exercise1=exercise1, exercise2=exercise2,
+                           image_file=image_file)
+
 
 @app.route('/schedule')
 @login_required
 def schedule():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('schedule.html',image_file=image_file)
+    return render_template('schedule.html', image_file=image_file)
 
-@app.route('/schedule/ToDoList', methods=['GET','POST'])
+
+@app.route('/schedule/ToDoList', methods=['GET', 'POST'])
 @login_required
 def todolist():
     form = TodoList()
@@ -265,83 +283,85 @@ def todolist():
         flash('Activity have been added to your schedule', 'success')
         return redirect(url_for('todolist'))
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('todolist.html',title='ToDoList',image_file=image_file, form=form, Todos=Todos )
+    return render_template('todolist.html', title='ToDoList', image_file=image_file, form=form, Todos=Todos)
+
 
 @app.route('/HealthTracker')
 @login_required
 def HealthTracker():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('HealthTracker.html',image_file=image_file)
+    return render_template('HealthTracker.html', image_file=image_file)
 
-@app.route('/food',methods=['GET','POST'])
+
+@app.route('/food', methods=['GET', 'POST'])
 @login_required
 def _Food():
-<<<<<<< HEAD
     form = SearchForm()
     if form.meal.data == 'breakfast':
         searches = Food.query.filter_by(name=form.name.data).first()
         app.logger.debug(form.meal.data)
-        breakfast = Breakfast(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories, protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
+        breakfast = Breakfast(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
+                              protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
         db.session.add(breakfast)
         flash('Commit!', 'success')
     elif form.meal.data == 'lunch':
         searches = Food.query.filter_by(name=form.name.data).first()
-        lunch = Lunch(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories, protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
+        lunch = Lunch(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
+                      protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
         db.session.add(lunch)
         flash('Commit!', 'success')
     elif form.meal.data == 'dinner':
         searches = Food.query.filter_by(name=form.name.data).first()
-        dinner = Dinner(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories, protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
+        dinner = Dinner(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
+                        protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
         db.session.add(dinner)
         flash('Commit!', 'success')
     else:
-        searches=""
+        searches = ""
     db.session.commit()
     app.logger.debug(form.meal.data)
 
+    # daily intake
+    if profile.kcal > 0:
+        mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
+                    4.33 * current_user.age)) * 1.55) - profile.kcal
+    else:
+        mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
+                    4.33 * current_user.age)) * 1.55)
+    simplifiedmt = round(mtcalories)
+
+    # macronutrients left
+    protein25 = round(simplifiedmt * 0.25)
+    fat25 = round(simplifiedmt * 0.25)
+    carb50 = round(simplifiedmt * 0.5)
+    cprotein25 = round(protein25 / 4)
+    cfat25 = round(fat25 / 9)
+    ccarb50 = round(carb50 / 4)
 
     r1 = Record('food1')
-    p1 = YourPlan('2500', 'bulk')
+    p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
+
+    now = datetime.datetime.now()
+    midnight = datetime.time(0, 0, 0)
+    if now == midnight:
+        resetBreakfast = Breakfast.query.all()
+        for i in resetBreakfast:
+            db.session.delete(i)
+            db.session.commit()
+        resetLunch = Lunch.query.all()
+        for i in resetLunch:
+            db.session.delete(i)
+            db.session.commit()
+        resetDinner = Dinner.query.all()
+        for i in resetDinner:
+            db.session.delete(i)
+            db.session.commit()
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('food.html', items=r1, kcal=p1, image_file=image_file, form=form, searches=searches)
-=======
-    form = FoodForm()
-    if form.validate_on_submit():
-        food = Food(name=form.name.data, mass=form.mass.data)
-        db.session.add(food)
-        db.session.commit()
-        flash('Your entry has been entered!', 'success')
-
-    #daily intake
-    mtcalories = (447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height *100) - (4.33 * current_user.age))*1.55
-    simplifiedmt = round(mtcalories)
-
-    #food and exercise
-    # totalfood = foodprotein*4 + foodcarb*4 + foodfat*9
-    # totalexercises = time*(intensity*0.33)
-    # 1 rep = 0.3-0.4cal
-
-    #daily intake - added food and exercises
-    # recordedcalories = totalfood + totalexercises
-    # simplifiedmt = round(mtcalories) - recordedcalories
-
-    #macronutrients left
-    protein25 = round(simplifiedmt*0.25)
-    fat25 = round(simplifiedmt*0.25)
-    carb50 = round(simplifiedmt*0.5)
-    cprotein25 = round(protein25/4)
-    cfat25 = round(fat25/9)
-    ccarb50 = round(carb50/4)
 
 
-    p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
-
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('food.html', kcal=p1, image_file=image_file, form=form)
-
->>>>>>> 2f4777dc18de9d3e17bed3cc0a309950cc99a348
-@app.route('/exercise',methods=['GET','POST'])
+@app.route('/exercise', methods=['GET', 'POST'])
 @login_required
 def exercise():
     form = ExerciseForm()
@@ -351,51 +371,18 @@ def exercise():
         db.session.commit()
         flash('Your entry has been entered!', 'success')
 
-<<<<<<< HEAD
     return render_template('exercise.html', form=form)
 
-@app.route('/addfood',methods=['GET','POST'])
+
+@app.route('/addfood', methods=['GET', 'POST'])
 def addFood():
     form = SearchForm()
     if form.validate_on_submit():
         print('asd')
-        food = Food(name=form.name.data, mass=form.mass.data, calories=form.calories.data, protein=form.protein.data, carbohydrates=form.carbohydrates.data, fats=form.fats.data)
+        food = Food(name=form.name.data, mass=form.mass.data, calories=form.calories.data, protein=form.protein.data,
+                    carbohydrates=form.carbohydrates.data, fats=form.fats.data)
         db.session.add(food)
         db.session.commit()
-        flash('Your entry has been entered!','success')
+        flash('Your entry has been entered!', 'success')
+
     return render_template('addFood.html', form=form)
-
-@app.route('/test', methods=['GET','POST'])
-def test():
-    form = SearchForm()
-    if form.validate_on_submit():
-        searches = Food.query.filter_by(name=form.name.data).first()
-        if form.meal.data == 'breakfast':
-            search = Breakfast(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories, protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
-            db.session.add(search)
-        db.session.commit()
-        flash('Commit!','success')
-        app.logger.debug(searches)
-    else:
-        searches = ''
-
-
-    return render_template('test.html', form=form, searches=searches)
-=======
-    mtcalories = (447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
-                4.33 * current_user.age)) * 1.55
-    simplifiedmt = round(mtcalories)
-
-    protein25 = round(simplifiedmt * 0.25)
-    fat25 = round(simplifiedmt * 0.25)
-    carb50 = round(simplifiedmt * 0.5)
-    cprotein25 = round(protein25 / 4)
-    cfat25 = round(fat25 / 9)
-    ccarb50 = round(carb50 / 4)
-
-    p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    # items = db_connection.get_items(form.name.data)
-
-    return render_template('exercise.html', image_file=image_file, kcal=p1, form=form)
->>>>>>> 2f4777dc18de9d3e17bed3cc0a309950cc99a348
