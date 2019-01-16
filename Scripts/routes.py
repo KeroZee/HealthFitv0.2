@@ -280,8 +280,9 @@ def _Food():
     simplifiedmt = round(mtcalories)
 
     #food and exercise
-    # totalfood =
-    # totalexercises =
+    # totalfood = foodprotein*4 + foodcarb*4 + foodfat*9
+    # totalexercises = time*(intensity*0.33)
+    # 1 rep = 0.3-0.4cal
 
     #daily intake - added food and exercises
     # recordedcalories = totalfood + totalexercises
@@ -297,7 +298,6 @@ def _Food():
 
 
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
-    # 447.593 + (9.247 x form.weight ) + (3.098 x form.height) - (4.33 x form.age)
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('food.html', kcal=p1, image_file=image_file, form=form)
