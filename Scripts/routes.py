@@ -15,6 +15,18 @@ from flask_mail import Message
 @app.route("/")
 @app.route("/home")
 def home():
+    bfastt = Breakfast.query.all()
+    lunchh = Lunch.query.all()
+    dinnerr = Dinner.query.all()
+
+    profile.kcal = 0
+    for food in bfastt:
+        profile.kcal += food.calories
+    for food in lunchh:
+        profile.kcal += food.calories
+    for food in dinnerr:
+        profile.kcal += food.calories
+    app.logger.debug(profile.kcal)
     if current_user.is_authenticated:
         image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     else:
@@ -81,9 +93,6 @@ def save_picture(form_picture):
 @login_required
 def profile():
     form = UpdateDetails()
-    bfastt = Breakfast.query.all()
-    lunchh = Lunch.query.all()
-    dinnerr = Dinner.query.all()
     app.logger.debug('in profile method')
     if form.validate_on_submit():
         if form.picture.data:
@@ -104,14 +113,6 @@ def profile():
         form.weight.data = current_user.weight
         form.age.data = current_user.age
 
-    profile.kcal = 0
-    for food in bfastt:
-        profile.kcal += food.calories
-    for food in lunchh:
-        profile.kcal += food.calories
-    for food in dinnerr:
-        profile.kcal += food.calories
-    app.logger.debug(profile.kcal)
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('profile.html', title='Profile',
                            image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr)
@@ -341,22 +342,6 @@ def _Food():
     r1 = Record('food1')
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
 
-    now = datetime.datetime.now()
-    midnight = datetime.time(0, 0, 0)
-    if now == midnight:
-        resetBreakfast = Breakfast.query.all()
-        for i in resetBreakfast:
-            db.session.delete(i)
-            db.session.commit()
-        resetLunch = Lunch.query.all()
-        for i in resetLunch:
-            db.session.delete(i)
-            db.session.commit()
-        resetDinner = Dinner.query.all()
-        for i in resetDinner:
-            db.session.delete(i)
-            db.session.commit()
-
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('food.html', items=r1, kcal=p1, image_file=image_file, form=form, searches=searches)
 
@@ -376,7 +361,7 @@ def exercise():
 
 @app.route('/addfood', methods=['GET', 'POST'])
 def addFood():
-    form = SearchForm()
+    form = FoodForm()
     if form.validate_on_submit():
         print('asd')
         food = Food(name=form.name.data, mass=form.mass.data, calories=form.calories.data, protein=form.protein.data,
