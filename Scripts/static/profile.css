@@ -1,0 +1,19 @@
+#chartContainer {
+    height: 500px;
+    width: 650px;
+    left: 500px;
+    top: 150px;
+    position: absolute;
+}
+.rounded-circle
+    {
+        margin-right:50px;
+    }
+    #Updatedetails
+    {
+        width:15%;
+    }
+    .content-section
+    {
+        margin-left: 30px;
+    }
