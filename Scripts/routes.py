@@ -15,18 +15,6 @@ from flask_mail import Message
 @app.route("/")
 @app.route("/home")
 def home():
-    bfastt = Breakfast.query.all()
-    lunchh = Lunch.query.all()
-    dinnerr = Dinner.query.all()
-
-    profile.kcal = 0
-    for food in bfastt:
-        profile.kcal += food.calories
-    for food in lunchh:
-        profile.kcal += food.calories
-    for food in dinnerr:
-        profile.kcal += food.calories
-    app.logger.debug(profile.kcal)
     if current_user.is_authenticated:
         image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     else:
@@ -113,9 +101,22 @@ def profile():
         form.weight.data = current_user.weight
         form.age.data = current_user.age
 
+    profile.bfastt = Breakfast.query.all()
+    profile.lunchh = Lunch.query.all()
+    profile.dinnerr = Dinner.query.all()
+
+    profile.kcal = 0
+    for food in profile.bfastt:
+        profile.kcal += food.calories
+    for food in profile.lunchh:
+        profile.kcal += food.calories
+    for food in profile.dinnerr:
+        profile.kcal += food.calories
+
+
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('profile.html', title='Profile',
-                           image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr)
+                           image_file=image_file, form=form, bfastt=profile.bfastt, lunchh=profile.lunchh, dinnerr=profile.dinnerr)
 
 
 def send_reset_email(user):
