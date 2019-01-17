@@ -8,9 +8,7 @@ function Multiply() {
             localStorage.setItem("bpm", x * 4);
             localStorage.setItem("date", new Date().toLocaleDateString());
             document.getElementById("record").innerHTML = localStorage.getItem("bpm");
-            document.getElementById("record2").innerHTML = localStorage.getItem("bpm");
             document.getElementById("date").innerHTML = localStorage.getItem("date");
-            document.getElementById("date2").innerHTML = localStorage.getItem("date");
             localStorage.setItem("bpm1", JSON.stringify(heartrate_list[1]));
             localStorage.setItem("bpm2", JSON.stringify(heartrate_list[2]));
             localStorage.setItem("bpm3", JSON.stringify(heartrate_list[3]));
@@ -59,9 +57,7 @@ function setList() {
 window.onload = function () {
     localStorage.getItem("list");
     document.getElementById("record").innerHTML = localStorage.getItem("bpm");
-    document.getElementById("record2").innerHTML = localStorage.getItem("bpm");
     document.getElementById("date").innerHTML = localStorage.getItem("date");
-    document.getElementById("date2").innerHTML = localStorage.getItem("date");
     document.getElementById("condition").innerHTML = localStorage.getItem("condition");
     document.getElementById("recommend").innerHTML = localStorage.getItem("recommend");
 
@@ -69,7 +65,7 @@ window.onload = function () {
         animationEnabled: true,
         theme: "light2",
         title: {
-            text: "Health Tracker"
+            //text: "Health Tracker"
         },
         axisX: {
             valueFormatString: "DD MMM"
@@ -98,7 +94,7 @@ window.onload = function () {
             color: "#F08080",
             yValueFormatString: "#,##0BPM",
             dataPoints: [
-                {x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 4), y: parseInt(localStorage.getItem("bpm1"))}, //124
+                {x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 4), y: parseInt(localStorage.getItem("bpm1"))},
                 {x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 3), y: parseInt(localStorage.getItem("bpm2"))},
                 {x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 2), y: parseInt(localStorage.getItem("bpm3"))},
                 {x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1), y: parseInt(localStorage.getItem("bpm4"))},

@@ -22,16 +22,16 @@
 {% block body %}
     <div id="healthtracker">
         <!--Update-->
-    <div class="alert alert-info" id="update">
-        <strong>Update!</strong> Your new heart rate as of <strong><span id="date"></span></strong> is <strong><span id="record"></span></strong> beats per minute.
-    </div>
+    <!--<div class="alert alert-success" id="update">
+        <strong>Heart rate successfully updated!</strong>
+    </div>-->
         <!--User Stats-->
-    <h1>{{ current_user.username }}</h1>
+    <h1>{{ current_user.username }}'s Health Tracker</h1>
     <img class="rounded-circle account-img" src="{{ image_file }}">
     <div id="userstats">
     <p>Age : <strong>{{ current_user.age }}</strong></p><br>
-    <p>Previous Heart Rate: <strong><span id="record2">???</span></strong> beats per minute</p><br>
-    <p>Previously Recorded on: <strong><span id="date2">???</span></strong></p><br>
+    <p>Previous Heart Rate: <strong><span id="record">???</span></strong> beats per minute</p><br>
+    <p>Previously Recorded on: <strong><span id="date">???</span></strong></p><br>
     <p>Condition: <strong><span id="condition">???</span></strong></p><br>
     <p>Recommended Measures: <strong><span id="recommend">???</span></strong></p><br>
     <p style="font-weight: bold;">(Note: Subject to change)</p><br>
@@ -47,7 +47,7 @@
         <!--Instructions-->
         <h1 id="heading">Want to measure your heart rate? Click <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#info">here</button> to see how!</h1>
         <div id="info" class="collapse">
-            <h2>Learn what is a normal heart rate and how to find your pulse with your fingers or a device</h2>
+            <h2>Learn what is a normal heart rate and how to find your pulse with your fingers or a device.</h2>
             <p>Measuring your heart rate is any easy way to gauge your health, as it provides a real-time snapshot of your heart muscle function.</p>
             <p>A normal heart rate can vary from person to person. However, an unusually high or low resting heart rate can be a sign of trouble.</p>
             <h2>What is a normal heart rate?</h2>
@@ -59,7 +59,7 @@
                 <img src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/2018/1-whatshouldmy.jpg" style="float: right; width: 200px; height: 100px;">
                 <li>At the neck, lightly press the side of the neck, just below your jawbone.</li>
                 <li>Alternatively, at the wrist, lightly press the index and middle fingers of one hand on the opposite wrist, just below the base of the thumb.</li>
-                <li>Count the number of beats in 15 seconds, and multiply by four. That's your heart rate.</li>
+                <li>Count the number of beats in 15 seconds, and the health tracker will multiply it by four. That's your heart rate.</li>
                 <li>Depending on your heart rate at rest, the health tracker will identify your condition as follows:</li>
                 <ol>
                     <li><strong>Poor: </strong>If your heart rate is lower than 60 beats per minute.</li>
