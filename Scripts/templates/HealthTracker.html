@@ -9,37 +9,37 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='HealthTracker.css') }}">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="{{ url_for('static', filename='HealthTracker.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <script src="../static/HealthTracker.js"></script>
 </head>
 <body>
 <!--Navbar-->
-{% include 'includes/_navbar.html' %}
+{% extends 'layout.html' %}
+{% block body %}
     <div id="healthtracker">
         <!--Update-->
     <div class="alert alert-info" id="update">
         <strong>Update!</strong> Your new heart rate as of <strong><span id="date"></span></strong> is <strong><span id="record"></span></strong> beats per minute.
     </div>
         <!--User Stats-->
-    <h1>Username</h1>
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FF1iiKKqXcGja2DO9tplEIoq1Es4x20SIEGJXld2XWrB9zDz" alt=username">
+    <h1>{{ current_user.username }}</h1>
+    <img class="rounded-circle account-img" src="{{ image_file }}">
     <div id="userstats">
-    <p>Age : 16</p><br>
-    <p>Date of Birth: 25/12/2001</p><br>
-    <p>Previous Heart Rate: <strong><span id="record2"></span></strong> beats per minute</p><br>
-        <p>Previously Recorded on: <strong><span id="date2"></span></strong></p><br>
-    <p>Condition: <span id="condition"></span></p><br>
-    <p>Recommended Activities: Exercising</p><br>
+    <p>Age : <strong>{{ current_user.age }}</strong></p><br>
+    <p>Previous Heart Rate: <strong><span id="record2">???</span></strong> beats per minute</p><br>
+    <p>Previously Recorded on: <strong><span id="date2">???</span></strong></p><br>
+    <p>Condition: <strong><span id="condition">???</span></strong></p><br>
+    <p>Recommended Measures: <strong><span id="recommend">???</span></strong></p><br>
     <p style="font-weight: bold;">(Note: Subject to change)</p><br>
     </div>
     <div id="measure">
     <div id="measure_stats">
         <!--Measure heart rate-->
-    <h3>No. of heart beats in 10 seconds:<textarea placeholder="E.g.(20, 30)" id="bpm"></textarea></h3>
+    <h3>No. of heart beats in 15 seconds:<textarea placeholder="E.g.(20, 30)" id="bpm"></textarea></h3>
     </div>
     <button type="button" class="btn btn-warning" id="myBtn" onclick="Multiply()">MEASURE</button>
 </div>
@@ -59,7 +59,14 @@
                 <img src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/2018/1-whatshouldmy.jpg" style="float: right; width: 200px; height: 100px;">
                 <li>At the neck, lightly press the side of the neck, just below your jawbone.</li>
                 <li>Alternatively, at the wrist, lightly press the index and middle fingers of one hand on the opposite wrist, just below the base of the thumb.</li>
-                <li>Count the number of beats in 10 seconds, and multiply by six. That's your heart rate.</li>
+                <li>Count the number of beats in 15 seconds, and multiply by four. That's your heart rate.</li>
+                <li>Depending on your heart rate at rest, the health tracker will identify your condition as follows:</li>
+                <ol>
+                    <li><strong>Poor: </strong>If your heart rate is lower than 60 beats per minute.</li>
+                    <li><strong>Good: </strong>If your heart rate is within the range of 60 to 100 beats per minute.</li>
+                    <li><strong>Critical: </strong>If your heart rate is within the range of 101 to 140 beats per minute.</li>
+                    <li><strong>Hazardous: </strong>If your heart rate is higher than 140 beats per minute.</li>
+                </ol>
             </ul>
         </div>
     </div>
@@ -68,6 +75,7 @@
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 </div>
+{% endblock %}
 </body>
 </html>
 

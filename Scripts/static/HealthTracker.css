@@ -3,10 +3,6 @@
     margin: 0px;
 }
 
-body{
-    background-image: url("e5WlXi.jpg");
-}
-
 #healthtracker {
     position: static;
     float: left;
@@ -51,7 +47,7 @@ img {
 
 #instructions {
     position: relative;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 #heading {
