@@ -4,7 +4,6 @@
 }
 
 body{
-    background-color: white;
     background-image: url("e5WlXi.jpg");
 }
 
@@ -53,4 +52,13 @@ body{
 
 h3{
     text-align: center;
+}
+
+.media-body{
+    background-color:white;
+    max-width:270px;
+    height: 140px;
+    margin-top: 10px;
+    margin-left: 20px;
+    border: 1px solid black;
 }
