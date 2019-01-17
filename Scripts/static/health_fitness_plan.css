@@ -16,8 +16,11 @@ body{
 }
 
 table{
-    border: 2px solid black;
+    font-weight: bold;
+    color: black;
     text-align: center;
+    width: 1415px;
+    height: 302px;
 }
 
 .lastmth, .nextmth{
@@ -32,7 +35,7 @@ table{
     display: inline-block;
 }
 
-#planner td:hover{
+.dycalendar-month-container td:hover{
     transform:scale(1.3);
     box-shadow: 0px 0px 5px black;
     background-color: white;
@@ -41,20 +44,6 @@ table{
 td > span{
     color: black;
     font-weight: bold;
-}
-
-#poly{
-    background-color: darkred;
-}
-
-#education{
-    border: 2px solid black;
-    padding: 20px;
-}
-
-.important{
-    font-weight: bold;
-    font-family: Bernard MT Condensed;
 }
 
 #legend{
@@ -74,10 +63,6 @@ td > span{
     max-width: 290px;
 }
 
-#Nov, #Dec, #Jan, #Feb, #Mar, #Apr, #May{
-    width: 1160px;
-}
-
 #allinstruction{
     font-weight: bold;
 }
@@ -87,3 +72,24 @@ td > span{
     font-weight: bold;
 }
 
+.dycalendar-header{
+    color: black;
+    text-align: center;
+    font-weight: bold;
+}
+
+tr > td:first-child{
+    color: red;
+}
+
+.dycalendar-month-container{
+    width: 1465px;
+    height: 348px;
+    border: 2px solid black;
+    border-radius: 2px;
+}
+
+#month, #year, #date{
+    font-weight: bold;
+    font-family: Impact, Charcoal, sans-serif;
+}
