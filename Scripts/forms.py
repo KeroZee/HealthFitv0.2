@@ -70,8 +70,8 @@ class UpdateDetails(FlaskForm):
                 raise ValidationError('That email is taken. Please Choose a different one')
 class TodoList(FlaskForm):
     datetime = DateField('Date', format='%Y-%m-%d')
-    description = TextAreaField('Description', validators=[DataRequired()], render_kw={"placeholder":"Enter your to-do in this section"})
-    remarks = TextAreaField('Remarks', render_kw={"placeholder":"Enter any important info about your to-dos"})
+    description = TextAreaField('Description', validators=[DataRequired()], render_kw={"placeholder":"Enter your to-do in this section\nExample: Do 4 sets of 10 push-ups everyday starting from 26 January 2019"})
+    remarks = TextAreaField('Remarks', render_kw={"placeholder":"Enter any important info about your to-dos\nExample: To train for stomach muscles"})
     submit = SubmitField('Add')
 
 class RequestResetForm(FlaskForm):

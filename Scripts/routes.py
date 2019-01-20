@@ -81,6 +81,9 @@ def save_picture(form_picture):
 @login_required
 def profile():
     form = UpdateDetails()
+    bfastt = Breakfast.query.all()
+    lunchh = Lunch.query.all()
+    dinnerr = Dinner.query.all()
     app.logger.debug('in profile method')
     if form.validate_on_submit():
         if form.picture.data:
@@ -101,22 +104,17 @@ def profile():
         form.weight.data = current_user.weight
         form.age.data = current_user.age
 
-    profile.bfastt = Breakfast.query.all()
-    profile.lunchh = Lunch.query.all()
-    profile.dinnerr = Dinner.query.all()
-
     profile.kcal = 0
-    for food in profile.bfastt:
+    for food in bfastt:
         profile.kcal += food.calories
-    for food in profile.lunchh:
+    for food in lunchh:
         profile.kcal += food.calories
-    for food in profile.dinnerr:
+    for food in dinnerr:
         profile.kcal += food.calories
-
-
+    app.logger.debug(profile.kcal)
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('profile.html', title='Profile',
-                           image_file=image_file, form=form, bfastt=profile.bfastt, lunchh=profile.lunchh, dinnerr=profile.dinnerr)
+                           image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr)
 
 
 def send_reset_email(user):
@@ -236,10 +234,7 @@ def guide():
         "https://i.pinimg.com/originals/74/d8/55/74d855acc30ffdfe3c7410f3c278918b.jpg",
         "https://www.youtube.com/embed/ANVdMDaYRts")
     exercises_list.extend([e1, e2, e3, e4, e5, e6])
-    storing = shelve.open('store_ex')
-    for i in range(5):
-        storing['exer' + str(i)] = exercises_list[i]
-        print(storing)
+
     exercise = ""
     exercise1 = ""
     exercise2 = ""
@@ -247,28 +242,25 @@ def guide():
     while exercise == "":
         cycle = randint(0, 5)
         if cycle not in int_list:
-            exercise = storing['exer' + str(cycle)]
+            exercise = exercises_list[cycle]
             int_list.append(cycle)
 
     while exercise1 == "":
         cycle = randint(0, 5)
         if cycle not in int_list:
-            exercise1 = storing['exer' + str(cycle)]
+            exercise1 = exercises_list[cycle]
             int_list.append(cycle)
 
     while exercise2 == "":
         cycle = randint(0, 5)
         if cycle not in int_list:
-            exercise2 = storing['exer' + str(cycle)]
+            exercise2 = exercises_list[cycle]
             int_list.append(cycle)
-
-    storing.close()
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
     return render_template('ExGuide.html', exercise=exercise, exercise1=exercise1, exercise2=exercise2,
                            image_file=image_file)
-
 
 @app.route('/schedule')
 @login_required
@@ -292,6 +284,36 @@ def todolist():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('todolist.html', title='ToDoList', image_file=image_file, form=form, Todos=Todos)
 
+@app.route('/schedule/ToDoList/<int:todo_id>')
+@login_required
+def todo(todo_id):
+    todo = Schedule.query.get_or_404(todo_id)
+    return render_template('todo.html', title=todo.description, todo=todo)
+
+# @app.route('/schedule/ToDoList/<int:todo_id>/edit', methods=['GET', 'POST'])
+# @login_required
+# def edit_todo(todo_id):
+#     activity = Schedule.query.get_or_404(todo_id)
+#     form = TodoList()
+#     if form.validate_on_submit():
+#         activity.description = form.description.data
+#         activity.remarks = form.remarks.data
+#         db.session.commit()
+#         flash('Your to-do has been updated!', 'success')
+#         return redirect(url_for('todo', todo_id=todo.id))
+#     elif request.method == 'GET':
+#         form.description.data = form.description
+#         form.remarks.data = form.remarks
+#     return render_template('todolist.html', title='HealthFit - Edit to-do-list', form=form, legend='Edit To-Do-List')
+
+@app.route('/schedule/ToDoList/<int:todo_id>/delete', methods=['POST'])
+@login_required
+def delete_todo(todo_id):
+    todo = Schedule.query.get_or_404(todo_id)
+    db.session.delete(todo)
+    db.session.commit()
+    flash('Your to-do has been deleted!', 'danger')
+    return redirect(url_for('todolist'))
 
 @app.route('/HealthTracker')
 @login_required
@@ -348,6 +370,22 @@ def _Food():
     r1 = Record('food1')
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
 
+    now = datetime.datetime.now()
+    midnight = datetime.time(0, 0, 0)
+    if now == midnight:
+        resetBreakfast = Breakfast.query.all()
+        for i in resetBreakfast:
+            db.session.delete(i)
+            db.session.commit()
+        resetLunch = Lunch.query.all()
+        for i in resetLunch:
+            db.session.delete(i)
+            db.session.commit()
+        resetDinner = Dinner.query.all()
+        for i in resetDinner:
+            db.session.delete(i)
+            db.session.commit()
+
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('food.html', items=r1, kcal=p1, image_file=image_file, form=form, searches=searches)
 
@@ -367,7 +405,7 @@ def exercise():
 
 @app.route('/addfood', methods=['GET', 'POST'])
 def addFood():
-    form = FoodForm()
+    form = SearchForm()
     if form.validate_on_submit():
         print('asd')
         food = Food(name=form.name.data, mass=form.mass.data, calories=form.calories.data, protein=form.protein.data,
