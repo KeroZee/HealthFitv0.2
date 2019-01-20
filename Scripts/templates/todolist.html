@@ -1,10 +1,11 @@
 <!doctype html>
 <html>
 <head>
-
-	<title>To-Do-List_Planner</title>
-
-
+    {% if title %}
+        <title>HealthFit - {{ title }}</title>
+    {% else %}
+        <title>HealthFit - Health & Fitness Planner</title>
+    {% endif %}
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="../static/todolist.css">
@@ -93,7 +94,28 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Leave</button>
+                <button type="button" class="btn btn-danger" onclick="window.location.href = '/schedule';">Leave</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="deleteTodo" tabindex="-1" role="dialog" aria-labelledby="deleteTodoLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteTodoLabel">Are you sure want to delete this To-Do?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Once you delete, the data will be gone!
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Delete</button>
               </div>
             </div>
           </div>
@@ -104,11 +126,16 @@
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ activity.name.name }}</a>
-              <small class="text-muted">{{ activity.date_posted.strftime('%H:%M %p') }}</small>
+              <a class="mr-2" href="#" style="margin-left:6px; text-decoration:none;">{{ activity.name.name }}</a>
+              <small class="text-muted">Posted on {{ activity.date_posted.strftime('%d %b %Y %I:%M %p') }}</small>
             </div>
-            <h2><a class="article-title" href="#">{{ activity.description }}</a></h2>
-            <p class="article-content">{{ activity.remarks }}</p>
+            <h4><a class="article-title" href="#" style="text-decoration:none;">{{ activity.description }}</a></h4>
+            <p class="article-content" style="margin-left:6px">{{ activity.remarks }}</p>
+              <!--<button id="edit" type="button" class="btn btn-secondary btn-sm m-1">Edit</button>-->
+              <form action="{{ url_for('delete_todo', todo_id=activity.id) }}" method="POST" style="float:left; margin-left:6px;">
+                  <input class="btn btn-danger" type="submit" value="Delete">
+              </form>
+              <!--<button id="delete" type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteTodo">Delete</button>-->
           </div>
         </article>
     {% endfor %}
