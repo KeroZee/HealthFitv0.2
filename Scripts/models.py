@@ -105,3 +105,8 @@ class Dinner(db.Model):
     carbohydrates = db.Column(db.Integer(), nullable=False)
     fats = db.Column(db.Integer(), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+class HealthTrack(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    heartrate = db.Column(db.Integer(), nullable=False)

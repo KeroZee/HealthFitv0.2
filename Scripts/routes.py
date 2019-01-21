@@ -1,10 +1,9 @@
 import secrets, os, datetime
 from PIL import Image
 from flask import render_template, flash, redirect, url_for, request
-from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm, \
-    FoodForm, ExerciseForm, SearchForm
+from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm, HealthForm, FoodForm, ExerciseForm, SearchForm
 from Scripts import app, db, bcrypt, mail
-from Scripts.models import User, Schedule, Food, Fitness, Breakfast, Lunch, Dinner
+from Scripts.models import User, Schedule, Food, Fitness, Breakfast, Lunch, Dinner, HealthTrack
 from random import randint
 from Scripts.Exercises import Exercises
 from Scripts.Fitness import Record, YourPlan
@@ -318,6 +317,12 @@ def delete_todo(todo_id):
 @app.route('/HealthTracker')
 @login_required
 def HealthTracker():
+    form = HealthForm()
+    if form.validate_on_submit():
+        heartrate = HealthTrack(name=form.name.data)
+        db.session.add(heartrate)
+        db.session.commit()
+        flash('Heart rate successfully updated!', 'success')
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('HealthTracker.html', image_file=image_file)
 

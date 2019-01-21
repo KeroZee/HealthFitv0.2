@@ -112,3 +112,7 @@ class SearchForm(FlaskForm):
     name = StringField('Food Name',validators=[DataRequired()])
     submit = SubmitField('Search & Add')
 
+class HealthForm(FlaskForm):
+    heartrate = StringField('Food Name',validators=[DataRequired()])
+    submit = SubmitField('Measure')
+
