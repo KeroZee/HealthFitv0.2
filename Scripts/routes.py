@@ -9,7 +9,6 @@ from Scripts.Exercises import Exercises
 from Scripts.Fitness import Record, YourPlan
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
-import shelve
 
 
 @app.route("/")
@@ -234,10 +233,7 @@ def guide():
         "https://i.pinimg.com/originals/74/d8/55/74d855acc30ffdfe3c7410f3c278918b.jpg",
         "https://www.youtube.com/embed/ANVdMDaYRts")
     exercises_list.extend([e1, e2, e3, e4, e5, e6])
-    storing = shelve.open('store_ex')
-    for i in range(5):
-        storing['exer' + str(i)] = exercises_list[i]
-        print(storing)
+
     exercise = ""
     exercise1 = ""
     exercise2 = ""
@@ -245,22 +241,20 @@ def guide():
     while exercise == "":
         cycle = randint(0, 5)
         if cycle not in int_list:
-            exercise = storing['exer' + str(cycle)]
+            exercise = exercises_list[cycle]
             int_list.append(cycle)
 
     while exercise1 == "":
         cycle = randint(0, 5)
         if cycle not in int_list:
-            exercise1 = storing['exer' + str(cycle)]
+            exercise1 = exercises_list[cycle]
             int_list.append(cycle)
 
     while exercise2 == "":
         cycle = randint(0, 5)
         if cycle not in int_list:
-            exercise2 = storing['exer' + str(cycle)]
+            exercise2 = exercises_list[cycle]
             int_list.append(cycle)
-
-    storing.close()
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
@@ -320,17 +314,17 @@ def delete_todo(todo_id):
     flash('Your to-do has been deleted!', 'danger')
     return redirect(url_for('todolist'))
 
-@app.route('/HealthTracker')
+@app.route('/HealthTracker', methods=['GET', 'POST'])
 @login_required
 def HealthTracker():
-    form = HealthForm()
-    if form.validate_on_submit():
-        heartrate = HealthTrack(name=form.name.data)
-        db.session.add(heartrate)
-        db.session.commit()
-        flash('Heart rate successfully updated!', 'success')
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('HealthTracker.html', image_file=image_file)
+
+@app.route('/HealthTracker/submit', methods=['POST'])
+@login_required
+def submit_heartrate():
+    flash("Your heart rate has been successfully updated!", "success")
+    return redirect(url_for('HealthTracker'))
 
 
 @app.route('/food', methods=['GET', 'POST'])

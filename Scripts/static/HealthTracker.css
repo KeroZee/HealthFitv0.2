@@ -10,14 +10,15 @@
     margin-left: 50px;
     margin-top: 50px;
     line-height: 1.4;
+    height: 100%;
     border: 3px solid black;
     background-color: white;
 }
 
 #userstats {
-    margin-top: 20px;
     line-height: 1;
     width: 400px;
+    margin-top: 20px;
 }
 
 #recommend {
@@ -25,10 +26,9 @@
 }
 
 #measure {
-    position: absolute;
-    left: 500px;
-    top: 650px;
-    width: 100%;
+    position: relative;
+    left: 400px;
+    bottom: 130px;
 }
 
 .btn btn-warning{
@@ -36,7 +36,7 @@
 }
 
 #measure_stats {
-    margin-right: 300px;
+    position: static;
 }
 
 textarea {
@@ -44,8 +44,9 @@ textarea {
     height: 50px;
     padding: 10px;
     font-size: 50%;
-    position: absolute;
-    left: 440px;
+    position: relative;
+    left: 20px;
+    top: 10px;
 }
 
 img {
@@ -55,7 +56,6 @@ img {
 
 #instructions {
     position: relative;
-    margin-top: 100px;
 }
 
 #heading {
@@ -84,8 +84,8 @@ ol {
 }
 
 #chartContainer {
-    margin-top: 130px;
-    height: 400px;
+    margin-top: 150px;
+    height: 350px;
     width: 650px;
     left: 500px;
     position: absolute;
