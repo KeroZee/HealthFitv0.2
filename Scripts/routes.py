@@ -9,6 +9,7 @@ from Scripts.Exercises import Exercises
 from Scripts.Fitness import Record, YourPlan
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
+import shelve
 
 
 @app.route("/")
@@ -233,7 +234,10 @@ def guide():
         "https://i.pinimg.com/originals/74/d8/55/74d855acc30ffdfe3c7410f3c278918b.jpg",
         "https://www.youtube.com/embed/ANVdMDaYRts")
     exercises_list.extend([e1, e2, e3, e4, e5, e6])
-
+    storing = shelve.open('store_ex')
+    for i in range(5):
+        storing['exer' + str(i)] = exercises_list[i]
+        print(storing)
     exercise = ""
     exercise1 = ""
     exercise2 = ""
@@ -241,20 +245,22 @@ def guide():
     while exercise == "":
         cycle = randint(0, 5)
         if cycle not in int_list:
-            exercise = exercises_list[cycle]
+            exercise = storing['exer' + str(cycle)]
             int_list.append(cycle)
 
     while exercise1 == "":
         cycle = randint(0, 5)
         if cycle not in int_list:
-            exercise1 = exercises_list[cycle]
+            exercise1 = storing['exer' + str(cycle)]
             int_list.append(cycle)
 
     while exercise2 == "":
         cycle = randint(0, 5)
         if cycle not in int_list:
-            exercise2 = exercises_list[cycle]
+            exercise2 = storing['exer' + str(cycle)]
             int_list.append(cycle)
+
+    storing.close()
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
