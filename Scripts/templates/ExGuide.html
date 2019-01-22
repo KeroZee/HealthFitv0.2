@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <!-- Bootstrap CSS -->
-    <!--<link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">-->
     <!-- Guide Style CSS -->
     <link rel="stylesheet" href="../static/ExStyle.css">
+<<<<<<< HEAD
+=======
+    <!--Logo of website-->
+    <link rel="icon" href="../static/Logo.png">
+>>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
     <title>HealthGuide</title>
 </head>
 <body>
@@ -20,15 +23,19 @@
                 <h2 class="font-weight-bold text-center headers">Welcome to the Exercise Guide!</h2>
             </div>
             <div id="guide_body">
+                <!--Div below contains one exercise-->
                 <div class="jumbotron" id="no1">
                     <div class="container">
                         <div class="row">
+                            <!--Image of exercise-->
                             <div class="col-md-6">
                                 <img src="{{ exercise.get_image() }}" class="images">
                             </div>
                             <div class="col-md-6">
+                                <!--Description of exercise-->
                                 <p class="text-justify desc">{{ exercise.get_desc() }}</p>
                                 <dl>
+                                    <!--Muscles worked from exercise-->
                                     <dt class = 'ben_list'>Muscles Trained:</dt>
                                     {% for benefits in exercise.get_benefits() %}
                                     <dd>{{ benefits }}</dd>
@@ -36,6 +43,7 @@
                                 </dl>
                                 <a href="#randex" class="btn btn-info" data-toggle="collapse">Instructions</a>
                                 <div id="randex" class="collapse">
+                                    <!--Steps for the exercise-->
                                     <ol type="1">
                                         {% for steps in exercise.get_steps() %}
                                             <li>{{ steps }}</li>
@@ -44,6 +52,7 @@
                                 </div>
                                 <a href="#vids" class="btn btn-info" data-toggle="collapse">Tutorial Videos</a>
                                 <div id="vids" class="collapse tutorials">
+                                    <!--Tutorial videos for exercise-->
                                     <iframe width="420" height="315"
                                         src = "{{ exercise.get_videos() }}">
                                     </iframe>
@@ -119,9 +128,6 @@
             </div>
         </div>
     </div>
-    <!-- jQuery first, then Bootstrap JS. -->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
-    <!--<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>-->
 {% endblock %}
 </body>
 </html>

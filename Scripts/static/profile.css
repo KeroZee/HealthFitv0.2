@@ -4,6 +4,7 @@
     left: 500px;
     top: 150px;
     position: absolute;
+    border: 3px solid black;
 }
 .rounded-circle
     {
@@ -17,3 +18,20 @@
     {
         margin-left: 30px;
     }
+
+/*body{
+    background-image: url("../static/e5WlXi.jpg");
+}*/
+.foodnames{
+    font-size: 17px;
+}
+
+.user{
+    font-size: 18px;
+}
+
+#addweight{
+    position: absolute;
+    top: 650px;
+    left: 500px;
+}

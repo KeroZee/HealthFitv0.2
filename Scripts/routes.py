@@ -5,11 +5,16 @@ from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, Requ
 from Scripts import app, db, bcrypt, mail
 from Scripts.models import User, Schedule, Food, Fitness, Breakfast, Lunch, Dinner, HealthTrack
 from random import randint
+<<<<<<< HEAD
 from Scripts.Fitness import Record, YourPlan, Exercise
+=======
+from Scripts.Fitness import Record, YourPlan
+>>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 import shelve
 
+<<<<<<< HEAD
 totalKcalfromExercise = 0
 queryExerciseKcal = Fitness.query.all()
 for i in queryExerciseKcal:
@@ -55,6 +60,8 @@ def deleteRecords():
             db.session.commit()
 
 deleteRecords()
+=======
+>>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
 
 @app.route("/")
 @app.route("/home")
@@ -126,6 +133,9 @@ def save_picture(form_picture):
 @login_required
 def profile():
     form = UpdateDetails()
+    bfastt = Breakfast.query.all()
+    lunchh = Lunch.query.all()
+    dinnerr = Dinner.query.all()
     app.logger.debug('in profile method')
     if form.validate_on_submit():
         if form.picture.data:
@@ -146,8 +156,19 @@ def profile():
         form.weight.data = current_user.weight
         form.age.data = current_user.age
 
+<<<<<<< HEAD
 
     app.logger.debug(kcal)
+=======
+    profile.kcal = 0
+    for food in bfastt:
+        profile.kcal += food.calories
+    for food in lunchh:
+        profile.kcal += food.calories
+    for food in dinnerr:
+        profile.kcal += food.calories
+    app.logger.debug(profile.kcal)
+>>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('profile.html', title='Profile',
                            image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr)
@@ -202,10 +223,15 @@ def guide():
     exercise = ""
     exercise1 = ""
     exercise2 = ""
+<<<<<<< HEAD
+=======
+    # Open shelve to retrieve exercise objects (Data) for use
+>>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
     storing = shelve.open('store_ex')
 
     while exercise == "":
         cycle = randint(0, 5)
+        # Makes sure that the same exercise will not appear twice
         if cycle not in int_list:
             exercise = storing['exer' + str(cycle)]
             int_list.append(cycle)
@@ -225,6 +251,7 @@ def guide():
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
+    # Returns variable to be used in HTML
     return render_template('ExGuide.html', exercise=exercise, exercise1=exercise1, exercise2=exercise2,
                            image_file=image_file)
 
@@ -347,6 +374,22 @@ def _Food():
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
     e1 = Exercise(totalexercises)
 
+    now = datetime.datetime.now()
+    midnight = datetime.time(0, 0, 0)
+    if now == midnight:
+        resetBreakfast = Breakfast.query.all()
+        for i in resetBreakfast:
+            db.session.delete(i)
+            db.session.commit()
+        resetLunch = Lunch.query.all()
+        for i in resetLunch:
+            db.session.delete(i)
+            db.session.commit()
+        resetDinner = Dinner.query.all()
+        for i in resetDinner:
+            db.session.delete(i)
+            db.session.commit()
+
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('food.html', items=r1, kcal=p1, exer=e1, image_file=image_file, form=form, searches=searches)
 
@@ -458,7 +501,7 @@ def exercise():
     return render_template('exercise.html', items=r1, kcal=p1, exer=e1, image_file=image_file, form=form, totalKcalfromExercise=totalKcalfromExercise)
 @app.route('/addfood', methods=['GET', 'POST'])
 def addFood():
-    form = FoodForm()
+    form = SearchForm()
     if form.validate_on_submit():
         print('asd')
         food = Food(name=form.name.data, mass=form.mass.data, calories=form.calories.data, protein=form.protein.data,

@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 from flask import flash
 
+=======
+>>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
 from Scripts.Exercises import Exercises
 import shelve
 
 storing = shelve.open('store_ex')
 
+<<<<<<< HEAD
 if storing['exer0'] == None:
     # flash(f"{storing['exer0']}", 'success')
     exercises_list = []
+=======
+# Prevents data from being stored again if data is already existent
+if storing['exer0'] == None:
+    exercises_list = []
+    # Creation of exercise objects to be used in HTML
+>>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
     e1 = Exercises(
         "A Push-up is a common exercise that involves beginning from the prone position,then raising and lowering the body using the arms.",
         ['Pectoral muscles',
@@ -78,6 +88,10 @@ if storing['exer0'] == None:
         "https://i.pinimg.com/originals/74/d8/55/74d855acc30ffdfe3c7410f3c278918b.jpg",
         "https://www.youtube.com/embed/ANVdMDaYRts")
     exercises_list.extend([e1, e2, e3, e4, e5, e6])
+<<<<<<< HEAD
+=======
+    # Stores all the objects in shelve
+>>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
     for i in range(5):
         storing['exer' + str(i)] = exercises_list[i]
     storing.close()
