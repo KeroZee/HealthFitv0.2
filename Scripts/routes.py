@@ -5,11 +5,23 @@ from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, Requ
 from Scripts import app, db, bcrypt, mail
 from Scripts.models import User, Schedule, Food, Fitness, Breakfast, Lunch, Dinner, HealthTrack
 from random import randint
+<<<<<<< HEAD
 from Scripts.Fitness import Record, YourPlan, Exercise
+=======
+
+from Scripts.Fitness import Record, YourPlan, Exercise
+
+from Scripts.Fitness import Record, YourPlan
+
+>>>>>>> d237fd6febff8997aaa766543d2847e8f8d3efb1
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 import shelve
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d237fd6febff8997aaa766543d2847e8f8d3efb1
 totalKcalfromExercise = 0
 queryExerciseKcal = Fitness.query.all()
 for i in queryExerciseKcal:
@@ -45,6 +57,10 @@ def deleteRecords():
             db.session.commit()
 
 deleteRecords()
+<<<<<<< HEAD
+=======
+
+>>>>>>> d237fd6febff8997aaa766543d2847e8f8d3efb1
 
 @app.route("/")
 @app.route("/home")
@@ -139,6 +155,7 @@ def profile():
         form.weight.data = current_user.weight
         form.age.data = current_user.age
 
+<<<<<<< HEAD
     profile.kcal = 0
     for food in bfastt:
         profile.kcal += food.calories
@@ -147,6 +164,20 @@ def profile():
     for food in dinnerr:
         profile.kcal += food.calories
     app.logger.debug(profile.kcal)
+=======
+
+
+    # app.logger.debug(kcal)
+
+    # profile.kcal = 0
+    # for food in bfastt:
+    #     profile.kcal += food.calories
+    # for food in lunchh:
+    #     profile.kcal += food.calories
+    # for food in dinnerr:
+    #     profile.kcal += food.calories
+    # app.logger.debug(profile.kcal)
+>>>>>>> d237fd6febff8997aaa766543d2847e8f8d3efb1
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('profile.html', title='Profile',image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr)
@@ -201,8 +232,13 @@ def guide():
     exercise = ""
     exercise1 = ""
     exercise2 = ""
+<<<<<<< HEAD
 
     # Open shelve to retrieve exercise objects (Data) for use
+=======
+    # Open shelve to retrieve exercise objects (Data) for use
+
+>>>>>>> d237fd6febff8997aaa766543d2847e8f8d3efb1
     storing = shelve.open('store_ex')
 
     while exercise == "":
@@ -432,7 +468,8 @@ def exercise():
             db.session.add(exer)
             db.session.commit()
         elif form.duration.data == 'thirty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data,
+            calories=totalexercises)
             db.session.add(exer)
             db.session.commit()
         elif form.duration.data == 'forty':
