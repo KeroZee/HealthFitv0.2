@@ -4,7 +4,7 @@
 }
 
 #healthtracker {
-    position: static;
+    position: relative;
     float: left;
     padding: 20px;
     margin-left: 50px;
@@ -36,7 +36,7 @@
 }
 
 #measure_stats {
-    position: static;
+    position: relative;
 }
 
 textarea {
@@ -50,7 +50,7 @@ textarea {
 }
 
 img {
-    position: static;
+    position: relative;
     text-align: center;
 }
 
@@ -87,8 +87,8 @@ ol {
     margin-top: 150px;
     height: 350px;
     width: 650px;
-    left: 500px;
-    position: absolute;
+    right: 700px;
+    position: relative;
 }
 
 #here {
@@ -96,7 +96,7 @@ ol {
 }
 
 #footer {
-    position: static;
+    position: relative;
 }
 
 .profile-pic
