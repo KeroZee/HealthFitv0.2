@@ -21,6 +21,7 @@ class User(db.Model, UserMixin):
     breakfast = db.relationship('Breakfast', backref='name', lazy=True)
     lunch = db.relationship('Lunch', backref='name', lazy=True)
     dinner = db.relationship('Dinner', backref='name', lazy=True)
+    exercise = db.relationship('Fitness', backref='name', lazy=True)
     age = db.Column(db.Integer)
     weight = db.Column(db.Integer)
     height = db.Column(db.Integer)
@@ -70,8 +71,11 @@ class Food(db.Model):
 
 class Fitness(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    exercisename = db.Column(db.String(100), nullable=False)
     duration = db.Column(db.Integer(), nullable=False)
+    intensity = db.Column(db.String(100), nullable=False)
+    calories = db.Column(db.Integer(), nullable=False)
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self): #How objects are printed
         return f"Fitness('{self.name}', '{self.duration}')"
@@ -105,3 +109,8 @@ class Dinner(db.Model):
     carbohydrates = db.Column(db.Integer(), nullable=False)
     fats = db.Column(db.Integer(), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+class HealthTrack(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    heartrate = db.Column(db.Integer(), nullable=False)

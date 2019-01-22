@@ -2,22 +2,19 @@ var heartrate_list = JSON.parse(localStorage.getItem('list')) || [];
 
 function Multiply() {
     var x = document.getElementById("bpm").value;
-    var confirm1 = confirm("Are you sure?");
-    if (confirm1 == true) {
-        if (typeof(Storage) !== "undefined") {
-            localStorage.setItem("bpm", x * 4);
-            localStorage.setItem("date", new Date().toLocaleDateString());
-            document.getElementById("record").innerHTML = localStorage.getItem("bpm");
-            document.getElementById("date").innerHTML = localStorage.getItem("date");
-            localStorage.setItem("bpm1", JSON.stringify(heartrate_list[1]));
-            localStorage.setItem("bpm2", JSON.stringify(heartrate_list[2]));
-            localStorage.setItem("bpm3", JSON.stringify(heartrate_list[3]));
-            localStorage.setItem("bpm4", JSON.stringify(heartrate_list[4]));
-            setList();
-            Condition();
-            location.reload();
+    if (typeof(Storage) !== "undefined") {
+        localStorage.setItem("bpm", x);
+        localStorage.setItem("date", new Date().toLocaleDateString());
+        document.getElementById("record").innerHTML = localStorage.getItem("bpm");
+        document.getElementById("date").innerHTML = localStorage.getItem("date");
+        localStorage.setItem("bpm1", JSON.stringify(heartrate_list[1]));
+        localStorage.setItem("bpm2", JSON.stringify(heartrate_list[2]));
+        localStorage.setItem("bpm3", JSON.stringify(heartrate_list[3]));
+        localStorage.setItem("bpm4", JSON.stringify(heartrate_list[4]));
+        setList();
+        Condition();
+        location.reload();
         }
-    }
 }
 
 function Condition(){

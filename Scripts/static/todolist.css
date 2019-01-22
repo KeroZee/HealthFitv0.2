@@ -57,8 +57,13 @@ h3{
 .media-body{
     background-color:white;
     max-width:270px;
-    height: 140px;
+    height: 190px;
     margin-top: 10px;
     margin-left: 20px;
     border: 1px solid black;
+    display: inline-block;
+}
+
+#edit{
+    margin-left: 5px;
 }

@@ -1,20 +1,65 @@
-import secrets, os, datetime
+import secrets, os, datetime, threading
 from PIL import Image
 from flask import render_template, flash, redirect, url_for, request
-from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm, \
-    FoodForm, ExerciseForm, SearchForm
+from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm, HealthForm, FoodForm, ExerciseForm, SearchForm
 from Scripts import app, db, bcrypt, mail
-from Scripts.models import User, Schedule, Food, Fitness, Breakfast, Lunch, Dinner
+from Scripts.models import User, Schedule, Food, Fitness, Breakfast, Lunch, Dinner, HealthTrack
 from random import randint
-from Scripts.Exercises import Exercises
-from Scripts.Fitness import Record, YourPlan
+from Scripts.Fitness import Record, YourPlan, Exercise
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
+import shelve
 
+totalKcalfromExercise = 0
+queryExerciseKcal = Fitness.query.all()
+for i in queryExerciseKcal:
+    totalKcalfromExercise += i.calories
+
+time = 10
+intensity = 1
+totalexercises = round(time * (intensity * 0.33))
+
+kcal = 0
+bfastt = Breakfast.query.all()
+lunchh = Lunch.query.all()
+dinnerr = Dinner.query.all()
+for food in bfastt:
+    kcal += food.calories
+for food in lunchh:
+    kcal += food.calories
+for food in dinnerr:
+    kcal += food.calories
+
+def deleteRecords():
+
+    threading.Timer(86400.0, deleteRecords).start()
+    now = datetime.datetime.now().time()
+    midnight = datetime.time(0, 0, 0)
+    print(now, midnight)
+    if now > midnight:
+        resetBreakfast = Breakfast.query.all()
+        for i in resetBreakfast:
+            db.session.delete(i)
+            db.session.commit()
+        resetLunch = Lunch.query.all()
+        for i in resetLunch:
+            db.session.delete(i)
+            db.session.commit()
+        resetDinner = Dinner.query.all()
+        for i in resetDinner:
+            db.session.delete(i)
+            db.session.commit()
+        resetExercise = Fitness.query.all()
+        for i in resetExercise:
+            db.session.delete(i)
+            db.session.commit()
+
+deleteRecords()
 
 @app.route("/")
 @app.route("/home")
 def home():
+
     if current_user.is_authenticated:
         image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     else:
@@ -101,22 +146,11 @@ def profile():
         form.weight.data = current_user.weight
         form.age.data = current_user.age
 
-    profile.bfastt = Breakfast.query.all()
-    profile.lunchh = Lunch.query.all()
-    profile.dinnerr = Dinner.query.all()
 
-    profile.kcal = 0
-    for food in profile.bfastt:
-        profile.kcal += food.calories
-    for food in profile.lunchh:
-        profile.kcal += food.calories
-    for food in profile.dinnerr:
-        profile.kcal += food.calories
-
-
+    app.logger.debug(kcal)
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('profile.html', title='Profile',
-                           image_file=image_file, form=form, bfastt=profile.bfastt, lunchh=profile.lunchh, dinnerr=profile.dinnerr)
+                           image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr)
 
 
 def send_reset_email(user):
@@ -164,85 +198,11 @@ def reset_token(token):
 @app.route('/ExGuide')
 @login_required
 def guide():
-    exercises_list = []
     int_list = []
-    e1 = Exercises(
-        "A Push-up is a common exercise that involves beginning from the prone position,then raising and lowering the body using the arms.",
-        ['Pectoral muscles',
-         'Abdominal muscles',
-         'Triceps'],
-        ["Extend your legs backwards and place hands on the ground, slightly more than shoulder-width apart.",
-         "Start by bending your elbows to lower your chest until it is just above the floor.",
-         "Push yourself back to the starting position. An ideal push-up would be a 1-second push, pause and a 2 second down count.",
-         "Repeat steps 1 to 3 for preferably 10 to 15 times."],
-        "https://cdn-ami-drupal.heartyhosting.com/sites/muscleandfitness.com/files/styles/full_node_image_1090x614/public/media/1109-pushups_0.jpg?itok=QyFVWqN6",
-        "https://www.youtube.com/embed/IODxDxX7oi4")
-    e2 = Exercises(
-        'Crunching is an exercise that involves lying face-up on the floor, bending the knees then curling the shoulders towards the waist.',
-        ['Abdominal muscles'],
-        ['Lie on your back with your knees bent and feet flat on the floor hip-width apart.',
-         'Place your hands behind your head such that your thumbs are behind your ears',
-         'Hold your elbows to the sides, slightly facing in.',
-         'Slightly tilt your chin, leaving some space between your chin and chest.',
-         'Gently pull your abdominals inward.',
-         'Curl up and forward so that your head, neck and shoulders lift off the floor',
-         'Hold for a moment at the top of the movement in Step 6 and slowly lower yourself back down',
-         'Repeat Steps 1 to 7 for preferably 10 to 15 times.'],
-        "https://cdn2.coachmag.co.uk/sites/coachmag/files/styles/16x9_480/public/images/dir_30/mens_fitness_15427.jpg?itok=T3OF7wPv&timestamp=1369282187",
-        "https://www.youtube.com/embed/Xyd_fa5zoEU")
-    e3 = Exercises(
-        'Jumping Jacks is an exercise that involves jumping with the legs spread wide and hands touching overhead then returning to a position with the feet together and arms at the sides.',
-        ['Calve muscles',
-         'Shoulder muscles',
-         'Hip muscles'],
-        ['Stand with your feet together and pointing forward, arms hanging straight at the sides.',
-         'In one jump, bend your knees and extend both legs out to the sides while simultaneously extending your arms out to the sides and then up and over the head.',
-         'Immediately reverse this motion, jumping back to the starting or neutral standing position.',
-         'Repeat Steps 1 to 3 for preferably 10 to 15 times.'],
-        "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/1104-jumping-jacks-1441032989.jpg",
-        "https://www.youtube.com/embed/UpH7rm0cYbM")
-    e4 = Exercises(
-        'Tuck jumping is an exercise that involves standing in a shoulder width position, slowly descending into a squat and use your feet to explode off the floor while driving your knees towards your chest.',
-        ['Abdominal muscles',
-         'Hamstrings',
-         'Calve muscles'],
-        ['Start in a standing position, slightly bending your knees',
-         'Hold your hands out at chest level.',
-         'Lower your body quickly into a squatting position, then explode upwards bringing your knees up towards your chest.',
-         'Repeat Steps 1 to 3 for preferably 10 to 15 times.'],
-        "http://fitmw.com/wp-content/uploads/2015/07/Exercises-Tuck-Jump.jpg",
-        "https://www.youtube.com/embed/ZR6aFqdRi2Y")
-    e5 = Exercises(
-        'Squatting is an exercise that involves standing in a shoulder width position, bending your knees all the way down and then suddenly propelling yourself back up to a standing position.',
-        ['Hip muscles',
-         'Hamstrings',
-         'Quads'],
-        ['Stand with your feet apart, directly under your hips, and place your hands on your hips.',
-         'Standing up tall, put your shoulders back, lift your chest, and pull in your abdominal muscles.',
-         'Bend your knees while keeping your upper body as straight as possible, like a sitting position. Lower yourself down as far as you can without leaning your upper body more than a few inches forward.',
-         'Straighten your legs so you do not lock your knees when you reach a standing position.',
-         'Repeat Steps 1 to 4 for preferably 10 to 15 times.'],
-        "https://19jkon2dxx3g14btyo2ec2u9-wpengine.netdna-ssl.com/wp-content/uploads/2013/11/squats.jpg",
-        "https://www.youtube.com/embed/aclHkVaku9U")
-    e6 = Exercises(
-        'Flutter kicks is an exercise that involves lying down face-up, straightening your legs until they are level with your hips and alternating between lifting each leg.',
-        ['Abdominal muscles',
-         'Hip muscles',
-         'Quads'],
-        ['Lie on your back with your legs extended and your arms alongside your hips, palms down.',
-         'Lift your legs about 4 to 6 inches off the floor. Press your lower back into the floor or gym mat.',
-         'Keep your legs straight as you rhythmically raise one leg higher, then switch. Move in a fluttering, up and down motion.',
-         'Repeat Steps 1 to 3 for preferably 15 to 20 times.'],
-        "https://i.pinimg.com/originals/74/d8/55/74d855acc30ffdfe3c7410f3c278918b.jpg",
-        "https://www.youtube.com/embed/ANVdMDaYRts")
-    exercises_list.extend([e1, e2, e3, e4, e5, e6])
-    storing = shelve.open('store_ex')
-    for i in range(5):
-        storing['exer' + str(i)] = exercises_list[i]
-        print(storing)
     exercise = ""
     exercise1 = ""
     exercise2 = ""
+    storing = shelve.open('store_ex')
 
     while exercise == "":
         cycle = randint(0, 5)
@@ -261,14 +221,12 @@ def guide():
         if cycle not in int_list:
             exercise2 = storing['exer' + str(cycle)]
             int_list.append(cycle)
-
     storing.close()
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
     return render_template('ExGuide.html', exercise=exercise, exercise1=exercise1, exercise2=exercise2,
                            image_file=image_file)
-
 
 @app.route('/schedule')
 @login_required
@@ -292,18 +250,55 @@ def todolist():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('todolist.html', title='ToDoList', image_file=image_file, form=form, Todos=Todos)
 
+@app.route('/schedule/ToDoList/<int:todo_id>')
+@login_required
+def todo(todo_id):
+    todo = Schedule.query.get_or_404(todo_id)
+    return render_template('todo.html', title=todo.description, todo=todo)
 
-@app.route('/HealthTracker')
+# @app.route('/schedule/ToDoList/<int:todo_id>/edit', methods=['GET', 'POST'])
+# @login_required
+# def edit_todo(todo_id):
+#     activity = Schedule.query.get_or_404(todo_id)
+#     form = TodoList()
+#     if form.validate_on_submit():
+#         activity.description = form.description.data
+#         activity.remarks = form.remarks.data
+#         db.session.commit()
+#         flash('Your to-do has been updated!', 'success')
+#         return redirect(url_for('todo', todo_id=todo.id))
+#     elif request.method == 'GET':
+#         form.description.data = form.description
+#         form.remarks.data = form.remarks
+#     return render_template('todolist.html', title='HealthFit - Edit to-do-list', form=form, legend='Edit To-Do-List')
+
+@app.route('/schedule/ToDoList/<int:todo_id>/delete', methods=['POST'])
+@login_required
+def delete_todo(todo_id):
+    todo = Schedule.query.get_or_404(todo_id)
+    db.session.delete(todo)
+    db.session.commit()
+    flash('Your to-do has been deleted!', 'danger')
+    return redirect(url_for('todolist'))
+
+@app.route('/HealthTracker', methods=['GET', 'POST'])
 @login_required
 def HealthTracker():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('HealthTracker.html', image_file=image_file)
 
 
+@app.route('/HealthTracker/submit', methods=['POST'])
+@login_required
+def submit_heartrate():
+    flash("Your heart rate has been successfully updated!", "success")
+    return redirect(url_for('HealthTracker'))
+
 @app.route('/food', methods=['GET', 'POST'])
 @login_required
 def _Food():
     form = SearchForm()
+
     if form.meal.data == 'breakfast':
         searches = Food.query.filter_by(name=form.name.data).first()
         app.logger.debug(form.meal.data)
@@ -328,13 +323,16 @@ def _Food():
     db.session.commit()
     app.logger.debug(form.meal.data)
 
+    print(totalKcalfromExercise)
+
+
     # daily intake
-    if profile.kcal > 0:
+    if kcal > 0:
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
-                    4.33 * current_user.age)) * 1.55) - profile.kcal
+                    4.33 * current_user.age)) * 1.55) - kcal + totalKcalfromExercise
     else:
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
-                    4.33 * current_user.age)) * 1.55)
+                    4.33 * current_user.age)) * 1.55) + totalKcalfromExercise
     simplifiedmt = round(mtcalories)
 
     # macronutrients left
@@ -347,24 +345,117 @@ def _Food():
 
     r1 = Record('food1')
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
+    e1 = Exercise(totalexercises)
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('food.html', items=r1, kcal=p1, image_file=image_file, form=form, searches=searches)
+    return render_template('food.html', items=r1, kcal=p1, exer=e1, image_file=image_file, form=form, searches=searches)
 
 
 @app.route('/exercise', methods=['GET', 'POST'])
 @login_required
 def exercise():
     form = ExerciseForm()
-    if form.validate_on_submit():
-        exercise1 = Fitness(name=form.name.data, duration=form.duration.data)
-        db.session.add(exercise1)
-        db.session.commit()
-        flash('Your entry has been entered!', 'success')
+    if form.intensity.data == 'light':
+        if form.duration.data == 'ten':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'twenty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'thirty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'forty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'fifty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'sixty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+    if form.intensity.data == 'moderate':
+        if form.duration.data == 'ten':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'twenty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'thirty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'forty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'fifty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'sixty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+    if form.intensity.data == 'vigorious':
+        if form.duration.data == 'ten':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'twenty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'thirty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'forty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'fifty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+        elif form.duration.data == 'sixty':
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            db.session.add(exer)
+            db.session.commit()
+    app.logger.debug(totalKcalfromExercise)
 
-    return render_template('exercise.html', form=form)
+    # daily intake
+    if kcal > 0:
+        mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
+                    4.33 * current_user.age)) * 1.55) - kcal + totalKcalfromExercise
+    else:
+        mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
+                    4.33 * current_user.age)) * 1.55) + totalKcalfromExercise
+    simplifiedmt = round(mtcalories)
+
+    # macronutrients left
+    protein25 = round(simplifiedmt * 0.25)
+    fat25 = round(simplifiedmt * 0.25)
+    carb50 = round(simplifiedmt * 0.5)
+    cprotein25 = round(protein25 / 4)
+    cfat25 = round(fat25 / 9)
+    ccarb50 = round(carb50 / 4)
+
+    r1 = Record('food1')
+    p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
+    e1 = Exercise(totalexercises)
 
 
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('exercise.html', items=r1, kcal=p1, exer=e1, image_file=image_file, form=form, totalKcalfromExercise=totalKcalfromExercise)
 @app.route('/addfood', methods=['GET', 'POST'])
 def addFood():
     form = FoodForm()

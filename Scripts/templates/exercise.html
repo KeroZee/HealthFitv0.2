@@ -32,6 +32,16 @@
     {
         width:15%;
     }
+    #exercisediv
+    {
+        background-color:white;
+        margin-top: 10px;
+        margin-left: 20px;
+        border: 1px solid black;
+        display: inline-block;
+        padding:30px;
+        border-radius: 10px;
+    }
 </style>
 
 <!--<script>-->
@@ -97,7 +107,7 @@
         <div class="marginTB__ ">
             <div class="circle hover text-center">
                 <h1>
-                    {{ kcal.get_maintenance() }}</h1>
+                    {{ kcal.get_maintenance() + exer.get_exercise()}}</h1>
                 <span class="font-weight-bold">KCAL LEFT</span>
             </div>
         </div>
@@ -173,14 +183,13 @@
     </div>
 </div>
 <br>
+<div id="exercisediv">
     <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <div class="container">
             <p class="lead">
                 Exercise
             </p>
-            <a href="#Exercise" class="btn btn-info" data-toggle="collapse">Exercise</a>
-            <fieldset id="Exercise" class="collapse">
                 <legend class="border-bottom mb-4">Exercise Details</legend>
                 <div class="form-group">
                     {{ form.name.label(class="form-control-label") }}
@@ -226,11 +235,9 @@
                 </div>
             </fieldset>
             <ul id="navigation">
-                {% for item in items %}
-                <li>{{ form.name }}</li>
-                {% endfor %}
             </ul>
         </div>
     </form>
+</div>
 </body>
 {% endblock %}

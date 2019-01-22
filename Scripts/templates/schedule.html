@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Health & Fitness Schedule Planner</title>
+    {% if title %}
+        <title>HealthFit - {{ title }}</title>
+    {% else %}
+        <title>HealthFit - Health & Fitness Planner</title>
+    {% endif %}
     <link rel="stylesheet" href="../static/health_fitness_plan.css">
     <script src="../static/health_fitness_plan.js"></script>
     <link rel="stylesheet" href="../static/dycalendar.min.css">
@@ -11,6 +15,41 @@
 <!-- Navigation bar -->
 {% extends 'layout.html' %}
 {% block body %}
+
+<style>
+    .modal-image, #caption{
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+    }
+
+    .close{
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 42px;
+    font-weight: bold;
+    transition: 0.3s;
+    }
+
+    .close:hover{
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    @media only screen and (max-width: 640px){
+        .modal-image{
+            width: 100%;
+        }
+    }
+
+    #PH-link{
+        text-decoration: none;
+    }
+</style>
 
 <!-- calendar page -->
 <div id="overlay">
@@ -24,36 +63,21 @@
         </div>
         <div>
             <h2>Current month/year:
-                <span id="month"></span> / <span id="year"></span>
+                <span id="month" class="text-muted"></span> <span class="text-muted">/</span> <span id="year" class="text-muted"></span>
             </h2>
             <h2>Current date:
-                <span id="date"></span>
+                <span id="date" class="text-muted"></span>
             </h2>
             <div class="calendar-class">
                 <div id="calendar" class="dycalendar-container skin-blue gradient shadow-default"></div>
             </div>
             <div id="legendcont" class="col-lg-3 col-sm-12" style="float:right">
 
-                <div id="legend" class="col-12 ">
-                    <p>Legend</p>
-                    <p>(Hover over to get the details):</p>
-                    <div class="p-3 mb-2 bg-primary text-dark" data-toggle="tooltip" title="School Holiday">
-                        <div>
-                            <p id="Hol" class="text-center">December<br>20</p>
-                        </div>
-                    </div>
-
-                    <div class="p-3 mb-2 bg-danger text-dark" data-toggle="tooltip" title="Public Holiday">
-                        <div>
-                            <p id="PH" class="text-center">November<br>6</p>
-                        </div>
-                    </div>
-
-                    <div class="p-3 mb-2 bg-secondary text-white" data-toggle="tooltip" title="Next/Last Month">
-                        <div>
-                            <p id="next-last" class="text-center">January<br>3</p>
-                        </div>
-                    </div>
+                <div id="legend" class="col-12">
+                    <p>Public Holidays</p>
+                    <p>(Click on the image to zoom in on the image):</p>
+                    <img id="Public-hol" alt="Public Holidays of 2019" src="../static/Public-Holidays-image.PNG">
+                    <footer id="source-link">source: <a id="PH-link" href="https://www.mom.gov.sg/employment-practices/public-holidays#Year-2019" target="_blank">https://www.mom.gov.sg/employment-practices/public-holidays#Year-2019</a></footer>
                 </div>
                 <div>
                     <button class="btn btn-success col-12"  onclick="window.location.href = '../schedule/ToDoList';">&raquo; Go To-Do-List &raquo;</button>
@@ -65,36 +89,26 @@
             <div id="plannerinstruction" class="col-lg-8">
                 <button id="displayinstruction" class="btn btn-primary col-12" data-toggle="collapse" data-target="#instruction">Instructions</button>
                 <div id="instruction" class="collapse">
-                    <table id="allinstruction" class="table table-light">
-                        <thead>
-                        <tr class="table-success">
-                            <th>Instructions on how to use the Calendar Planner & To-Do-List</th>
-                        </tr>
-                        </thead>
-                        <tr>
-                            <td>&#8226; Click on the button <button class="btn btn-success">Go to To-Do-List</button> and you will enter into the To-Do-List page</td>
-                        </tr>
-                        <tr class="table-success">
-                            <td>&#8226; After entering into the To-Do-List page, you will need to write down the date, time and your to-do-lists in the given text boxes</td>
-                        </tr>
-                        <tr>
-                            <td>&#8226; After finish setting your To-Do-Lists, you will need to click on the
-                                <button class="btn btn-success">Submit your inputs</button>
-                                in order to save all your inputs
-                            </td>
-                        </tr>
-                        <tr class="table-success">
-                            <td>&#8226; Click on the
-                                <button class="btn btn-danger">Back to Calendar page</button>
-                                to go back to the Calendar page (But BEWARE! Once you click this button all your inputs will be erased if you did not save your inputs)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>&#8226; Hover over the dates in the LEGEND MENU to display the details on what each colors represent</td>
-                        </tr>
-                    </table>
+                    <div id="allinstruction">
+                        <h2>Instructions on how to use the To-Do-List</h2>
+                        <hr>
+                        <p>&#8226; Click on the button <button class="btn btn-success" disabled>&raquo; Go to To-Do-List &raquo;</button> and you will enter into the To-Do-List page</p>
+                        <p>&#8226; After entering into the To-Do-List page, you will need to input down the date and your to-do-lists in the given text boxes</p>
+                        <p>&#8226; After finish setting your To-Do-Lists, you will need to click on the <button class="btn btn-outline-info" disabled>Add</button> in order to save all your inputs</p>
+                        <p>&#8226; Click on the <button class="btn btn-outline-danger" disabled>Back to Calendar page</button> to go back to the Calendar page (But BEWARE! Once you click this button all your inputs will be erased if you did not save your inputs)</p>
+                        <p>&#8226; Click on the <button class="btn btn-primary" disabled>Edit</button> to edit the particular To-Do-List and save it in order to update the original version to the edited version</p>
+                        <p>&#8226; Click on the <button class="btn btn-danger" disabled>Delete</button> to delete the particular To-Do-List </p>
+                    </div>
                 </div>
             </div>
+
+            <!-- Image Modal -->
+            <div id="Public-Hol-modal" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-image" id="img-1">
+                <div id="caption"></div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -120,6 +134,21 @@
     document.getElementById('year').innerHTML = current_year;
     var today = d.toDateString();
     document.getElementById('date').innerHTML = today;
+
+    var modal = document.getElementById('Public-Hol-modal');
+    var img = document.getElementById('Public-hol');
+    var modalImage = document.getElementById('img-1');
+    var caption = document.getElementById('caption');
+    img.onclick = function(){
+        modal.style.display = 'block';
+        modalImage.src = this.src;
+        caption.innerHTML = this.alt;
+    };
+
+    var closeModal = document.getElementsByClassName('close')[0];
+    closeModal.onclick = function(){
+        modal.style.display = 'none';
+    };
 
     dycalendar.draw({
         target : '#calendar',
