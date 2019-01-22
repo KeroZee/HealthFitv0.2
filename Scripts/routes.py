@@ -165,10 +165,12 @@ def guide():
     exercise = ""
     exercise1 = ""
     exercise2 = ""
+    # Open shelve to retrieve exercise objects (Data) for use
     storing = shelve.open('store_ex')
 
     while exercise == "":
         cycle = randint(0, 5)
+        # Makes sure that the same exercise will not appear twice
         if cycle not in int_list:
             exercise = storing['exer' + str(cycle)]
             int_list.append(cycle)
@@ -188,6 +190,7 @@ def guide():
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
+    # Returns variable to be used in HTML
     return render_template('ExGuide.html', exercise=exercise, exercise1=exercise1, exercise2=exercise2,
                            image_file=image_file)
 

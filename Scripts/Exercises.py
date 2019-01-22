@@ -1,3 +1,4 @@
+# Exercise class to create an object with attributes needed for the HTML
 class Exercises():
     def __init__(self, desc, benefits, steps, image, videos):
         self.desc = desc
