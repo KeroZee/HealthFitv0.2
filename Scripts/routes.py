@@ -5,16 +5,16 @@ from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, Requ
 from Scripts import app, db, bcrypt, mail
 from Scripts.models import User, Schedule, Food, Fitness, Breakfast, Lunch, Dinner, HealthTrack
 from random import randint
-<<<<<<< HEAD
+
 from Scripts.Fitness import Record, YourPlan, Exercise
-=======
+
 from Scripts.Fitness import Record, YourPlan
->>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
+
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 import shelve
 
-<<<<<<< HEAD
+
 totalKcalfromExercise = 0
 queryExerciseKcal = Fitness.query.all()
 for i in queryExerciseKcal:
@@ -60,8 +60,7 @@ def deleteRecords():
             db.session.commit()
 
 deleteRecords()
-=======
->>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
+
 
 @app.route("/")
 @app.route("/home")
@@ -156,19 +155,19 @@ def profile():
         form.weight.data = current_user.weight
         form.age.data = current_user.age
 
-<<<<<<< HEAD
 
-    app.logger.debug(kcal)
-=======
-    profile.kcal = 0
-    for food in bfastt:
-        profile.kcal += food.calories
-    for food in lunchh:
-        profile.kcal += food.calories
-    for food in dinnerr:
-        profile.kcal += food.calories
-    app.logger.debug(profile.kcal)
->>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
+
+    # app.logger.debug(kcal)
+
+    # profile.kcal = 0
+    # for food in bfastt:
+    #     profile.kcal += food.calories
+    # for food in lunchh:
+    #     profile.kcal += food.calories
+    # for food in dinnerr:
+    #     profile.kcal += food.calories
+    # app.logger.debug(profile.kcal)
+
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('profile.html', title='Profile',
                            image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr)
@@ -223,10 +222,8 @@ def guide():
     exercise = ""
     exercise1 = ""
     exercise2 = ""
-<<<<<<< HEAD
-=======
     # Open shelve to retrieve exercise objects (Data) for use
->>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
+
     storing = shelve.open('store_ex')
 
     while exercise == "":
@@ -458,7 +455,8 @@ def exercise():
             db.session.add(exer)
             db.session.commit()
         elif form.duration.data == 'thirty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data,
+            calories=totalexercises)
             db.session.add(exer)
             db.session.commit()
         elif form.duration.data == 'forty':
@@ -476,9 +474,9 @@ def exercise():
     app.logger.debug(totalKcalfromExercise)
 
     # daily intake
-    if kcal > 0:
+    if profile.kcal > 0:
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
-                    4.33 * current_user.age)) * 1.55) - kcal + totalKcalfromExercise
+                    4.33 * current_user.age)) * 1.55) - profile.kcal + totalKcalfromExercise
     else:
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
                     4.33 * current_user.age)) * 1.55) + totalKcalfromExercise
@@ -496,6 +494,7 @@ def exercise():
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
     e1 = Exercise(totalexercises)
 
+    print(totalKcalfromExercise)
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('exercise.html', items=r1, kcal=p1, exer=e1, image_file=image_file, form=form, totalKcalfromExercise=totalKcalfromExercise)

@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2856a55d-ff9c-4593-8a56-33c78cdfdb0a" name="Default Changelist" comment="Update HTMLSv1.1">
+      <change beforePath="$PROJECT_DIR$/.idea/HealthFitv0.11.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HealthFitv0.11.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/health.db" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/health.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/templates/exercise.html" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/templates/exercise.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,15 +16,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/HealthFitv0_11$Revision2.coverage" NAME="Revision2 Coverage Results" MODIFIED="1542851646477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Documents/Python Scripts" />
-    <SUITE FILE_PATH="coverage/HealthFitv0_11_master$routes.coverage" NAME="routes Coverage Results" MODIFIED="1545272892567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Scripts" />
     <SUITE FILE_PATH="coverage/HealthFitv0_11_master$app.coverage" NAME="app Coverage Results" MODIFIED="1544590683296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/HealthFitv0_11_master$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1546394310840" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/AppData/Local/Temp/Temp1_HealthFitv0.11-master (1).zip/HealthFitv0.11-master" />
-    <SUITE FILE_PATH="coverage/HealthFitv0_11$Practical5.coverage" NAME="Practical5 Coverage Results" MODIFIED="1542852445998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Practical5" />
-    <SUITE FILE_PATH="coverage/HealthFitv0_11$app.coverage" NAME="app Coverage Results" MODIFIED="1544344509132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/HealthFitv0_11_master$run.coverage" NAME="run Coverage Results" MODIFIED="1547445101647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/HealthFitv0_2_master$run.coverage" NAME="run Coverage Results" MODIFIED="1548173489462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HealthFitv0_11_master$routes.coverage" NAME="routes Coverage Results" MODIFIED="1545272892567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Scripts" />
     <SUITE FILE_PATH="coverage/HealthFitv0_11$Revision1.coverage" NAME="Revision1 Coverage Results" MODIFIED="1542778757699" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Documents/Python Scripts" />
+    <SUITE FILE_PATH="coverage/HealthFitv0_11$Practical5.coverage" NAME="Practical5 Coverage Results" MODIFIED="1542852445998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Practical5" />
+    <SUITE FILE_PATH="coverage/HealthFitv0_11_master$app__1_.coverage" NAME="app (1) Coverage Results" MODIFIED="1546394310840" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/AppData/Local/Temp/Temp1_HealthFitv0.11-master (1).zip/HealthFitv0.11-master" />
+    <SUITE FILE_PATH="coverage/HealthFitv0_2_master$run.coverage" NAME="run Coverage Results" MODIFIED="1548173489462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HealthFitv0_11$Revision2.coverage" NAME="Revision2 Coverage Results" MODIFIED="1542851646477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Documents/Python Scripts" />
+    <SUITE FILE_PATH="coverage/HealthFitv0_11_master$run.coverage" NAME="run Coverage Results" MODIFIED="1547445101647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HealthFitv0_2$run.coverage" NAME="run Coverage Results" MODIFIED="1548176308225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HealthFitv0_11$app.coverage" NAME="app Coverage Results" MODIFIED="1544344509132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -212,14 +215,43 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="324056381">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.1" value="2" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="4" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scripts/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1666">
-              <caret line="104" column="61" selection-start-line="104" selection-start-column="61" selection-end-line="104" selection-end-column="61" />
+            <state relative-caret-position="2006">
+              <caret line="118" selection-start-line="118" selection-end-line="118" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -230,17 +262,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="485">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="290">
+              <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Scripts/templates/exercise.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="143">
+              <caret line="108" column="20" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Scripts/templates/exercise.html">
+        <entry file="file://$PROJECT_DIR$/Scripts/routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="553">
-              <caret line="42" column="27" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
+            <state relative-caret-position="-5193">
+              <caret line="168" column="36" lean-forward="true" selection-start-line="168" selection-start-column="36" selection-end-line="168" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -248,7 +292,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scripts/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
+            <state relative-caret-position="391">
               <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
@@ -369,11 +413,11 @@
         <option value="$PROJECT_DIR$/run.py" />
         <option value="$PROJECT_DIR$/Scripts/Fitness.py" />
         <option value="$PROJECT_DIR$/Scripts/static/todolist.css" />
-        <option value="$PROJECT_DIR$/Scripts/templates/exercise.html" />
         <option value="$PROJECT_DIR$/Scripts/templates/food.html" />
         <option value="$PROJECT_DIR$/Scripts/models.py" />
         <option value="$PROJECT_DIR$/Scripts/forms.py" />
         <option value="$PROJECT_DIR$/Scripts/routes.py" />
+        <option value="$PROJECT_DIR$/Scripts/templates/exercise.html" />
       </list>
     </option>
   </component>
@@ -383,10 +427,11 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="953" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="389" />
+    <option name="y" value="22" />
+    <option name="width" value="953" />
+    <option name="height" value="717" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -394,35 +439,23 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="HealthFitv0.2-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HealthFitv0.2-master" type="462c0819:PsiDirectoryNode" />
+              <item name="HealthFitv0.2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HealthFitv0.2" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="HealthFitv0.2-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HealthFitv0.2-master" type="462c0819:PsiDirectoryNode" />
+              <item name="HealthFitv0.2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HealthFitv0.2" type="462c0819:PsiDirectoryNode" />
               <item name="Scripts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HealthFitv0.2-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HealthFitv0.2-master" type="462c0819:PsiDirectoryNode" />
-              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HealthFitv0.2-master" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HealthFitv0.2-master" type="462c0819:PsiDirectoryNode" />
-              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -431,7 +464,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -576,15 +609,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="953" y="0" width="974" height="1047" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.2439825" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.17473525" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32837406" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49668875" visible="true" weight="0.32518598" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49668875" visible="true" weight="0.32459018" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -662,13 +695,7 @@
     <entry file="file://$PROJECT_DIR$/Scripts/static/profile_pics/default.jpg" />
     <entry file="file://$PROJECT_DIR$/Scripts/HealthTracker.css" />
     <entry file="file://$PROJECT_DIR$/Scripts/static/Carousel_OOPP/default.png" />
-    <entry file="file://C:/Program Files/Python36/Lib/site-packages/flask/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="1220" selection-start-line="1220" selection-end-line="1220" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/Program Files/Python36/Lib/site-packages/flask/app.py" />
     <entry file="file://$PROJECT_DIR$/Scripts/static/profile_pics/default.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -775,9 +802,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../HealthFitv0.2-master/HealthFitv0.2-master/run.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../HealthFitv0.2-master/HealthFitv0.2-master/run.py" />
     <entry file="file://$PROJECT_DIR$/Scripts/Exercises.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -824,17 +849,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/Project/HealthFitv0.2/run.py" />
     <entry file="file://$PROJECT_DIR$/Scripts/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1666">
-          <caret line="104" column="61" selection-start-line="104" selection-start-column="61" selection-end-line="104" selection-end-column="61" />
+        <state relative-caret-position="2006">
+          <caret line="118" selection-start-line="118" selection-end-line="118" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
@@ -843,19 +862,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
+        <state relative-caret-position="391">
           <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Project/HealthFitv0.2/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -876,15 +886,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+        <state relative-caret-position="290">
+          <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/templates/exercise.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="42" column="27" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
+        <state relative-caret-position="143">
+          <caret line="108" column="20" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5193">
+          <caret line="168" column="36" lean-forward="true" selection-start-line="168" selection-start-column="36" selection-end-line="168" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
