@@ -32,7 +32,7 @@
                         <fieldset class="form-group">
                             <legend class="border-bottom mb-4">{{ legend }}</legend>
                             <div class="form-group">
-                                {{ form.datetime.label }}
+                                {{ form.datetime.label }}:
                                 {% if form.datetime.errors %}
                                     {{ form.datetime(class="form-control form-control-lg is-invalid") }}
                                     <div class="invalid-feedback">
@@ -45,7 +45,7 @@
                                 {% endif %}
                             </div>
                             <div class="form-group">
-                                {{ form.description.label(class="form-control-label") }}
+                                {{ form.description.label(class="form-control-label") }}:
                                 {% if form.description.errors %}
                                     {{ form.description(class="form-control form-control-lg is-invalid") }}
                                     <div class="invalid-feedback">
@@ -58,7 +58,7 @@
                                 {% endif %}
                             </div>
                             <div class="form-group">
-                                {{ form.remarks.label(class="form-control-label") }}
+                                {{ form.remarks.label(class="form-control-label") }}:
                                 {% if form.remarks.errors %}
                                     {{ form.remarks(class="form-control form-control-lg is-invalid") }}
                                     <div class="invalid-feedback">
@@ -100,45 +100,48 @@
           </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="deleteTodo" tabindex="-1" role="dialog" aria-labelledby="deleteTodoLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="deleteTodoLabel">Are you sure want to delete this To-Do?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Once you delete, the data will be gone!
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!--&lt;!&ndash; Modal &ndash;&gt;-->
+        <!--<div class="modal fade" id="deleteTodo" tabindex="-1" role="dialog" aria-labelledby="deleteTodoLabel" aria-hidden="true">-->
+          <!--<div class="modal-dialog" role="document">-->
+            <!--<div class="modal-content">-->
+              <!--<div class="modal-header">-->
+                <!--<h5 class="modal-title" id="deleteTodoLabel">Are you sure want to delete this To-Do?</h5>-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                  <!--<span aria-hidden="true">&times;</span>-->
+                <!--</button>-->
+              <!--</div>-->
+              <!--<div class="modal-body">-->
+                <!--Once you delete, the data will be gone!-->
+              <!--</div>-->
+              <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                <!--<button type="button" class="btn btn-danger">Delete</button>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
 	</div>
 </div>
+<div id="To-Do-container"><h2>Your To-Do-List(s)</h2>
     {% for activity in Todos %}
-        <article class="media content-section">
+        <article id="media-content" class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#" style="margin-left:6px; text-decoration:none;">{{ activity.name.name }}</a>
-              <small class="text-muted">Posted on {{ activity.date_posted.strftime('%d %b %Y %I:%M %p') }}</small>
+              <a class="mr-2" href="{{ url_for('profile') }}" style="margin-left:6px; text-decoration:none;">{{ activity.name.name }}</a>
+                <br>
+              <small class="text-muted" style="margin-left:6px;">Posted on {{ activity.date_posted.strftime('%d %b %Y %I:%M %p') }}</small>
             </div>
             <h4><a class="article-title" href="#" style="text-decoration:none;">{{ activity.description }}</a></h4>
             <p class="article-content" style="margin-left:6px">{{ activity.remarks }}</p>
               <!--<button id="edit" type="button" class="btn btn-secondary btn-sm m-1">Edit</button>-->
-              <form action="{{ url_for('delete_todo', todo_id=activity.id) }}" method="POST" style="float:left; margin-left:6px;">
-                  <input class="btn btn-danger" type="submit" value="Delete">
+              <form action="{{ url_for('delete_todo', todo_id=activity.id) }}" method="POST" style="float:left; margin-left:2px;">
+                  <input id="delete" class="btn btn-danger btn-sm m-1" type="submit" value="Delete">
               </form>
               <!--<button id="delete" type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteTodo">Delete</button>-->
           </div>
         </article>
     {% endfor %}
+</div>
 {% endblock %}
 </body>
 </html>

@@ -71,7 +71,7 @@ class UpdateDetails(FlaskForm):
 class TodoList(FlaskForm):
     datetime = DateField('Date', format='%Y-%m-%d')
     description = TextAreaField('Description', validators=[DataRequired()], render_kw={"placeholder":"Enter your to-do in this section\nExample: Do 4 sets of 10 push-ups everyday starting from 26 January 2019"})
-    remarks = TextAreaField('Remarks', render_kw={"placeholder":"Enter any important info about your to-dos\nExample: To train for stomach muscles"})
+    remarks = TextAreaField('Remarks', render_kw={"placeholder":"Enter any important info about your to-dos\nExample: To train for stomach muscles and arms biceps"})
     submit = SubmitField('Add')
 
 class RequestResetForm(FlaskForm):

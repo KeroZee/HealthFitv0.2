@@ -5,26 +5,25 @@
 
 body{
     font-family: Verdana, sans-serif;
+    background-image: url("e5WlXi.jpg");
 }
 
 #container{
-    width:98.5%;
-    min-height: 80vh;
+    width:90.5%;
+    min-height: 165vh;
     margin:auto;
     margin-top:12vh;
 	border-radius: 10px;
+    background-color: white;
+    border: 3px solid black;
 }
 
 table{
     font-weight: bold;
     color: black;
     text-align: center;
-    width: 1415px;
+    width: 100%;
     height: 302px;
-}
-
-.lastmth, .nextmth{
-    background-color: #545454;
 }
 
 #planner{
@@ -40,9 +39,10 @@ table{
 #legend{
 	border: 2px solid green;
 	box-shadow: 0px 0px 5px yellow;
-    background-color: #fff;
+    background-color: #939393;
 	padding: 20px;
 	margin-bottom: 30px;
+    font-weight: bold;
 }
 
 #legendcont{
@@ -52,14 +52,26 @@ table{
     background-color: greenyellow;
     padding: 23px;
     max-width: 360px;
+    float: right;
 }
 
 #allinstruction{
     font-weight: bold;
     border: 1.5px solid black;
+    background-color: white;
 }
 
 #allinstruction > p{
+    margin-left: 14px;
+}
+
+div#all-instruction{
+    text-align: center;
+    border: 1.5px solid black;
+    font-weight: bold;
+}
+
+div#all-instruction > p{
     margin-left: 14px;
 }
 
@@ -71,7 +83,7 @@ table{
     color: black;
     text-align: center;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 tr > td:first-child{
@@ -80,15 +92,16 @@ tr > td:first-child{
 
 tr:first-child{
     color: darkblue;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 #calendar{
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .dycalendar-month-container{
-    width: 1465px;
+    width: 100%;
     height: 348px;
     border: 2px solid black;
     border-radius: 2px;
@@ -100,14 +113,14 @@ tr:first-child{
 }
 
 #Public-hol{
-    width: 280px;
-    max-height: 379px;
+    width: 100%;
+    max-height: 100%;
     margin-right: 138px;
     cursor: pointer;
     transition: 0.3s;
 }
 
-#Public-hol:hover{
+#Public-hol:hover, #TDL:hover, #SetTDL:hover{
     opacity: 0.6;
 }
 
@@ -115,7 +128,7 @@ tr:first-child{
     display: none; /* To hide the modal image */
     position: fixed; /* stay in the place I want */
     z-index: 1; /* To sit this modal on the top */
-    padding-top: 45px;
+    padding-top: 45px; /* have spaces between the div and span */
     left: 0;
     top: 0;
     width: 100%;
@@ -133,11 +146,27 @@ tr:first-child{
     max-width: 522px;
 }
 
-#caption{
+/* Modal image for accessing To-Do */
+.modal-img{
     margin: auto;
     display: block;
-    width: 80%;
-    max-width: 640px;
+    width: 31%;
+    max-height: 650px;
+}
+
+.img-modal{
+    margin: auto;
+    display: block;
+    width: 85%;
+    height: 630px;
+}
+
+/* caption title fot the zoomed image */
+#caption, #detail-TDL, #detail-SetTD{
+    margin: auto;
+    display: block;
+    width: 85%;
+    max-width: 650px;
     text-align: center;
     color: #ccc;
     padding: 10px 0;
@@ -154,8 +183,48 @@ tr:first-child{
     to {transform:scale(1)}
 }
 
+/* style the footer that contains the image link */
 #source-link{
     font-family: Courier, monospace;
     font-size: 12px;
     font-style: italic;
+}
+
+/* image source link */
+#source-link, #source-link > a{
+    font-weight: bold;
+    font-size: 1.7vh;
+}
+
+/* the month & date contents */
+#month-date > h2 > span{
+    text-shadow: 2px 2px 5px #878787;
+}
+
+#month-year, #today{
+    text-shadow: 2px 2px 5px #878787;
+}
+
+.title-head{
+    font-family: 'Goudy Stout', 'Rockwell Extra Bold', 'Verdana', 'sans-serif';
+    color: whitesmoke;
+    text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
+}
+
+#header-title{
+    margin: 10px 5px 5px 5px;
+}
+
+#TDL{
+    width: 80px;
+    height: 100px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#SetTDL{
+    width: 120px;
+    height: 85px;
+    cursor: pointer;
+    transition: 0.3s;
 }

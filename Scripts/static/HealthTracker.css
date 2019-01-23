@@ -36,11 +36,15 @@
 }
 
 #measure_stats {
-<<<<<<< HEAD
     position: static;
-=======
     position: relative;
->>>>>>> b9a25f5794783d67c73d61b036e35b23b635aeb4
+}
+
+.font-weight-bold {
+    font-family: 'Goudy Stout', 'Rockwell Extra Bold', 'Verdana', 'sans-serif';
+    color: whitesmoke;
+    text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
+    margin-top: 10px;
 }
 
 textarea {
