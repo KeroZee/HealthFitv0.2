@@ -1,6 +1,8 @@
+//List of heart rates set as data points
 var heartrate_list = JSON.parse(localStorage.getItem('list')) || [];
 
-function Multiply() {
+//Function to measure and record heart rate
+function Measure() {
     var x = document.getElementById("bpm").value;
     if (typeof(Storage) !== "undefined") {
         localStorage.setItem("bpm", x);
@@ -17,6 +19,7 @@ function Multiply() {
         }
 }
 
+//Adjusting condition and recommended measures variables after recording latest heart rate
 function Condition(){
     var y = localStorage.getItem("bpm");
     if (y < 60){
@@ -42,7 +45,7 @@ function Condition(){
     }
 }
 
-
+//Update list of heart rates (var heartrate_list)
 function setList() {
     heartrate_list.push(parseInt(localStorage.getItem("bpm")));
     if (heartrate_list.length > 5) {
@@ -51,13 +54,16 @@ function setList() {
     localStorage.setItem('list', JSON.stringify(heartrate_list));
 }
 
+//Function when user loads page
 window.onload = function () {
+    //Get local storage
     localStorage.getItem("list");
     document.getElementById("record").innerHTML = localStorage.getItem("bpm");
     document.getElementById("date").innerHTML = localStorage.getItem("date");
     document.getElementById("condition").innerHTML = localStorage.getItem("condition");
     document.getElementById("recommend").innerHTML = localStorage.getItem("recommend");
 
+    //JS for line graph
     var options = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
         theme: "light2",
