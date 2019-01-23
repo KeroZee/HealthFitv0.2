@@ -113,14 +113,14 @@ tr:first-child{
 }
 
 #Public-hol{
-    width: 280px;
-    max-height: 379px;
+    width: 100%;
+    max-height: 100%;
     margin-right: 138px;
     cursor: pointer;
     transition: 0.3s;
 }
 
-#Public-hol:hover, #TDL:hover{
+#Public-hol:hover, #TDL:hover, #SetTDL:hover{
     opacity: 0.6;
 }
 
@@ -154,12 +154,19 @@ tr:first-child{
     max-height: 650px;
 }
 
-/* caption title fot the zoomed image */
-#caption, #detail-TDL{
+.img-modal{
     margin: auto;
     display: block;
-    width: 80%;
-    max-width: 640px;
+    width: 85%;
+    height: 630px;
+}
+
+/* caption title fot the zoomed image */
+#caption, #detail-TDL, #detail-SetTD{
+    margin: auto;
+    display: block;
+    width: 85%;
+    max-width: 650px;
     text-align: center;
     color: #ccc;
     padding: 10px 0;
@@ -218,4 +225,6 @@ tr:first-child{
 #SetTDL{
     width: 120px;
     height: 85px;
+    cursor: pointer;
+    transition: 0.3s;
 }

@@ -47,7 +47,7 @@ class User(db.Model, UserMixin):
 
 class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now())
     description = db.Column(db.String(500), nullable=False)
     remarks = db.Column(db.String(500), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

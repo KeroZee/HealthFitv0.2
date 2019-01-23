@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Logo of website-->
+    <link rel="icon" href="../static/Logo.png">
+
+    <!-- tile of the page -->
     {% if title %}
         <title>HealthFit - {{ title }}</title>
     {% else %}
         <title>HealthFit - Health & Fitness Planner</title>
     {% endif %}
+
     <link rel="stylesheet" href="../static/health_fitness_plan.css">
     <script src="../static/health_fitness_plan.js"></script>
     <link rel="stylesheet" href="../static/dycalendar.min.css">
@@ -63,7 +68,7 @@
 
 <div class="container-fluid" id="container">
     <div>
-        <h1 class="text-center">Health & Fitness Schedule Planner</h1>
+        <h1 class="text-center">Calendar Planner</h1>
         <div>
             <br>
         </div>
@@ -76,6 +81,7 @@
             <h2 id="today" class="text-dark">Current date:
                 <span id="date" class="text-dark"></span>
             </h2>
+        </div>
 
             <!-- Div that contains the calendar -->
             <div class="calendar-class">
@@ -83,12 +89,12 @@
             </div>
 
             <!-- Public Holidays image container -->
-            <div id="legendcont" class="col-lg-3 col-sm-12">
+            <div id="legendcont" class="col-lg-3 col-sm-12 container-fluid">
                 <!-- Public Holidays image div -->
                 <div id="legend" class="col-12">
                     <p>Public Holidays</p>
                     <p>(Click on the image to zoom in on the image):</p>
-                    <img id="Public-hol" alt="Public Holidays of 2019" src="../static/Public-Holidays-image.PNG">
+                    <img id="Public-hol" alt="Public Holidays of 2019" src="../static/Public-Holidays-image.PNG" style="width:100%;">
                     <footer id="source-link">source: <a id="PH-link" class="text-danger" href="https://www.mom.gov.sg/employment-practices/public-holidays#Year-2019" target="_blank">https://www.mom.gov.sg/employment-practices/public-holidays#Year-2019</a></footer>
                 </div>
                 <div>
@@ -102,7 +108,7 @@
 
             <!-- Instruction buttons -->
             <p>
-                <a class="btn btn-primary col-lg-4" data-toggle="collapse" href="#textinstruction">Text Instructions</a>
+                <button class="btn btn-primary col-lg-4" type="button" data-toggle="collapse" data-target="#textinstruction">Text Instructions</button>
                 <button class="btn btn-primary col-lg-4" type="button" data-toggle="collapse" data-target="#imageinstruction">Image Instructions</button>
             </p>
 
@@ -110,7 +116,7 @@
             <div id="words-instruction" class="col-lg-4" style="display:inline-block">
 
                 <!-- Hidden div to collapse when the button is click -->
-                <div id="textinstruction" class="collapse">
+                <div id="textinstruction" class="collapse" style="margin-bottom:15px;">
 
                     <!-- Hidden text Instruction div that will be shown -->
                     <div id="allinstruction">
@@ -118,9 +124,10 @@
                         <hr>
                         <p>&#8226; Click on the button <button class="btn btn-success" disabled>&raquo; Go to To-Do-List &raquo;</button> and you will enter into the To-Do-List page</p>
                         <p>&#8226; After entering into the To-Do-List page, you will need to input down the date and your to-do-lists in the given text boxes</p>
-                        <p>&#8226; After finish setting your To-Do-Lists, you will need to click on the <button class="btn btn-outline-info" disabled>Add</button> in order to save all your inputs</p>
+                        <p>&#8226; After finish setting your To-Do-Lists, you will need to click on the <button class="btn btn-outline-info" disabled>Add</button> so that everything is saved</p>
                         <p>&#8226; Click on the <button class="btn btn-outline-danger" disabled>Back to Calendar page</button> to go back to the Calendar page (But BEWARE! Once you click this button all your inputs will be erased if you did not save your inputs)</p>
                         <p>&#8226; Click on the <button class="btn btn-danger" disabled>Delete</button> to delete a particular To-Do-List </p>
+                        <p>&#8226; If you wish to use the image instructions format click on the <button class="btn btn-primary" disabled>Image Instructions</button></p>
                     </div>
                 </div>
             </div>
@@ -135,8 +142,9 @@
                     <div id="all-instruction">
                         <h2>Instructions on how to use the To-Do-List</h2>
                         <hr>
-                        <p><img id="TDL" src="../static/GotoTDL.PNG" alt="Click on the button to access the To-Do-List page"></p><p>&#8226; Click on the button to access the To-Do-List page</p>
-                        <p><img id="SetTDL" src="../static/SettingTDL.PNG" alt="Input the date, description and remarks of your To-Do in the text boxes"></p><p>&#8226; Input your date, description of To-Do and remarks of To-Do in the text boxes provided</p>
+                        <p>Click on the images to zoom in</p>
+                        <p><img id="TDL" src="../static/GotoTDL.PNG" alt="Click on the button to access the To-Do-List page"></p><p>&#8226; Leads you to the To-Do-List page</p>
+                        <p><img id="SetTDL" src="../static/SettingTDL.PNG" alt="Input the date, description and remarks of your To-Do in the text boxes just like the example shown above"></p><p>&#8226; Set your own personal To-Do-List</p>
                     </div>
                 </div>
             </div>
@@ -155,7 +163,13 @@
                 <div id="detail-TDL"></div>
             </div>
 
-        </div>
+            <!-- Image for setting TDL -->
+            <div id="SetTD-modal" class="modal">
+                <span class="close">&times;</span>
+                <img class="img-modal" id="img-SetTD">
+                <div id="detail-SetTD"></div>
+            </div>
+
     </div>
 </div>
 <script src="../static/dycalendar.min.js"></script>
@@ -206,11 +220,11 @@
     // Zoom in on modal image when clicked //
     var modal_TDL = document.getElementById('TDL-modal');
     var TDL_image = document.getElementById('TDL');
-    var TDL_modal_image = document.getElementById('img-TDL');
+    var TDL_modal_img = document.getElementById('img-TDL');
     var detail_TDL = document.getElementById('detail-TDL');
     TDL_image.onclick = function(){
         modal_TDL.style.display = 'block';
-        TDL_modal_image.src = this.src;
+        TDL_modal_img.src = this.src;
         detail_TDL.innerHTML = this.alt
     };
 
@@ -218,6 +232,23 @@
     var closemodal = document.getElementsByClassName('close')[1];
     closemodal.onclick = function(){
         modal_TDL.style.display = 'none';
+    };
+
+    // Zoom in on modal image when clicked //
+    var modal_setTDL = document.getElementById('SetTD-modal');
+    var SetTD_image = document.getElementById('SetTDL');
+    var SetTD_modal_img = document.getElementById('img-SetTD');
+    var detail_setTD = document.getElementById('detail-SetTD');
+    SetTD_image.onclick = function(){
+        modal_setTDL.style.display = 'block';
+        SetTD_modal_img.src = this.src;
+        detail_setTD.innerHTML = this.alt;
+    };
+
+    // Close the modal function //
+    var modalclose = document.getElementsByClassName('close')[2];
+    modalclose.onclick = function(){
+        modal_setTDL.style.display = 'none';
     };
 
     dycalendar.draw({
