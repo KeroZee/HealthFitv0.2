@@ -281,7 +281,7 @@ def _Food():
 
     #food and exercise
     # totalfood = foodprotein*4 + foodcarb*4 + foodfat*9
-    # totalexercises = time*(intensity*0.33)
+    # totalexercises = time*(intensity*3.33)
     # 1 rep = 0.3-0.4cal
 
     #daily intake - added food and exercises
