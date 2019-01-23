@@ -125,7 +125,7 @@
         </fieldset>
     </form>
     <div id="breakfast" class="collapse">
-        <h4 class="font-weight-bold text-justify">BREAKFAST</h4>
+        <h4 class="font-weight-bold text-justify foodtitle">BREAKFAST</h4>
         <ul>
             {% for food in bfastt %}
             <li class="text-justify font-weight-bold foodnames">{{food.foodname}}</li>
@@ -135,7 +135,7 @@
     </div>
 
     <div id="lunch" class="collapse">
-        <h4 class="font-weight-bold text-justify">LUNCH</h4>
+        <h4 class="font-weight-bold text-justify foodtitle">LUNCH</h4>
         <ul>
             {% for food in lunchh %}
             <li class="text-justify font-weight-bold foodnames">{{food.foodname}}</li>
@@ -145,7 +145,7 @@
     </div>
 
     <div id="dinner" class="collapse">
-        <h4 class="text-justify font-weight-bold">DINNER</h4>
+        <h4 class="text-justify font-weight-bold foodtitle">DINNER</h4>
         <ul>
             {% for food in dinnerr %}
             <li class="text-justify font-weight-bold foodnames">{{food.foodname}}</li>
@@ -153,7 +153,6 @@
         <p class="text-justify text-danger font-weight-bold">{{food.calories}} Kcal</p>
         {% endfor %}
     </div>
-</div>
 </div>
 {% endblock %}
 </body>
