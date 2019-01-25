@@ -11,11 +11,9 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 import shelve
 
-
-
 def deleteRecords():
 
-    threading.Timer(86400.0, deleteRecords).start()
+    threading.Timer(300.0, deleteRecords).start()
     now = datetime.datetime.now().time()
     midnight = datetime.time(0, 0, 0)
     print(now, midnight)
@@ -109,10 +107,10 @@ def save_picture(form_picture):
 @login_required
 def profile():
     form = UpdateDetails()
+    exercises = Fitness.query.all()
     bfastt = Breakfast.query.all()
     lunchh = Lunch.query.all()
     dinnerr = Dinner.query.all()
-    app.logger.debug('in profile method')
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
@@ -141,19 +139,8 @@ def profile():
         profile.kcal += food.calories
 
 
-    # app.logger.debug(kcal)
-
-    # profile.kcal = 0
-    # for food in bfastt:
-    #     profile.kcal += food.calories
-    # for food in lunchh:
-    #     profile.kcal += food.calories
-    # for food in dinnerr:
-    #     profile.kcal += food.calories
-    # app.logger.debug(profile.kcal)
-
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('profile.html', title='Profile',image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr)
+    return render_template('profile.html', title='Profile',image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr, exercise=exercises)
 
 
 def send_reset_email(user):
@@ -321,28 +308,32 @@ def _Food():
         totalKcalfromExercise += i.calories
         # print(totalKcalfromExercise)
     print(totalKcalfromExercise)
-    if form.meal.data == 'breakfast':
-        searches = Food.query.filter_by(name=form.name.data).first()
-        app.logger.debug(form.meal.data)
-        breakfast = Breakfast(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
-                              protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
-        db.session.add(breakfast)
-        flash('Commit!', 'success')
-    elif form.meal.data == 'lunch':
-        searches = Food.query.filter_by(name=form.name.data).first()
-        lunch = Lunch(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
-                      protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
-        db.session.add(lunch)
-        flash('Commit!', 'success')
-    elif form.meal.data == 'dinner':
-        searches = Food.query.filter_by(name=form.name.data).first()
-        dinner = Dinner(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
-                        protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
-        db.session.add(dinner)
-        flash('Commit!', 'success')
-    else:
-        searches = ""
-    db.session.commit()
+    try:
+        if form.meal.data == 'breakfast':
+            searches = Food.query.filter_by(name=form.name.data).first()
+            app.logger.debug(form.meal.data)
+            breakfast = Breakfast(name=current_user, foodname=searches.name, mass=searches.mass,
+                                  calories=searches.calories,
+                                  protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
+            db.session.add(breakfast)
+            flash('Commit!', 'success')
+        elif form.meal.data == 'lunch':
+            searches = Food.query.filter_by(name=form.name.data).first()
+            lunch = Lunch(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
+                          protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
+            db.session.add(lunch)
+            flash('Commit!', 'success')
+        elif form.meal.data == 'dinner':
+            searches = Food.query.filter_by(name=form.name.data).first()
+            dinner = Dinner(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
+                            protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
+            db.session.add(dinner)
+            flash('Commit!', 'success')
+        else:
+            searches = ""
+        db.session.commit()
+    except AttributeError:
+        flash('The Food is not available in the database!','warning')
 
 
     # daily intake
@@ -394,7 +385,6 @@ def exercise():
     queryExerciseKcal = Fitness.query.all()
     for i in queryExerciseKcal:
         totalKcalfromExercise += i.calories
-        # print(totalKcalfromExercise)
     print(totalKcalfromExercise)
     if form.intensity.data == 'light':
         if form.duration.data == 'ten':

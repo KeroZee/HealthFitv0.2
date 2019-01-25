@@ -41,6 +41,7 @@
             <button class='btn btn-success' data-toggle="collapse" data-target="#breakfast">Breakfast</button>
             <button class='btn btn-success' data-toggle="collapse" data-target="#lunch">Lunch</button>
             <button class='btn btn-success' data-toggle="collapse" data-target="#dinner">Dinner</button>
+            <button class='btn btn-success' data-toggle="collapse" data-target="#exercise">Exercise</button>
         </p>
         <fieldset id="Updatedetails" class="collapse">
             <legend class="border-bottom mb-4">Account Info</legend>
@@ -151,6 +152,15 @@
             <li class="text-justify font-weight-bold foodnames">{{food.foodname}}</li>
         </ul>
         <p class="text-justify text-danger font-weight-bold">{{food.calories}} Kcal</p>
+        {% endfor %}
+    </div>
+    <div id="exercise" class="collapse">
+        <h4 class="text-justify font-weight-bold foodtitle">EXERCISE</h4>
+        <ul>
+            {% for exercise in exercise %}
+            <li class="text-justify font-weight-bold foodnames">{{exercise.exercisename}}</li>
+        </ul>
+        <p class="text-justify text-danger font-weight-bold">{{exercise.calories}} Kcal</p>
         {% endfor %}
     </div>
 </div>
