@@ -1,24 +1,13 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    {% if title %}
-        <title>HealthFit - {{ title }}</title>
-    {% else %}
-        <title>HealthFit - Health Tracker</title>
-    {% endif %}
+    <title>Health Tracker</title>
     <!-- Bootstrap-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='HealthTracker.css') }}">
+    <link rel="stylesheet" href="../static/HealthTracker.css">
     <link rel="icon" href="../static/Logo.png">
-    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
     <script src="../static/HealthTracker.js"></script>
 </head>
 <body>
@@ -27,122 +16,128 @@
 {% block body %}
 <div id="container">
     <h2 class="font-weight-bold text-center headers">Welcome to the Health Tracker!</h2>
-    <div id="healthtracker">
-        <!--Update-->
-    <!--<div class="alert alert-success" id="update">
-        <strong>Heart rate successfully updated!</strong>
-    </div>-->
-        <!--User Stats-->
-    <h1>{{ current_user.username }}'s Health Tracker</h1>
-    <img class="rounded-circle account-img" src="{{ image_file }}">
-    <div id="userstats">
-    <p>Age : <strong>{{ current_user.age }}</strong></p><br>
-    <p>Previous Heart Rate: <strong><span id="record">???</span></strong> beats per minute</p><br>
-    <p>Previously Recorded on: <strong><span id="date">???</span></strong></p><br>
-    <p>Condition: <strong><span id="condition">???</span></strong></p><br>
-    <p>Recommended Measures: <strong><span id="recommend">???</span></strong></p><br>
-    <p style="font-weight: bold;">(Note: Subject to change)</p><br>
-    </div>
-    <div id="measure">
-    <div id="measure_stats">
-        <!--Measure heart rate-->
-    <h3>No. of heart beats in 1 minute:<textarea placeholder="E.g.(80, 100)" id="bpm"></textarea></h3>
-    </div>
-    <button type="button" class="btn btn-warning" id="myBtn" data-toggle="modal" data-target="#backtoHealthTracker">MEASURE</button>
-</div>
-    <div id="instructions">
-        <!--Instructions-->
-        <h1 id="heading">Want to measure your heart rate? Click <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#info">here</button> to see how!</h1>
-        <div id="info" class="collapse">
-            <h2>Learn what is a normal heart rate and how to find your pulse with your fingers or a device.</h2>
-            <p>Measuring your heart rate is any easy way to gauge your health, as it provides a real-time snapshot of your heart muscle function.</p>
-            <p>A normal heart rate can vary from person to person. However, an unusually high or low resting heart rate can be a sign of trouble.</p>
-            <h2>What is a normal heart rate?</h2>
-            <p>A normal heart rate for adults is typically 60 to 100 beats per minute. A heart rate that is slower than 60 beats per minute is considered bradycardia ("slow heart") and a rate that is faster than 100 beats per minutes is termed tachycardia ("fast heart"). There are some experts who believe that an ideal resting heart rate is closer to 50 to 70 beats per minute. Regardless of what is considered normal, it's important to recognize that a healthy heart rate will vary depending on the situation.</p>
-            <p>Among healthy people, a slower heart rate can be due to being physically fit, a medication, or sleep patterns. However, a slower heart rate can indicate a sign of disease including heart attack or other heart disease, certain infections, high levels of potassium in the blood, or an an underactive thyroid.<p>
-            <p>On the reverse side, a fast rate in healthy people can be because they are exercising, nervous or excited, using a stimulant or are pregnant. The disease health conditions that are associated with a fast heart rate include most infections or just about any cause of fever, heart problems, certain medications, low levels of potassium in the blood, an overactive thyroid gland or too much thyroid medication, anemia, or asthma or other breathing trouble.</p>
-            <h2>How to check your heart rate?</h2>
-            <ul>
-                <img src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/2018/1-whatshouldmy.jpg" style="float: right; width: 200px; height: 100px;">
-                <li>At the neck, lightly press the side of the neck, just below your jawbone.</li>
-                <li>Alternatively, at the wrist, lightly press the index and middle fingers of one hand on the opposite wrist, just below the base of the thumb.</li>
-                <li>Alternatively, you may use a heart rate monitor if necessary.</li>
-                <li>Depending on your heart rate at rest, the health tracker will identify your condition as follows:</li>
-                <ol>
-                    <li><strong>Poor: </strong>If your heart rate is lower than 60 beats per minute.</li>
-                    <li><strong>Good: </strong>If your heart rate is within the range of 60 to 100 beats per minute.</li>
-                    <li><strong>Critical: </strong>If your heart rate is within the range of 101 to 140 beats per minute.</li>
-                    <li><strong>Hazardous: </strong>If your heart rate is higher than 140 beats per minute.</li>
-                </ol>
-            </ul>
-        </div>
-    </div>
-        <div class="modal fade" id="backtoHealthTracker" tabindex="-1" role="dialog" aria-labelledby="backtoHealthTrackerLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="backtoHealthTrackerLabel">Are you sure?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Once you submit, you cannot change your input again!
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                  <form action="{{ url_for('submit_heartrate') }}" method="POST">
-                    <input class="btn btn-warning" type="submit" value="Measure" onclick="Multiply()">
-                  </form>
-                <!--<button type="button" class="btn btn-warning" onclick="Multiply()">Submit</button>-->
-              </div>
+    <div id="healthtracker" class="jumbotron">
+        <h1 class="text-center">{{ current_user.username }}'s Health Tracker</h1>
+        <div class="row">
+            <!--User Stats-->
+            <div class="col-sm-4" id="userstats">
+                <img class="rounded-circle account-img" src="{{ image_file }}">
+                <p class="text-justify">Age : <strong>{{ current_user.age }}</strong></p><br>
+                <p class="text-justify">Previous Heart Rate: <strong><span id="record">???</span></strong> beats per
+                    minute</p><br>
+                <p class="text-justify">Previously Recorded on: <strong><span id="date">???</span></strong></p><br>
+                <p class="text-justify">Condition: <strong><span id="condition">???</span></strong></p><br>
+                <p class="text-justify">Recommended Measures: <strong><span id="recommend">???</span></strong></p>
+                <br>
+                <p class="text-justify font-weight-bold">(Note: Subject to change)</p><br>
             </div>
-          </div>
+            <div id="chartContainer">
+                <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+                <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+            </div>
         </div>
+        <div id="measure">
+            <div id="measure_stats">
+                <!--Measure heart rate-->
+                <h4>No. of heart beats in 1 minute:<textarea placeholder="E.g.(80, 100)" id="bpm"></textarea></h4>
+            </div>
+            <button type="button" class="btn btn-warning" id="myBtn" data-toggle="modal"
+                    data-target="#backtoHealthTracker">MEASURE
+            </button>
+        </div>
+        <div id="instructions">
+            <!--Instructions-->
+            <button type="button" class="btn btn-info col-sm-6" data-toggle="collapse" data-target="#info">Learn to
+                measure
+                your heart rate!
+            </button>
+            <div id="info" class="collapse">
+                <h3 class="text-justify">Why is my heart rate important?</h3>
+                <p class="text-justify">A normal heart rate for adults is typically 60 to 100 beats per minute. A
+                    heart
+                    rate that is slower
+                    than 60 beats per minute is considered bradycardia ("slow heart") and a rate that is faster than
+                    100
+                    beats per minutes is termed tachycardia ("fast heart"). Regardless of what is
+                    considered
+                    normal, it's important to recognize that a healthy heart rate will vary depending on the
+                    situation.</p>
+                <p class="text-justify">Reasons for a slower heart rate can be due to being
+                    physically
+                    fit,
+                    medication, or sleep
+                    patterns. However, a slower heart rate can indicate a sign of disease including heart attacks or
+                    other heart disease, certain infections, high levels of potassium in the blood, or an
+                    underactive
+                    thyroid.
+                </p>
+                <p class="text-justify">Vice versa, reasons for a faster heart rate includes
+                    exercising, nervous
+                    excited, using a stimulant or are pregnant. The health conditions that may cause a
+                    fast heart rate include most infections or fever, heart problems,
+                    certain
+                    medications, low levels of potassium in the blood, an overactive thyroid gland, too much
+                    thyroid
+                    medication, anemia, asthma or other breathing troubles.</p>
+                <h3 class="text-justify">How do I check my heart rate?</h3>
+                <ul>
+                    <img
+                            src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/2018/1-whatshouldmy.jpg"
+                            style="float: right; width: 250px; height: 200px;">
+                    <li>Lightly press the side of your neck, just below the jawbone (Figure A).</li>
+                    <li>Alternatively, at the wrist, lightly press the index and middle fingers of one hand on the
+                        opposite wrist, just below the base of the thumb (Figure B).
+                    </li>
+                    <li>Alternatively, you may have to use a heart rate monitor if necessary.</li>
+                    <li>Depending on your heart rate at rest, the health tracker will identify your condition as
+                        follows:
+                        <ol>
+                            <li><strong class="text-info">Poor: </strong>If your heart rate is lower than 60 beats per
+                                minute.
+                            </li>
+                            <li><strong class="text-success">Good: </strong>If your heart rate is within the range of 60
+                                to 100 beats per
+                                minute.
+                            </li>
+                            <li><strong class="text-warning">Critical: </strong>If your heart rate is within the range
+                                of 101 to 140 beats
+                                per
+                                minute.
+                            </li>
+                            <li><strong class="text-danger">Hazardous: </strong>If your heart rate is higher than 140
+                                beats per minute.
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal fade" id="backtoHealthTracker" tabindex="-1" role="dialog"
+             aria-labelledby="backtoHealthTrackerLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="backtoHealthTrackerLabel">Are you sure?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Once you submit, you cannot change your input again!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <form action="{{ url_for('submit_heartrate') }}" method="POST">
+                            <input class="btn btn-warning" type="submit" value="Measure" onclick="Multiply()">
+                        </form>
+                        <!--<button type="button" class="btn btn-warning" onclick="Multiply()">Submit</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div id="chartContainer">
-<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-</div>
-</div>
+
 {% endblock %}
 </body>
 </html>
-
-			<!--{ x: new Date(2017, 10, 6), y: 55 },
-			{ x: new Date(2017, 10, 7), y: 54 },
-			{ x: new Date(2017, 10, 8), y: 69 },
-			{ x: new Date(2017, 10, 9), y: 65 },
-			{ x: new Date(2017, 10, 10), y: 66 },
-			{ x: new Date(2017, 10, 11), y: 63 },
-			{ x: new Date(2017, 10, 12), y: 67 },
-			{ x: new Date(2017, 10, 13), y: 66 },
-			{ x: new Date(2017, 10, 14), y: 56 },
-			{ x: new Date(2017, 10, 15), y: 64 }
-
-			{ x: new Date(2017, 10, 6), y: 65 },
-			{ x: new Date(2017, 10, 7), y: 73 },
-			{ x: new Date(2017, 10, 8), y: 96 },
-			{ x: new Date(2017, 10, 9), y: 84 },
-			{ x: new Date(2017, 10, 10), y: 85 },
-			{ x: new Date(2017, 10, 11), y: 86 },
-			{ x: new Date(2017, 10, 12), y: 94 },
-			{ x: new Date(2017, 10, 13), y: 97 },
-			{ x: new Date(2017, 10, 14), y: 86 },
-			{ x: new Date(2017, 10, 15), y: 89 }
-
-			,
-	{
-		type: "line",
-		showInLegend: true,
-		name: "Actual Sales",
-		lineDashType: "dash",
-		yValueFormatString: "#,##0K",
-		dataPoints: [
-			{ x: new Date(2018, 11, 14), y: 60 },
-			{ x: new Date(2018, 11, 15), y: 57 },
-			{ x: new Date(2018, 11, 16), y: 51 },
-			{ x: new Date(2018, 11, 17), y: 56 },
-			{ x: new Date(2018, 11, 18), y: 54 },
-		]
-	}-->

@@ -61,19 +61,19 @@ window.onload = function () {
                 yValueFormatString: "#,##0KG",
                 dataPoints: [
                     {
-                        x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 4),
+                        x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 3),
                         y: parseInt(localStorage.getItem("weight3"))
                     }, //124
                     {
-                        x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 3),
+                        x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 2),
                         y: parseInt(localStorage.getItem("weight2"))
                     },
                     {
-                        x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 2),
+                        x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1),
                         y: parseInt(localStorage.getItem("weight1"))
                     },
                     {
-                        x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1),
+                        x: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
                         y: parseInt(localStorage.getItem("weight"))
                     },
                 ]
