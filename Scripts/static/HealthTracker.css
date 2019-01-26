@@ -44,6 +44,11 @@ div p, li, button{
     height: 400px;
 }
 
+#instructions{
+    position: relative;
+    top: 15px;
+}
+
 textarea {
     width: 150px;
     height: 40px;
