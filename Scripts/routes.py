@@ -37,6 +37,7 @@ def deleteRecords():
 
 deleteRecords()
 
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -130,13 +131,13 @@ def profile():
         form.weight.data = current_user.weight
         form.age.data = current_user.age
 
-    profile.kcal = 0
+    kcal = 0
     for food in bfastt:
-        profile.kcal += food.calories
+        kcal += food.calories
     for food in lunchh:
-        profile.kcal += food.calories
+        kcal += food.calories
     for food in dinnerr:
-        profile.kcal += food.calories
+        kcal += food.calories
 
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
@@ -296,18 +297,18 @@ def _Food():
     bfastt = Breakfast.query.all()
     lunchh = Lunch.query.all()
     dinnerr = Dinner.query.all()
+    kcal = 0
     for food in bfastt:
-        profile.kcal += food.calories
+        kcal += food.calories
     for food in lunchh:
-        profile.kcal += food.calories
+        kcal += food.calories
     for food in dinnerr:
-        profile.kcal += food.calories
+        kcal += food.calories
     totalKcalfromExercise = 0
     queryExerciseKcal = Fitness.query.all()
     for i in queryExerciseKcal:
         totalKcalfromExercise += i.calories
         # print(totalKcalfromExercise)
-    print(totalKcalfromExercise)
     try:
         if form.meal.data == 'breakfast':
             searches = Food.query.filter_by(name=form.name.data).first()
@@ -337,9 +338,9 @@ def _Food():
 
 
     # daily intake
-    if profile.kcal > 0:
+    if kcal > 0:
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
-                    4.33 * current_user.age)) * 1.55) - profile.kcal + totalKcalfromExercise
+                    4.33 * current_user.age)) * 1.55) - kcal + totalKcalfromExercise
     else:
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
                     4.33 * current_user.age)) * 1.55) + totalKcalfromExercise
@@ -357,21 +358,7 @@ def _Food():
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
     e1 = Exercise(totalKcalfromExercise)
 
-    now = datetime.datetime.now()
-    midnight = datetime.time(0, 0, 0)
-    if now == midnight:
-        resetBreakfast = Breakfast.query.all()
-        for i in resetBreakfast:
-            db.session.delete(i)
-            db.session.commit()
-        resetLunch = Lunch.query.all()
-        for i in resetLunch:
-            db.session.delete(i)
-            db.session.commit()
-        resetDinner = Dinner.query.all()
-        for i in resetDinner:
-            db.session.delete(i)
-            db.session.commit()
+    print(totalKcalfromExercise)
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('food.html', items=r1, kcal=p1, exer=e1, image_file=image_file, form=form, searches=searches)
@@ -383,9 +370,18 @@ def exercise():
     form = ExerciseForm()
     totalKcalfromExercise = 0
     queryExerciseKcal = Fitness.query.all()
+    kcal = 0
+    bfastt = Breakfast.query.all()
+    lunchh = Lunch.query.all()
+    dinnerr = Dinner.query.all()
+    for food in bfastt:
+        kcal += food.calories
+    for food in lunchh:
+        kcal += food.calories
+    for food in dinnerr:
+        kcal += food.calories
     for i in queryExerciseKcal:
         totalKcalfromExercise += i.calories
-    print(totalKcalfromExercise)
     if form.intensity.data == 'light':
         if form.duration.data == 'ten':
             time = 10
@@ -527,9 +523,9 @@ def exercise():
     #app.logger.debug(totalKcalfromExercise)
 
     # daily intake
-    if profile.kcal > 0:
+    if kcal > 0:
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
-                    4.33 * current_user.age)) * 1.55) - profile.kcal + totalKcalfromExercise
+                    4.33 * current_user.age)) * 1.55) - kcal + totalKcalfromExercise
     else:
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
                     4.33 * current_user.age)) * 1.55) + totalKcalfromExercise
@@ -543,6 +539,10 @@ def exercise():
     cfat25 = round(fat25 / 9)
     ccarb50 = round(carb50 / 4)
 
+    print(totalKcalfromExercise + simplifiedmt)
+    print(simplifiedmt)
+    print(mtcalories)
+
     r1 = Record('food1')
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
     e1 = Exercise(totalKcalfromExercise)
@@ -552,7 +552,7 @@ def exercise():
 
 @app.route('/addfood', methods=['GET', 'POST'])
 def addFood():
-    form = SearchForm()
+    form = FoodForm()
     if form.validate_on_submit():
         print('asd')
         food = Food(name=form.name.data, mass=form.mass.data, calories=form.calories.data, protein=form.protein.data,
