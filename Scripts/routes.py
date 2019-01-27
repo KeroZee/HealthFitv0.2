@@ -260,26 +260,26 @@ def schedule():
     today = datetime.datetime.now().strftime('%A')
     encouraging_quotes = ScheduleTodolist.Quotes
     quote_author = ScheduleTodolist.Author
-    contents1 = 'Don’t put a limit on anything. The more you dream, the further you get."'
-    author1 = 'By: Michael Phelps'
+    contents1 = '"Don’t put a limit on anything. The more you dream, the further you get."'
+    author1 = '--- Michael Phelps ---'
 
-    contents2 = '"Our greatest glory is not in never falling, but in rising every time we fall."'
-    author2 = 'By: Confucius'
+    contents2 = '"I’ve failed over and over and over again in my life. And that is why I succeed."'
+    author2 = '--- Michael Jordan ---'
 
     contents3 = '"There are always going to be obstacles that come in your way, stay positive."'
-    author3 = 'By: Michael Phelps'
+    author3 = '--- Michael Phelps ---'
 
     contents4 = '"All our dreams can come true, if we have the courage to pursue them."'
-    author4 = 'By: Walt Disney'
+    author4 = '--- Walt Disney ---'
 
     contents5 = '"Success is not final, failure is not fatal: it is the courage to continue that counts."'
-    author5 = 'By: Winston Churchill'
+    author5 = '--- Winston Churchill ---'
 
     contents6 = '"Failure is acceptable. but not trying is a whole different ball park."'
-    author6 = 'By: Michael Jordan'
+    author6 = '--- Michael Jordan ---'
 
     contents7 = '"Believe in yourself. You are braver than you think, more talented than you know, and capable of more than you imagine."'
-    author7 = 'By: Roy T. Bennett'
+    author7 = '--- Roy T. Bennett ---'
 
     if today == 'Monday':
         quote1 = encouraging_quotes(contents1)
@@ -336,7 +336,7 @@ def todolist():
         db.session.add(activity)
         db.session.commit()
         app.logger.debug('Activities added')
-        flash('Activity have been added to your schedule', 'success')
+        flash('To-Do has been added to your schedule', 'success')
         return redirect(url_for('todolist'))
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('todolist.html', title='ToDoList', image_file=image_file, form=form, Todos=Todos)
@@ -347,26 +347,13 @@ def todo(todo_id):
     todo = Schedule.query.get_or_404(todo_id)
     return render_template('todo.html', title=todo.description, todo=todo)
 
-# @app.route('/schedule/ToDoList/<int:todo_id>/edit', methods=['GET', 'POST'])
-# @login_required
-# def edit_todo(todo_id):
-#     activity = Schedule.query.get_or_404(todo_id)
-#     form = TodoList()
-#     if form.validate_on_submit():
-#         activity.description = form.description.data
-#         activity.remarks = form.remarks.data
-#         db.session.commit()
-#         flash('Your to-do has been updated!', 'success')
-#         return redirect(url_for('todo', todo_id=todo.id))
-#     elif request.method == 'GET':
-#         form.description.data = form.description
-#         form.remarks.data = form.remarks
-#     return render_template('todolist.html', title='HealthFit - Edit to-do-list', form=form, legend='Edit To-Do-List')
-
 @app.route('/schedule/ToDoList/<int:todo_id>/delete', methods=['POST'])
 @login_required
 def delete_todo(todo_id):
     todo = Schedule.query.get_or_404(todo_id)
+    if todo.user_id != current_user.id:
+        flash("You cannot delete other user's To-Do!", 'danger')
+        return redirect(url_for('todolist'))
     db.session.delete(todo)
     db.session.commit()
     flash('Your to-do has been deleted!', 'danger')
