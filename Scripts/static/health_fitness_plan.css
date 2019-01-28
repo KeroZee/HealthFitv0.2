@@ -12,7 +12,7 @@ body{
     width:90.5%;
     min-height: 165vh;
     margin:auto;
-    margin-top:12vh;
+    margin-top:4vh;
 	border-radius: 10px;
     background-color: white;
     border: 3px solid black;
@@ -189,6 +189,7 @@ tr:first-child{
 .title-head{
     font-family: 'Goudy Stout', 'Rockwell Extra Bold', 'Verdana', 'sans-serif';
     color: whitesmoke;
+    margin: 18px;
     text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
 }
 

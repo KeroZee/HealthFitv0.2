@@ -356,7 +356,7 @@ def delete_todo(todo_id):
         return redirect(url_for('todolist'))
     db.session.delete(todo)
     db.session.commit()
-    flash('Your to-do has been deleted!', 'danger')
+    flash('Your To-Do has been deleted!', 'danger')
     return redirect(url_for('todolist'))
 
 @app.route('/HealthTracker', methods=['GET', 'POST'])
