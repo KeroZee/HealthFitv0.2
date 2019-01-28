@@ -409,7 +409,7 @@ def _Food():
 
             db.session.add(breakfast)
 
-            flash('Commit!', 'success')
+            flash('Food has been added!', 'success')
 
         elif form.meal.data == 'lunch':
 
@@ -421,7 +421,7 @@ def _Food():
 
             db.session.add(lunch)
 
-            flash('Commit!', 'success')
+            flash('Food has been added!', 'success')
 
         elif form.meal.data == 'dinner':
 
@@ -433,7 +433,7 @@ def _Food():
 
             db.session.add(dinner)
 
-            flash('Commit!', 'success')
+            flash('Food has been added!', 'success')
 
         else:
 
