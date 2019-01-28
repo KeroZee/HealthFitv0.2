@@ -1,7 +1,8 @@
 import secrets, os, datetime, threading
 from PIL import Image
 from flask import render_template, flash, redirect, url_for, request
-from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm, HealthForm, FoodForm, ExerciseForm, SearchForm
+from Scripts.forms import RegisterForm, LoginForm, UpdateDetails, TodoList, RequestResetForm, ResetPasswordForm, \
+    HealthForm, FoodForm, ExerciseForm, SearchForm
 from Scripts import app, db, bcrypt, mail
 from Scripts.models import User, Schedule, Food, Fitness, Breakfast, Lunch, Dinner, HealthTrack
 from Scripts import ScheduleTodolist
@@ -13,23 +14,14 @@ from Scripts.Fitness import Record, YourPlan, Exercise
 
 from Scripts.Fitness import Record, YourPlan
 
+from Scripts.Fitness import Record, YourPlan, MacroNutrients, Carbohydrates, Proteins, Fats
+
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 import shelve
 
 
-totalKcalfromExercise = 0
-queryExerciseKcal = Fitness.query.all()
-for i in queryExerciseKcal:
-    totalKcalfromExercise += i.calories
-    print(totalKcalfromExercise)
-
-time = 10
-intensity = 1
-totalexercises = round(time * (intensity * 0.33))
-
 def deleteRecords():
-
     threading.Timer(86400.0, deleteRecords).start()
     now = datetime.datetime.now().time()
     midnight = datetime.time(0, 0, 0)
@@ -52,12 +44,13 @@ def deleteRecords():
             db.session.delete(i)
             db.session.commit()
 
+
 deleteRecords()
+
 
 @app.route("/")
 @app.route("/home")
 def home():
-
     if current_user.is_authenticated:
         image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     else:
@@ -124,10 +117,10 @@ def save_picture(form_picture):
 @login_required
 def profile():
     form = UpdateDetails()
+    exercises = Fitness.query.all
     bfastt = Breakfast.query.all()
     lunchh = Lunch.query.all()
     dinnerr = Dinner.query.all()
-    app.logger.debug('in profile method')
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
@@ -147,29 +140,20 @@ def profile():
         form.weight.data = current_user.weight
         form.age.data = current_user.age
 
-    profile.kcal = 0
+    kcal = 0
+
     for food in bfastt:
-        profile.kcal += food.calories
+        kcal += food.calories
+
     for food in lunchh:
-        profile.kcal += food.calories
+        kcal += food.calories
+
     for food in dinnerr:
-        profile.kcal += food.calories
-    app.logger.debug(profile.kcal)
-
-
-    # app.logger.debug(kcal)
-
-    # profile.kcal = 0
-    # for food in bfastt:
-    #     profile.kcal += food.calories
-    # for food in lunchh:
-    #     profile.kcal += food.calories
-    # for food in dinnerr:
-    #     profile.kcal += food.calories
-    # app.logger.debug(profile.kcal)
+        kcal += food.calories
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('profile.html', title='Profile',image_file=image_file, form=form, bfastt=bfastt, lunchh=lunchh, dinnerr=dinnerr)
+    return render_template('profile.html', title='Profile', image_file=image_file, form=form, bfastt=bfastt,
+                           lunchh=lunchh, dinnerr=dinnerr, exercise=exercises)
 
 
 def send_reset_email(user):
@@ -253,6 +237,7 @@ def guide():
     return render_template('ExGuide.html', exercise=exercise, exercise1=exercise1, exercise2=exercise2,
                            image_file=image_file)
 
+
 @app.route('/schedule')
 @login_required
 def schedule():
@@ -323,7 +308,8 @@ def schedule():
         today_quote = quote7
         today_quote_author = author7
 
-    return render_template('schedule.html', image_file=image_file, today_quote=today_quote, today_quote_author=today_quote_author)
+    return render_template('schedule.html', image_file=image_file, today_quote=today_quote,
+                           today_quote_author=today_quote_author)
 
 
 @app.route('/schedule/ToDoList', methods=['GET', 'POST'])
@@ -341,11 +327,13 @@ def todolist():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('todolist.html', title='ToDoList', image_file=image_file, form=form, Todos=Todos)
 
+
 @app.route('/schedule/ToDoList/<int:todo_id>')
 @login_required
 def todo(todo_id):
     todo = Schedule.query.get_or_404(todo_id)
     return render_template('todo.html', title=todo.description, todo=todo)
+
 
 @app.route('/schedule/ToDoList/<int:todo_id>/delete', methods=['POST'])
 @login_required
@@ -358,6 +346,7 @@ def delete_todo(todo_id):
     db.session.commit()
     flash('Your To-Do has been deleted!', 'danger')
     return redirect(url_for('todolist'))
+
 
 @app.route('/HealthTracker', methods=['GET', 'POST'])
 @login_required
@@ -372,42 +361,104 @@ def submit_heartrate():
     flash("Your heart rate has been successfully updated!", "success")
     return redirect(url_for('HealthTracker'))
 
+
 @app.route('/food', methods=['GET', 'POST'])
 @login_required
 def _Food():
     form = SearchForm()
 
-    if form.meal.data == 'breakfast':
-        searches = Food.query.filter_by(name=form.name.data).first()
-        app.logger.debug(form.meal.data)
-        breakfast = Breakfast(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
-                              protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
-        db.session.add(breakfast)
-        flash('Commit!', 'success')
-    elif form.meal.data == 'lunch':
-        searches = Food.query.filter_by(name=form.name.data).first()
-        lunch = Lunch(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
-                      protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
-        db.session.add(lunch)
-        flash('Commit!', 'success')
-    elif form.meal.data == 'dinner':
-        searches = Food.query.filter_by(name=form.name.data).first()
-        dinner = Dinner(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
-                        protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
-        db.session.add(dinner)
-        flash('Commit!', 'success')
-    else:
-        searches = ""
-    db.session.commit()
+    bfastt = Breakfast.query.all()
 
+    lunchh = Lunch.query.all()
+
+    dinnerr = Dinner.query.all()
+
+    kcal = 0
+
+    for food in bfastt:
+        kcal += food.calories
+
+    for food in lunchh:
+        kcal += food.calories
+
+    for food in dinnerr:
+        kcal += food.calories
+
+    totalKcalfromExercise = 0
+
+    queryExerciseKcal = Fitness.query.all()
+
+    for i in queryExerciseKcal:
+        totalKcalfromExercise += i.calories
+
+        # print(totalKcalfromExercise)
+
+    try:
+
+        if form.meal.data == 'breakfast':
+
+            searches = Food.query.filter_by(name=form.name.data).first()
+
+            app.logger.debug(form.meal.data)
+
+            breakfast = Breakfast(name=current_user, foodname=searches.name, mass=searches.mass,
+
+                                  calories=searches.calories,
+
+                                  protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
+
+            db.session.add(breakfast)
+
+            flash('Commit!', 'success')
+
+        elif form.meal.data == 'lunch':
+
+            searches = Food.query.filter_by(name=form.name.data).first()
+
+            lunch = Lunch(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
+
+                          protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
+
+            db.session.add(lunch)
+
+            flash('Commit!', 'success')
+
+        elif form.meal.data == 'dinner':
+
+            searches = Food.query.filter_by(name=form.name.data).first()
+
+            dinner = Dinner(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
+
+                            protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
+
+            db.session.add(dinner)
+
+            flash('Commit!', 'success')
+
+        else:
+
+            searches = ""
+
+        db.session.commit()
+
+    except AttributeError:
+
+        flash('The Food is not available in the database!', 'warning')
 
     # daily intake
-    if profile.kcal > 0:
+
+    if kcal > 0:
+
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
-                    4.33 * current_user.age)) * 1.55) - profile.kcal + totalKcalfromExercise
+
+                4.33 * current_user.age)) * 1.55) - kcal + totalKcalfromExercise
+
     else:
+
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
-                    4.33 * current_user.age)) * 1.55) + totalKcalfromExercise
+
+                4.33 * current_user.age)) * 1.55) + totalKcalfromExercise
+
     simplifiedmt = round(mtcalories)
 
     # macronutrients left
@@ -420,118 +471,414 @@ def _Food():
 
     r1 = Record('food1')
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
-    e1 = Exercise(totalexercises)
+    e1 = Exercise(totalKcalfromExercise)
 
-    now = datetime.datetime.now()
-    midnight = datetime.time(0, 0, 0)
-    if now == midnight:
-        resetBreakfast = Breakfast.query.all()
-        for i in resetBreakfast:
-            db.session.delete(i)
-            db.session.commit()
-        resetLunch = Lunch.query.all()
-        for i in resetLunch:
-            db.session.delete(i)
-            db.session.commit()
-        resetDinner = Dinner.query.all()
-        for i in resetDinner:
-            db.session.delete(i)
-            db.session.commit()
+    # now = datetime.datetime.now()
+    # midnight = datetime.time(0, 0, 0)
+    # if now == midnight:
+    #     resetBreakfast = Breakfast.query.all()
+    #     for i in resetBreakfast:
+    #         db.session.delete(i)
+    #         db.session.commit()
+    #     resetLunch = Lunch.query.all()
+    #     for i in resetLunch:
+    #         db.session.delete(i)
+    #         db.session.commit()
+    #     resetDinner = Dinner.query.all()
+    #     for i in resetDinner:
+    #         db.session.delete(i)
+    #         db.session.commit()
+
+    carbohydrates = Carbohydrates
+    proteins = Proteins
+    fats = Fats
+
+    carbohydrates_name = 'Carbohydrates'
+    carbohydrates_description = 'have six major functions within the body: Providing energy and regulation of blood glucose. Prevent ketosis.'
+    carbohydrates_details = Carbohydrates(carbohydrates_name, carbohydrates_description)
+
+    proteins_name = 'Proteins'
+    proteins_description = 'is essential for the maintenance and building of body tissues and muscle. Prevent protein deficiency issues.'
+    proteins_details = Proteins(proteins_name, proteins_description)
+
+    fats_name = 'Fats'
+    fats_description = 'acts as a backup source of energy, absorption for fat-soluble vitamins, insulation to temperature, increasing testoterone.'
+    fats_details = Fats(fats_name, fats_description)
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('food.html', items=r1, kcal=p1, exer=e1, image_file=image_file, form=form, searches=searches)
+    return render_template('food.html', items=r1, kcal=p1, exer=e1, image_file=image_file, form=form, searches=searches,
+                           carbohydrates_details=carbohydrates_details, proteins_details=proteins_details,
+                           fats_details=fats_details)
 
 
 @app.route('/exercise', methods=['GET', 'POST'])
 @login_required
 def exercise():
     form = ExerciseForm()
+
+    totalKcalfromExercise = 0
+
+    queryExerciseKcal = Fitness.query.all()
+
+    kcal = 0
+
+    bfastt = Breakfast.query.all()
+
+    lunchh = Lunch.query.all()
+
+    dinnerr = Dinner.query.all()
+
+    for food in bfastt:
+        kcal += food.calories
+
+    for food in lunchh:
+        kcal += food.calories
+
+    for food in dinnerr:
+        kcal += food.calories
+
+    for i in queryExerciseKcal:
+        totalKcalfromExercise += i.calories
+
     if form.intensity.data == 'light':
+
         if form.duration.data == 'ten':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 10
+
+            intensity = 1
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
-            flash('Exercise successfully Added!','success')
+
+            flash('Exercise successfully Added!', 'success')
+
+
+
         elif form.duration.data == 'twenty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 20
+
+            intensity = 1
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'thirty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 30
+
+            intensity = 1
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'forty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 40
+
+            intensity = 1
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'fifty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 50
+
+            intensity = 1
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'sixty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 60
+
+            intensity = 1
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
+    else:
+
+        totalexercises = 0
+
     if form.intensity.data == 'moderate':
+
         if form.duration.data == 'ten':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 10
+
+            intensity = 2
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'twenty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 20
+
+            intensity = 2
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'thirty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 30
+
+            intensity = 2
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'forty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 40
+
+            intensity = 2
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'fifty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 50
+
+            intensity = 2
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'sixty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 60
+
+            intensity = 2
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
+    else:
+
+        totalexercises = 0
+
     if form.intensity.data == 'vigorious':
+
         if form.duration.data == 'ten':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 10
+
+            intensity = 3
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'twenty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 20
+
+            intensity = 3
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'thirty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data,
-            calories=totalexercises)
+
+            time = 30
+
+            intensity = 3
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data,
+
+                           calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'forty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 40
+
+            intensity = 3
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'fifty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 50
+
+            intensity = 3
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
+
+
+
         elif form.duration.data == 'sixty':
-            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data, duration=form.duration.data, calories=totalexercises)
+
+            time = 60
+
+            intensity = 3
+
+            totalexercises = round(time * (intensity * 3.33))
+
+            print(totalexercises)
+
+            exer = Fitness(name=current_user, exercisename=form.name.data, intensity=form.name.data,
+                           duration=form.duration.data, calories=totalexercises)
+
             db.session.add(exer)
+
             db.session.commit()
-    app.logger.debug(totalKcalfromExercise)
+
+
+
+    else:
+
+        totalexercises = 0
+
+    # app.logger.debug(totalKcalfromExercise)
 
     # daily intake
-    if profile.kcal > 0:
+    if kcal > 0:
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
-                    4.33 * current_user.age)) * 1.55) - profile.kcal + totalKcalfromExercise
+                4.33 * current_user.age)) * 1.55) - kcal + totalKcalfromExercise
     else:
         mtcalories = ((447.593 + (9.247 * current_user.weight) + (3.098 * current_user.height * 100) - (
-                    4.33 * current_user.age)) * 1.55) + totalKcalfromExercise
+                4.33 * current_user.age)) * 1.55) + totalKcalfromExercise
     simplifiedmt = round(mtcalories)
 
     # macronutrients left
@@ -544,16 +891,35 @@ def exercise():
 
     r1 = Record('food1')
     p1 = YourPlan(simplifiedmt, ccarb50, cprotein25, cfat25)
-    e1 = Exercise(totalexercises)
+    e1 = Exercise(totalKcalfromExercise)
 
-    print(totalKcalfromExercise)
+    carbohydrates = Carbohydrates
+    proteins = Proteins
+    fats = Fats
+
+    carbohydrates_name = 'Carbohydrates'
+    carbohydrates_description = 'have six major functions within the body: Providing energy and regulation of blood glucose. Prevent ketosis.'
+    carbohydrates_details = Carbohydrates(carbohydrates_name, carbohydrates_description)
+
+    proteins_name = 'Proteins'
+    proteins_description = 'is essential for the maintenance and building of body tissues and muscle. Prevent protein deficiency issues.'
+    proteins_details = Proteins(proteins_name, proteins_description)
+
+    fats_name = 'Fats'
+    fats_description = 'acts as a backup source of energy, absorption for fat-soluble vitamins, insulation to temperature, increasing testoterone.'
+    fats_details = Fats(fats_name, fats_description)
+
+    # print(totalKcalfromExercise)
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('exercise.html', items=r1, kcal=p1, exer=e1, image_file=image_file, form=form, totalKcalfromExercise=totalKcalfromExercise)
+    return render_template('exercise.html', items=r1, kcal=p1, exer=e1, image_file=image_file, form=form,
+                           totalKcalfromExercise=totalKcalfromExercise, carbohydrates_details=carbohydrates_details,
+                           proteins_details=proteins_details, fats_details=fats_details)
+
 
 @app.route('/addfood', methods=['GET', 'POST'])
 def addFood():
-    form = SearchForm()
+    form = FoodForm()
     if form.validate_on_submit():
         print('asd')
         food = Food(name=form.name.data, mass=form.mass.data, calories=form.calories.data, protein=form.protein.data,
