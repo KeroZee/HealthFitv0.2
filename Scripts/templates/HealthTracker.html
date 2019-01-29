@@ -1,282 +1,144 @@
 <!DOCTYPE HTML>
-
 <html>
-
 <head>
-
     <title>Health Tracker</title>
-
     <!-- Bootstrap-->
-
     <meta charset="utf-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-
     <link rel="stylesheet" href="../static/HealthTracker.css">
-
     <link rel="icon" href="../static/Logo.png">
-
     <script src="../static/HealthTracker.js"></script>
-
 </head>
-
 <body>
-
 <!--Navbar-->
-
 {% extends 'layout.html' %}
-
 {% block body %}
-
 <div id="container">
-
     <h2 class="font-weight-bold text-center headers">Welcome to the Health Tracker!</h2>
-
     <div id="healthtracker" class="jumbotron">
-
         <h1 class="text-center">{{ current_user.username }}'s Health Tracker</h1>
-
         <div class="row">
-
             <!--User Stats-->
-
-            <div class="col-sm-4" id="userstats">
-
+            <form class="col-sm-4" id="userstats" method="post" action=" {{url_for('Healthtracker') }}">
                 <img class="rounded-circle account-img" src="{{ image_file }}">
-
                 <p class="text-justify">Age : <strong>{{ current_user.age }}</strong></p><br>
-
                 <p class="text-justify">Previous Heart Rate: <strong><span id="record">???</span></strong> beats per
-
                     minute</p><br>
-
                 <p class="text-justify">Previously Recorded on: <strong><span id="date">???</span></strong></p><br>
-
-                <p class="text-justify">Condition: <strong><span id="condition">???</span></strong></p><br>
-
-                <p class="text-justify">Recommended Measures: <strong><span id="recommend">???</span></strong></p>
-
+                <p class="text-justify">Condition: <strong><span id="condition">{{ current_condition }}</span></strong></p><br>
+                <p class="text-justify">Recommended Measures: <strong><span id="recommend">{{ current_recommend }}</span></strong></p>
                 <br>
-
                 <p class="text-justify font-weight-bold">(Note: Subject to change)</p><br>
-
-            </div>
-
+            </form>
             <div id="chartContainer">
-
                 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-
                 <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-
             </div>
-
         </div>
-
         <div id="measure">
-
+            <form method="POST" action="">
             <div id="measure_stats">
-
                 <!--Measure heart rate-->
-
                 <h4>No. of heart beats in 1 minute:<textarea placeholder="E.g.(80, 100)" id="bpm"></textarea></h4>
-
             </div>
-
+        </form>
             <button type="button" class="btn btn-warning" id="myBtn" data-toggle="modal"
-
                     data-target="#backtoHealthTracker">MEASURE
-
             </button>
-
         </div>
-
         <div id="instructions">
-
             <!--Instructions-->
-
             <button type="button" class="btn btn-info col-sm-6" data-toggle="collapse" data-target="#info">Learn to
-
                 measure
-
                 your heart rate!
-
             </button>
-
             <div id="info" class="collapse">
-
                 <h3 class="text-justify">Why is my heart rate important?</h3>
-
                 <p class="text-justify">A normal heart rate for adults is typically 60 to 100 beats per minute. A
-
                     heart
-
                     rate that is slower
-
                     than 60 beats per minute is considered bradycardia ("slow heart") and a rate that is faster than
-
                     100
-
                     beats per minutes is termed tachycardia ("fast heart"). Regardless of what is
-
                     considered
-
                     normal, it's important to recognize that a healthy heart rate will vary depending on the
-
                     situation.</p>
-
                 <p class="text-justify">Reasons for a slower heart rate can be due to being
-
                     physically
-
                     fit,
-
                     medication, or sleep
-
                     patterns. However, a slower heart rate can indicate a sign of disease including heart attacks or
-
                     other heart disease, certain infections, high levels of potassium in the blood, or an
-
                     underactive
-
                     thyroid.
-
                 </p>
-
                 <p class="text-justify">Vice versa, reasons for a faster heart rate includes
-
                     exercising, nervous
-
                     excited, using a stimulant or are pregnant. The health conditions that may cause a
-
                     fast heart rate include most infections or fever, heart problems,
-
                     certain
-
                     medications, low levels of potassium in the blood, an overactive thyroid gland, too much
-
                     thyroid
-
                     medication, anemia, asthma or other breathing troubles.</p>
-
                 <h3 class="text-justify">How do I check my heart rate?</h3>
-
                 <ul>
-
                     <img
-
                             src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/2018/1-whatshouldmy.jpg"
-
                             style="float: right; width: 250px; height: 200px;">
-
                     <li>Lightly press the side of your neck, just below the jawbone (Figure A).</li>
-
                     <li>Alternatively, at the wrist, lightly press the index and middle fingers of one hand on the
-
                         opposite wrist, just below the base of the thumb (Figure B).
-
                     </li>
-
                     <li>Alternatively, you may have to use a heart rate monitor if necessary.</li>
-
                     <li>Depending on your heart rate at rest, the health tracker will identify your condition as
-
                         follows:
-
                         <ol>
-
                             <li><strong class="text-info">Poor: </strong>If your heart rate is lower than 60 beats per
-
                                 minute.
-
                             </li>
-
                             <li><strong class="text-success">Good: </strong>If your heart rate is within the range of 60
-
                                 to 100 beats per
-
                                 minute.
-
                             </li>
-
                             <li><strong class="text-warning">Critical: </strong>If your heart rate is within the range
-
                                 of 101 to 140 beats
-
                                 per
-
                                 minute.
-
                             </li>
-
                             <li><strong class="text-danger">Hazardous: </strong>If your heart rate is higher than 140
-
                                 beats per minute.
-
                             </li>
-
                         </ol>
-
                     </li>
-
                 </ul>
-
             </div>
-
         </div>
-
         <div class="modal fade" id="backtoHealthTracker" tabindex="-1" role="dialog"
-
              aria-labelledby="backtoHealthTrackerLabel" aria-hidden="true">
-
             <div class="modal-dialog" role="document">
-
                 <div class="modal-content">
-
                     <div class="modal-header">
-
                         <h5 class="modal-title" id="backtoHealthTrackerLabel">Are you sure?</h5>
-
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
                             <span aria-hidden="true">&times;</span>
-
                         </button>
-
                     </div>
-
                     <div class="modal-body">
-
                         Once you submit, you cannot change your input again!
-
                     </div>
-
                     <div class="modal-footer">
-
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-
                         <form action="{{ url_for('submit_heartrate') }}" method="POST">
-
                             <input class="btn btn-warning" type="submit" value="Confirm" onclick="Measure()">
-
                         </form>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
-
 {% endblock %}
-
 </body>
-
 </html>
