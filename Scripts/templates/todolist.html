@@ -1,10 +1,6 @@
 <!doctype html>
 <html>
 <head>
-    <!-- Logo of our website -->
-    <link rel="icon" href="../static/Logo.png">
-
-    <!-- Title of the page -->
     {% if title %}
         <title>HealthFit - {{ title }}</title>
     {% else %}
@@ -17,18 +13,6 @@
 <body>
 {% extends 'layout.html' %}
 {% block body %}
-<style>
-    #To-Do-container{
-        border-radius: 15px;
-        background-color: grey;
-        margin-top: 22px;
-        margin-left: 22px;
-        width: 97%;
-        height: 100%;
-        border: 3px solid black;
-    }
-</style>
-
 <div id="overlay">
     <div id="spinner"></div>
 </div>
@@ -138,7 +122,6 @@
         <!--</div>-->
 	</div>
 </div>
-
 <div id="To-Do-container"><h2>Your To-Do-List(s)</h2>
     {% for activity in Todos %}
         <article id="media-content" class="media content-section">

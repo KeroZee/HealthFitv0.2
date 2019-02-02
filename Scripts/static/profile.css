@@ -1,102 +1,41 @@
 #chartContainer {
-
     height: 500px;
-
     width: 650px;
-
-    left: 100px;
-
-    position: relative;
-
-    float: right;
-
-    border: 3px solid black;
-
-}
-
-
-#profbod {
-
-    margin: 0 50px 50px 50px;
-
-    border: 3px solid black;
-
-}
-
-
-#buttons {
-
-    position: relative;
-
-    bottom: 310px;
-
-}
-
-
-body {
-
-    background-image: url("../static/e5WlXi.jpg");
-
-}
-
-
-.rounded-circle {
-
-    margin-right: 50px;
-
-}
-
-
-#Updatedetails {
-
-    width: 20%;
-
-}
-
-
-.content-section {
-
-    margin-left: 30px;
-
-}
-
-
-.foodnames {
-
-    font-size: 17px;
-
-}
-
-
-.user {
-
-    font-size: 18px;
-
-}
-
-
-#addweight {
-
-    position: relative;
-
-    bottom: 20px;
-
     left: 500px;
+    top: 150px;
+    position: absolute;
+    border: 3px solid black;
+}
+.rounded-circle
+    {
+        margin-right:50px;
+    }
+    #Updatedetails
+    {
+        width:15%;
+    }
+    .content-section
+    {
+        margin-left: 30px;
+    }
 
+/*body{
+    background-image: url("../static/e5WlXi.jpg");
+}*/
+.foodnames{
+    font-size: 17px;
 }
 
-
-.allcoll {
-
-    position: relative;
-
-    bottom: 300px;
-
+.user{
+    font-size: 18px;
 }
 
+#addweight{
+    position: absolute;
+    top: 650px;
+    left: 500px;
+}
 
-.foodtitle {
-
+.foodtitle{
     text-decoration: underline;
-
 }

@@ -12,7 +12,7 @@ body{
     width:90.5%;
     min-height: 165vh;
     margin:auto;
-    margin-top:4vh;
+    margin-top:12vh;
 	border-radius: 10px;
     background-color: white;
     border: 3px solid black;
@@ -45,15 +45,15 @@ table{
     font-weight: bold;
 }
 
-/*#legendcont{*/
-    /*border: 2px solid green;*/
-    /*box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.1);*/
-    /*border-radius: 10px;*/
-    /*background-color: greenyellow;*/
-    /*padding: 23px;*/
-    /*max-width: 360px;*/
-    /*float: right;*/
-/*}*/
+#legendcont{
+    border: 2px solid green;
+    box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: greenyellow;
+    padding: 23px;
+    max-width: 360px;
+    float: right;
+}
 
 #allinstruction{
     font-weight: bold;
@@ -62,6 +62,16 @@ table{
 }
 
 #allinstruction > p{
+    margin-left: 14px;
+}
+
+div#all-instruction{
+    text-align: center;
+    border: 1.5px solid black;
+    font-weight: bold;
+}
+
+div#all-instruction > p{
     margin-left: 14px;
 }
 
@@ -92,16 +102,12 @@ tr:first-child{
 
 .dycalendar-month-container{
     width: 100%;
-    height: 364px;
+    height: 348px;
     border: 2px solid black;
     border-radius: 2px;
 }
 
-#img-button{
-    margin-left: 20px;
-}
-
-#month, #year, #date, #time{
+#month, #year, #date{
     font-weight: bold;
     font-family: Impact, Charcoal, sans-serif;
 }
@@ -114,7 +120,7 @@ tr:first-child{
     transition: 0.3s;
 }
 
-#Public-hol:hover{
+#Public-hol:hover, #TDL:hover, #SetTDL:hover{
     opacity: 0.6;
 }
 
@@ -140,18 +146,31 @@ tr:first-child{
     max-width: 522px;
 }
 
-/* caption title fot the zoomed image */
-#caption{
+/* Modal image for accessing To-Do */
+.modal-img{
     margin: auto;
     display: block;
-    font-weight: bold;
-    font-size: 22px;
+    width: 31%;
+    max-height: 650px;
+}
+
+.img-modal{
+    margin: auto;
+    display: block;
     width: 85%;
-    max-width: 750px;
+    height: 630px;
+}
+
+/* caption title fot the zoomed image */
+#caption, #detail-TDL, #detail-SetTD{
+    margin: auto;
+    display: block;
+    width: 85%;
+    max-width: 650px;
     text-align: center;
     color: #ccc;
     padding: 10px 0;
-    height: 180px;
+    height: 150px;
 }
 
 @-webkit-keyframes zoom {
@@ -189,7 +208,6 @@ tr:first-child{
 .title-head{
     font-family: 'Goudy Stout', 'Rockwell Extra Bold', 'Verdana', 'sans-serif';
     color: whitesmoke;
-    margin: 18px;
     text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
 }
 
@@ -197,30 +215,16 @@ tr:first-child{
     margin: 10px 5px 5px 5px;
 }
 
-#quote-title{
-    padding-left: 12px;
-    padding-top: 15px;
+#TDL{
+    width: 80px;
+    height: 100px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-#quote{
-    padding-left: 12px;
-    padding-bottom: 4px;
-    font-weight: bold;
-    font-size: 25px;
-    font-family: Impact, Charcoal, sans-serif
-}
-
-#author{
-    padding-left: 12px;
-    font-weight: bold;
-    font-size: 18px;
-    font-family: Arial Black, sans-serif;
-}
-
-#motivation-quotes{
-    background-color: #b8c6ce;
-}
-
-#motivation-quotes > hr{
-    background-color: black;
+#SetTDL{
+    width: 120px;
+    height: 85px;
+    cursor: pointer;
+    transition: 0.3s;
 }

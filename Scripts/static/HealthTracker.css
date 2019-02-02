@@ -1,195 +1,128 @@
 * {
-
-    padding: 0;
-
-    margin: 0;
-
+    padding: 0px;
+    margin: 0px;
 }
-
-
 
 #healthtracker {
-
     position: relative;
-
+    float: left;
     padding: 20px;
-
-    margin: 0 50px 50px 50px;
-
+    margin-left: 50px;
+    margin-top: 50px;
     line-height: 1.4;
-
     height: 100%;
-
     border: 3px solid black;
-
+    background-color: white;
 }
-
-
-
-div p, li, button{
-
-    font-size: 18px;
-
-}
-
-
 
 #userstats {
-
     line-height: 1;
-
     width: 400px;
-
     margin-top: 20px;
-
 }
-
-
 
 #recommend {
-
     line-height: 1.4;
-
 }
-
-
 
 #measure {
-
     position: relative;
-
     left: 400px;
-
+    bottom: 130px;
 }
 
-
-
-.headers {
-
-    font-family: 'Goudy Stout', 'Rockwell Extra Bold', 'Verdana', 'sans-serif';
-
-    color: whitesmoke;
-
-    text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
-
-    margin-top: 10px;
-
+.btn btn-warning{
+    cursor: pointer;
 }
 
-
-
-#chartContainer{
-
-    float: right;
-
-    width: 700px;
-
-    height: 400px;
-
-}
-
-
-
-#instructions{
-
+#measure_stats {
+    position: static;
     position: relative;
-
-    top: 15px;
-
 }
 
-
+.font-weight-bold {
+    font-family: 'Goudy Stout', 'Rockwell Extra Bold', 'Verdana', 'sans-serif';
+    color: whitesmoke;
+    text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
+    margin-top: 10px;
+}
 
 textarea {
-
-    width: 150px;
-
-    height: 40px;
-
+    width: 200px;
+    height: 50px;
+    padding: 10px;
     font-size: 50%;
-
     position: relative;
-
     left: 20px;
-
     top: 10px;
-
 }
 
-
-
-.account-img{
-
+img {
     position: relative;
-
-    bottom: 20px;
-
+    text-align: center;
 }
 
+#instructions {
+    position: relative;
+}
 
+#heading {
+    font-weight: bold;
+}
 
+h1 {
+    text-align: center;
+}
 
-
-div h3 {
-
+div h2 {
     color: blue;
-
-    text-decoration: underline;
-
 }
-
-
 
 #info {
-
     line-height: 2;
-
     width: 800px;
-
 }
 
-
-
-
+button {
+    width: 100px;
+}
 
 ol {
-
     list-style-position: inside;
-
 }
 
+#chartContainer {
+    margin-top: 150px;
+    height: 350px;
+    width: 650px;
+    right: 700px;
+    position: relative;
+}
 
+#here {
+    cursor: pointer;
+}
+
+#footer {
+    position: relative;
+}
 
 .profile-pic
-
 {
-
     right:0;
-
     width: 50px;
-
     height: 50px;
-
     overflow:hidden;
-
 }
-
-
 
 .img-thumbnail
-
 {
-
     height:50px!important;
-
+}
+.highlight-pic:hover
+{
 }
 
-
-
 body{
-
     background-image: url('../static/e5WlXi.jpg');
-
-    overflow-x: hidden;
-
 }

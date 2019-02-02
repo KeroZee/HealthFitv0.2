@@ -1,341 +1,169 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
+    <!-- Bootstrap CSS -->
+    <!--<link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">-->
     <!-- Guide Style CSS -->
-
     <link rel="stylesheet" href="../static/profile.css">
-
     <link rel="icon" href="../static/Logo.png">
-
     <script src="../static/profile.js"></script>
-
     <title>Profile</title>
-
 </head>
-
 <body>
-
 {% extends "layout.html" %}
-
 {% block body %}
-
 <br>
-
-<div class="jumbotron" id="profbod">
-
-    <div class="content-section row">
-
-        <div class="media col-sm-4">
-
-            <img class="rounded-circle account-img" src="{{ image_file }}">
-
-            <div class="media-body">
-
-                <h2 class="account-heading">{{ current_user.name }}</h2>
-
-                <p class="font-weight-bold user">{{ current_user.email }}</p>
-
-                <p class="font-weight-bold user">Age: {{ current_user.age }}</p>
-
-                <p class="font-weight-bold user">Height(M): {{ current_user.height }}</p>
-
-                <p class="font-weight-bold user">Weight(KG): {{ current_user.weight }}</p>
-
-            </div>
-
+<div class="content-section">
+    <div class="media">
+        <img class="rounded-circle account-img" src="{{ image_file }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ current_user.name }}</h2>
+            <p class="font-weight-bold user">{{ current_user.email }}</p>
+            <p class="font-weight-bold user">Age: {{ current_user.age }}</p>
+            <p class="font-weight-bold user">Height(M): {{ current_user.height }}</p>
+            <p class="font-weight-bold user">Weight(KG): {{ current_user.weight }}</p>
         </div>
-
-        <div id="chartContainer">
-
-            <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-
-            <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-
-        </div>
-
     </div>
-
     <form method="POST" action="" enctype="multipart/form-data">
-
         {{ form.hidden_tag() }}
-
         <br>
-
-        <button type="button" class="btn btn-danger" id="addweight" onclick="set_weight()">Measure Weight!</button>
-
-        <div id="buttons">
-
-            <p>
-
-                <a href="#Updatedetails" class="btn btn-info" data-toggle="collapse">Update Details</a>
-
-                <button class='btn btn-success' data-toggle="collapse" data-target="#breakfast">Breakfast</button>
-
-                <button class='btn btn-success' data-toggle="collapse" data-target="#lunch">Lunch</button>
-
-                <button class='btn btn-success' data-toggle="collapse" data-target="#dinner">Dinner</button>
-
-                <button class='btn btn-success' data-toggle="collapse" data-target="#exercise">Exercises</button>
-
-            </p>
-
+        <div id="chartContainer">
+            <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+            <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
         </div>
-
-        <fieldset id="Updatedetails" class="collapse allcoll">
-
+        <button type="button" class="btn btn-danger" id="addweight" onclick="set_weight()">Measure Weight!</button>
+        <p>
+            <a href="#Updatedetails" class="btn btn-info" data-toggle="collapse">Update Details</a>
+            <button class='btn btn-success' data-toggle="collapse" data-target="#breakfast">Breakfast</button>
+            <button class='btn btn-success' data-toggle="collapse" data-target="#lunch">Lunch</button>
+            <button class='btn btn-success' data-toggle="collapse" data-target="#dinner">Dinner</button>
+            <button class='btn btn-success' data-toggle="collapse" data-target="#exercise">Exercise</button>
+        </p>
+        <fieldset id="Updatedetails" class="collapse">
             <legend class="border-bottom mb-4">Account Info</legend>
-
             <div class="form-group">
-
                 {{ form.username.label(class="form-control-label") }}
 
-
-
                 {% if form.username.errors %}
-
                 {{ form.username(class="form-control form-control-lg is-invalid") }}
-
                 <div class="invalid-feedback">
-
                     {% for error in form.username.errors %}
-
                     <span>{{ error }}</span>
-
                     {% endfor %}
-
                 </div>
-
                 {% else %}
-
                 {{ form.username(class="form-control form-control-lg") }}
-
                 {% endif %}
-
             </div>
-
             <div class="form-group">
-
                 {{ form.email.label(class="form-control-label") }}
-
                 {% if form.email.errors %}
-
                 {{ form.email(class="form-control form-control-lg is-invalid") }}
-
                 <div class="invalid-feedback">
-
                     {% for error in form.email.errors %}
-
                     <span>{{ error }}</span>
-
                     {% endfor %}
-
                 </div>
-
                 {% else %}
-
                 {{ form.email(class="form-control form-control-lg") }}
-
                 {% endif %}
-
             </div>
-
             <div class="form-group">
-
                 {{ form.weight.label(class="form-control-label") }}
-
                 {% if form.weight.errors %}
-
                 {{ form.weight(class="form-control form-control-lg is-invalid") }}
-
                 <div class="invalid-feedback">
-
                     {% for error in form.email.errors %}
-
                     <span>{{ error }}</span>
-
                     {% endfor %}
-
                 </div>
-
                 {% else %}
-
                 {{ form.weight(class="form-control form-control-lg") }}
-
                 {% endif %}
-
             </div>
-
             <div class="form-group">
-
                 {{ form.height.label(class="form-control-label") }}
-
                 {% if form.height.errors %}
-
                 {{ form.height(class="form-control form-control-lg is-invalid") }}
-
                 <div class="invalid-feedback">
-
                     {% for error in form.email.errors %}
-
                     <span>{{ error }}</span>
-
                     {% endfor %}
-
                 </div>
-
                 {% else %}
-
                 {{ form.height(class="form-control form-control-lg") }}
-
                 {% endif %}
-
             </div>
-
             <div class="form-group">
-
                 {{ form.age.label(class="form-control-label") }}
-
                 {% if form.age.errors %}
-
                 {{ form.age(class="form-control form-control-lg is-invalid") }}
-
                 <div class="invalid-feedback">
-
                     {% for error in form.email.errors %}
-
                     <span>{{ error }}</span>
-
                     {% endfor %}
-
                 </div>
-
                 {% else %}
-
                 {{ form.age(class="form-control form-control-lg") }}
-
                 {% endif %}
-
             </div>
-
             <div class="form-group">
-
                 {{ form.picture.label() }}
-
                 {{ form.picture(class="form-control-file") }}
-
                 {% if form.picture.errors %}
-
                 {% for error in form.picture.errors %}
-
                 <span class="text-danger">{{ error }}</span></br>
-
                 {% endfor %}
-
                 {% endif %}
-
             </div>
-
             <div class="form-group">
-
                 {{ form.submit(class="btn btn-outline-info") }}
-
             </div>
-
         </fieldset>
-
     </form>
-
-    <div id="breakfast" class="collapse allcoll">
-
+    <div id="breakfast" class="collapse">
         <h4 class="font-weight-bold text-justify foodtitle">BREAKFAST</h4>
-
         <ul>
-
             {% for food in bfastt %}
-
             <li class="text-justify font-weight-bold foodnames">{{food.foodname}}</li>
-
         </ul>
-
         <p class="text-justify text-danger font-weight-bold">{{food.calories}} Kcal</p>
-
         {% endfor %}
-
     </div>
 
-
-
-    <div id="lunch" class="collapse allcoll">
-
+    <div id="lunch" class="collapse">
         <h4 class="font-weight-bold text-justify foodtitle">LUNCH</h4>
-
         <ul>
-
             {% for food in lunchh %}
-
             <li class="text-justify font-weight-bold foodnames">{{food.foodname}}</li>
-
         </ul>
-
         <p class="text-justify text-danger font-weight-bold">{{food.calories}} Kcal</p>
-
         {% endfor %}
-
     </div>
 
-
-
-    <div id="dinner" class="collapse allcoll">
-
+    <div id="dinner" class="collapse">
         <h4 class="text-justify font-weight-bold foodtitle">DINNER</h4>
-
         <ul>
-
             {% for food in dinnerr %}
-
             <li class="text-justify font-weight-bold foodnames">{{food.foodname}}</li>
-
         </ul>
-
         <p class="text-justify text-danger font-weight-bold">{{food.calories}} Kcal</p>
-
         {% endfor %}
-
     </div>
-
-    <div id="exercise" class="collapse allcoll">
-
+    <div id="exercise" class="collapse">
         <h4 class="text-justify font-weight-bold foodtitle">EXERCISE</h4>
-
         <ul>
-
-            {% for exercise in exercises %}
-
+            {% for exercise in exercise %}
             <li class="text-justify font-weight-bold foodnames">{{exercise.exercisename}}</li>
-
         </ul>
-
         <p class="text-justify text-danger font-weight-bold">{{exercise.calories}} Kcal</p>
-
         {% endfor %}
-
     </div>
-
 </div>
-
-</div>
-
 {% endblock %}
-
 </body>
-
 </html>
