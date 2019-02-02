@@ -317,19 +317,19 @@ def _Food():
                                   calories=searches.calories,
                                   protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
             db.session.add(breakfast)
-            flash('Commit!', 'success')
+            flash('Food has been added !', 'success')
         elif form.meal.data == 'lunch':
             searches = Food.query.filter_by(name=form.name.data).first()
             lunch = Lunch(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
                           protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
             db.session.add(lunch)
-            flash('Commit!', 'success')
+            flash('Food has been added !', 'success')
         elif form.meal.data == 'dinner':
             searches = Food.query.filter_by(name=form.name.data).first()
             dinner = Dinner(name=current_user, foodname=searches.name, mass=searches.mass, calories=searches.calories,
                             protein=searches.protein, carbohydrates=searches.carbohydrates, fats=searches.fats)
             db.session.add(dinner)
-            flash('Commit!', 'success')
+            flash('Food has been added !', 'success')
         else:
             searches = ""
         db.session.commit()
