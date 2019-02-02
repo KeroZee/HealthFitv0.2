@@ -1,58 +1,58 @@
 # import personalDetails (weight, height)
 
-def bmi():
-    bodyMassIndex = weight / (height ** 2)
-    return bodyMassIndex
+# def bmi():
+#     bodyMassIndex = weight / (height ** 2)
+#     return bodyMassIndex
+
 
 # in webapp, nChoice not available. Definition will be available through hover
 
+#
+# def category():
+#     print("(Bulk, Body Recomposition, Cut)")
+#
+#     while True:
+#
+#         nChoice = input("View or choose: ")
+#
+#         if nChoice.lower() == "view":
+#             definition = input("View which category?:")
+#             if definition.lower() == "bulk":
+#                 print("Providing your body excess calories to gain weight.")
+#             elif definition.lower() == "body recomposition":
+#                 print("Focuses on body composition rather than weight.")
+#             elif definition.lower() == "cut":
+#                 print("Uses fat burning and healthy diet to lose weight.")
+#
+#         elif nChoice.lower() == "choose":
+#             types = input("Choose a nutrition plan:")
+#             if types.lower() == "bulk":
+#                 nutritionPlan = types
+#                 print("Nutrition plan for " + nutritionPlan + " confirmed.")
+#                 break
+#             elif types.lower() == "body recomposition":
+#                 nutritionPlan = types
+#                 print("Nutrition plan for " + nutritionPlan + " confirmed.")
+#                 break
+#             elif types.lower() == "cut":
+#                 nutritionPlan = types
+#                 print("Nutrition plan for " + nutritionPlan + " confirmed.")
+#                 break
+#             else:
+#                 print("An error occured, please put in the right plan.")
 
-def category():
-    print("(Bulk, Body Recomposition, Cut)")
+    # store nutritionPlan in database
 
-    while True:
+    # def macronutrient_measured_per_gram():
+    #     protein = 4
+    #     protein_intake = weight * 1.4
+    #     carb = 4
+    #     fat = 9
 
-        nChoice = input("View or choose: ")
-
-        if nChoice.lower() == "view":
-            definition = input("View which category?:")
-            if definition.lower() == "bulk":
-                print("Providing your body excess calories to gain weight.")
-            elif definition.lower() == "body recomposition":
-                print("Focuses on body composition rather than weight.")
-            elif definition.lower() == "cut":
-                print("Uses fat burning and healthy diet to lose weight.")
-
-        elif nChoice.lower() == "choose":
-            types = input("Choose a nutrition plan:")
-            if types.lower() == "bulk":
-                nutritionPlan = types
-                print("Nutrition plan for " + nutritionPlan + " confirmed.")
-                break
-            elif types.lower() == "body recomposition":
-                nutritionPlan = types
-                print("Nutrition plan for " + nutritionPlan + " confirmed.")
-                break
-            elif types.lower() == "cut":
-                nutritionPlan = types
-                print("Nutrition plan for " + nutritionPlan + " confirmed.")
-                break
-            else:
-                print("An error occured, please put in the right plan.")
-
-# store nutritionPlan in database
-
-
-# def macronutrient_measured_per_gram():
-#     protein = 4
-#     protein_intake = weight * 1.4
-#     carb = 4
-#     fat = 9
-
-
-# def maintenanceNutrition():
+    # def maintenanceNutrition():
     # https://jcdfitness.com/calorie-intake-calculator/#calculator
-    calories = int(input("Input the calculated calories"))
+    # calories = int(input("Input the calculated calories"))
+
 
 # def bulk():
 #     35% of calories from protein, 45% of calories from carb, 20% of calories from fat
@@ -95,12 +95,15 @@ class YourPlan:
     def set_fats(self, fats):
         self.__fats = fats
 
+
 class Exercise:
     def __init__(self, exercise):
         self.__exercise = exercise
 
     def get_exercise(self):
         return self.__exercise
+
+
 class Record:
     def __init__(self, record):
         self.__record = record
@@ -111,5 +114,56 @@ class Record:
     def set_record(self, record):
         self.__record = record
 
+
+class MacroNutrients:
+    def __init__(self, name, contents):
+        self.name = name
+        self.contents = contents
+
+    def get_name(self):
+        return self.name
+
+    def get_contents(self):
+        return self.contents
+
+    def set_name(self, name):
+        self.name = name
+
+    def set_contents(self, contents):
+        self.contents = contents
+
+    def __str__(self):
+        s = f'{self.get_name()}\n{self.get_contents()}'
+        return s
+
+
+class Carbohydrates(MacroNutrients):
+    def __init__(self, name, contents):
+        super().__init__(name, contents)
+
+    def __str__(self):
+        s = super().__str__()
+        s = f'{self.get_name()}\n{self.get_contents()}'
+        return s
+
+
+class Proteins(MacroNutrients):
+    def __init__(self, name, contents):
+        super().__init__(name, contents)
+
+    def __str__(self):
+        s = super().__str__()
+        s = f'{self.get_name()}\n{self.get_contents()}'
+        return s
+
+
+class Fats(MacroNutrients):
+    def __init__(self, name, contents):
+        super().__init__(name, contents)
+
+    def __str__(self):
+        s = super().__str__()
+        s = f'{self.get_name()}\n{self.get_contents()}'
+        return s
 
 

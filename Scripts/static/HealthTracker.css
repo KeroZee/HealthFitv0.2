@@ -1,93 +1,195 @@
 * {
+
     padding: 0;
+
     margin: 0;
+
 }
+
+
 
 #healthtracker {
+
     position: relative;
+
     padding: 20px;
+
     margin: 0 50px 50px 50px;
+
     line-height: 1.4;
+
     height: 100%;
+
     border: 3px solid black;
+
 }
+
+
 
 div p, li, button{
+
     font-size: 18px;
+
 }
+
+
 
 #userstats {
+
     line-height: 1;
+
     width: 400px;
+
     margin-top: 20px;
+
 }
+
+
 
 #recommend {
+
     line-height: 1.4;
+
 }
+
+
 
 #measure {
+
     position: relative;
+
     left: 400px;
+
 }
+
+
 
 .headers {
+
     font-family: 'Goudy Stout', 'Rockwell Extra Bold', 'Verdana', 'sans-serif';
+
     color: whitesmoke;
+
     text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
+
     margin-top: 10px;
+
 }
+
+
 
 #chartContainer{
+
     float: right;
+
     width: 700px;
+
     height: 400px;
+
 }
+
+
+
+#instructions{
+
+    position: relative;
+
+    top: 15px;
+
+}
+
+
 
 textarea {
+
     width: 150px;
+
     height: 40px;
+
     font-size: 50%;
+
     position: relative;
+
     left: 20px;
+
     top: 10px;
+
 }
 
+
+
 .account-img{
+
     position: relative;
+
     bottom: 20px;
+
 }
+
+
+
 
 
 div h3 {
+
     color: blue;
+
     text-decoration: underline;
+
 }
 
+
+
 #info {
+
     line-height: 2;
+
     width: 800px;
+
 }
+
+
+
 
 
 ol {
+
     list-style-position: inside;
+
 }
+
+
 
 .profile-pic
+
 {
+
     right:0;
+
     width: 50px;
+
     height: 50px;
+
     overflow:hidden;
+
 }
+
+
 
 .img-thumbnail
+
 {
+
     height:50px!important;
+
 }
 
+
+
 body{
+
     background-image: url('../static/e5WlXi.jpg');
+
     overflow-x: hidden;
+
 }

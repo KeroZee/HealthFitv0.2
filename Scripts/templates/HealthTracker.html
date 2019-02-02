@@ -20,27 +20,29 @@
         <h1 class="text-center">{{ current_user.name }}'s Health Tracker</h1>
         <div class="row">
             <!--User Stats-->
-            <div class="col-sm-4" id="userstats">
+            <form class="col-sm-4" id="userstats" method="post" action=" {{url_for('Healthtracker') }}">
                 <img class="rounded-circle account-img" src="{{ image_file }}">
                 <p class="text-justify">Age : <strong>{{ current_user.age }}</strong></p><br>
                 <p class="text-justify">Previous Heart Rate: <strong><span id="record">???</span></strong> beats per
                     minute</p><br>
                 <p class="text-justify">Previously Recorded on: <strong><span id="date">???</span></strong></p><br>
-                <p class="text-justify">Condition: <strong><span id="condition">???</span></strong></p><br>
-                <p class="text-justify">Recommended Measures: <strong><span id="recommend">???</span></strong></p>
+                <p class="text-justify">Condition: <strong><span id="condition">{{ current_condition }}</span></strong></p><br>
+                <p class="text-justify">Recommended Measures: <strong><span id="recommend">{{ current_recommend }}</span></strong></p>
                 <br>
                 <p class="text-justify font-weight-bold">(Note: Subject to change)</p><br>
-            </div>
+            </form>
             <div id="chartContainer">
                 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
                 <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
             </div>
         </div>
         <div id="measure">
+            <form method="POST" action="">
             <div id="measure_stats">
                 <!--Measure heart rate-->
                 <h4>No. of heart beats in 1 minute:<textarea placeholder="E.g.(80, 100)" id="bpm"></textarea></h4>
             </div>
+        </form>
             <button type="button" class="btn btn-warning" id="myBtn" data-toggle="modal"
                     data-target="#backtoHealthTracker">MEASURE
             </button>
@@ -128,9 +130,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         <form action="{{ url_for('submit_heartrate') }}" method="POST">
-                            <input class="btn btn-warning" type="submit" value="Measure" onclick="Multiply()">
+                            <input class="btn btn-warning" type="submit" value="Confirm" onclick="Measure()">
                         </form>
-                        <!--<button type="button" class="btn btn-warning" onclick="Multiply()">Submit</button>-->
                     </div>
                 </div>
             </div>
